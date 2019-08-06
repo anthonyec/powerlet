@@ -3,7 +3,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   entry: {
-    popup: './src/popup.js',
+    popup: './src/popup/index.js',
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
