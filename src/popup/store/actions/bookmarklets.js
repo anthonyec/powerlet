@@ -7,7 +7,16 @@ function setBookmarklets(bookmarklets = []) {
 
 export function executeBookmarklet(url) {
   return (dispatch, getState, { browser }) => {
-    browser.tabs.executeScript({ code: decodeURIComponent(url) });
+    const code = `
+      try {
+        ${decodeURIComponent(url)}
+      } catch(err) {
+        console.error(err);
+        alert('Bookmarklet error: ' + err.message);
+      }
+    `;
+
+    browser.tabs.executeScript({ code });
   }
 }
 
