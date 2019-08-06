@@ -1,7 +1,9 @@
 .app {
   background: white;
-  width: 240px;
+  min-width: 250px;
+  max-width: 300px;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 13px;
 }
 
 input {
@@ -9,7 +11,7 @@ input {
   border: 0;
   width: 100%;
   padding: 14px 16px;
-  font-size: 14px;
+  font-size: 13px;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   outline: none;
 }
@@ -18,6 +20,7 @@ input {
   .app {
     background-color: #292A2D;
     background-color: #000000;
+    color: white;
   }
 
   input {

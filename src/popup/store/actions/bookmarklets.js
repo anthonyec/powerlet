@@ -1,5 +1,4 @@
 function setBookmarklets(bookmarklets = []) {
-  console.log('setBookmarklets', bookmarklets);
   return {
     type: 'SET_BOOKMARKLETS',
     payload: bookmarklets
@@ -8,13 +7,11 @@ function setBookmarklets(bookmarklets = []) {
 
 export function executeBookmarklet(url) {
   return (dispatch, getState, { browser }) => {
-    browser.tabs.executeScript({ code: url });
+    browser.tabs.executeScript({ code: decodeURIComponent(url) });
   }
 }
 
 export function fetchAllBookmarklets() {
-  console.log('fetchAllBookmarklets');
-
   return (dispatch, getState, { browser }) => {
     browser.bookmarks.search({
       query: 'javascript:'
@@ -23,7 +20,6 @@ export function fetchAllBookmarklets() {
         return result.url.match(/^javascript\:/);
       });
 
-      console.log('fetchAllBookmarklets->setBookmarklets', filteredResults)
       dispatch(setBookmarklets(filteredResults));
     });
   }

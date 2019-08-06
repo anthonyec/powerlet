@@ -1,0 +1,27 @@
+.search-list {}
+
+.search-list__item {
+  color: #202124;
+  border-top: 1px solid #F0F0F0;
+  padding: 10px 14px;
+  font-size: 13px;
+  line-height: 20px;
+  user-select: none;
+}
+
+.search-list__item--selected {
+  background: #E8EAED;
+  border-color: #E8EAED;
+}
+
+@media (prefers-color-scheme: dark) {
+ .search-list__item {
+   color: #E8EAED;
+   border-color: #3F4042;
+ }
+
+ .search-list__item--selected {
+    background: #444547;
+    border-color: #444547;
+  }
+}
