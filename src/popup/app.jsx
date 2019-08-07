@@ -84,12 +84,20 @@ export default function App() {
     setTotalItems(total);
   };
 
+  const handleItemMouseOverAndMove = (index) => {
+    setSelectedIndex(index);
+  };
+
   return (
     <div className="app">
       <input
         ref={inputEl}
         onKeyDown={handleInputChange}
         onChange={handleInputChange}
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="off"
+        spellcheck="false"
       />
 
       <SearchList
@@ -98,6 +106,8 @@ export default function App() {
         selected={selectedIndex}
         onItemClick={handleBookmarkletClick}
         onItemSelect={handleItemSelect}
+        onItemMouseOver={handleItemMouseOverAndMove}
+        onItemMouseMove={handleItemMouseOverAndMove}
       />
     </div>
   );

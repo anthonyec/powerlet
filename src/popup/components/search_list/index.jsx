@@ -7,6 +7,8 @@ export default function SearchList({
   query = '',
   onItemClick = () => {},
   onItemSelect = () => {},
+  onItemMouseOver = () => {},
+  onItemMouseMove = () => {},
   selected = -1
 }) {
   const filteredItems = items.filter((item) => {
@@ -32,6 +34,8 @@ export default function SearchList({
         key={item.id}
         className={className}
         onClick={onItemClick.bind(null, item.url)}
+        onMouseOver={onItemMouseOver.bind(null, index)}
+        onMouseMove={onItemMouseMove.bind(null, index)}
       >
         {item.title}
       </li>

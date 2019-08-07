@@ -7,16 +7,24 @@ function setBookmarklets(bookmarklets = []) {
 
 export function executeBookmarklet(url) {
   return (dispatch, getState, { browser }) => {
+    let bookmarkletCode;
+
+    try {
+      bookmarkletCode = decodeURIComponent(url)
+    } catch(err) {
+      bookmarkletCode = url;
+    }
+
     const code = `
       try {
-        ${decodeURIComponent(url)}
+        ${bookmarkletCode}
       } catch(err) {
         console.error(err);
         alert('Bookmarklet error: ' + err.message);
       }
     `;
 
-    browser.tabs.executeScript({ code });
+    browser.tabs.executeScript({ code, runAt: 'document_start' });
   }
 }
 
