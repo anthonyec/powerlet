@@ -2,7 +2,6 @@
   "manifest_version": 2,
   "name": "powerlets",
   "version": "0.0.1",
-  "default_locale": "en",
   "description": "Bookmarklets with power.",
   "icons": {},
   "permissions": [
@@ -14,24 +13,14 @@
     "<all_urls>"
   ],
   "background": {
-    "scripts": ["background.js"],
+    "scripts": ["background.bundle.js"],
     "persistent": false
   },
   "browser_action": {
     "default_popup": "popup.html",
     "default_icon": {
-      "19": "dist/default_icon.png",
-      "38": "dist/default_icon@2x.png"
+      "19": "default_icon.png",
+      "38": "default_icon@2x.png"
     }
-  },
-  "content_scripts": [
-    {
-      "matches": [
-        "<all_urls>"
-      ],
-      "js": [
-        "content.js"
-      ]
-    }
-  ]
+  }
 }

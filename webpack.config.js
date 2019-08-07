@@ -1,9 +1,12 @@
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: {
     popup: './src/popup/index.js',
+    background: './src/background/index.js'
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -29,6 +32,15 @@ module.exports = {
     extensions: ['*', '.js', '.jsx'],
   },
   plugins: [
-    new ExtractTextPlugin('popup.css'),
+    new CopyPlugin([
+      './src/manifest.json',
+      './assets'
+    ]),
+    new HtmlWebpackPlugin({
+      title: 'Powerlets',
+      filename: 'popup.html',
+      template: './src/popup/index.ejs'
+    }),
+    new ExtractTextPlugin('popup.css')
   ],
 };
