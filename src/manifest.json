@@ -23,6 +23,16 @@
       "38": "default_icon@2x.png"
     }
   },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content.bundle.js"
+      ]
+    }
+  ],
   "commands": {
     "_execute_browser_action": {
       "suggested_key": {
