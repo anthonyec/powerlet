@@ -3,12 +3,14 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import {
   fetchAllBookmarklets,
-  executeBookmarklet
+  executeBookmarklet,
+  addExampleBookmarklets
 } from './store/actions/bookmarklets';
 import SearchList from './components/search_list';
 
 import './reset.css';
 import './app.css';
+import './onboard.css';
 
 const KEYS = {
   ENTER: 13,
@@ -94,6 +96,11 @@ export default function App() {
     setSelectedIndex(index);
   };
 
+  const handleExampleOnClick = () => {
+    dispatch(addExampleBookmarklets());
+    dispatch(fetchAllBookmarklets());
+  };
+
   return (
     <div className="app">
       <input
@@ -106,15 +113,29 @@ export default function App() {
         spellcheck="false"
       />
 
-      <SearchList
-        query={searchQuery}
-        items={bookmarklets}
-        selected={selectedIndex}
-        onItemClick={handleBookmarkletClick}
-        onItemSelect={handleItemSelect}
-        onItemMouseOver={handleItemMouseOverAndMove}
-        onItemMouseMove={handleItemMouseOverAndMove}
-      />
+      {bookmarklets.length !== 0 &&
+        <SearchList
+          query={searchQuery}
+          items={bookmarklets}
+          selected={selectedIndex}
+          onItemClick={handleBookmarkletClick}
+          onItemSelect={handleItemSelect}
+          onItemMouseOver={handleItemMouseOverAndMove}
+          onItemMouseMove={handleItemMouseOverAndMove}
+        />
+      }
+
+      {bookmarklets.length === 0 &&
+        <div className="onboard">
+          <div className="onboard__message">
+            You don't have any bookmarks&nbsp;scripts.
+          </div>
+
+          <button onClick={handleExampleOnClick} className="onboard__button">
+            Add Example Scripts
+          </button>
+        </div>
+      }
     </div>
   );
 }

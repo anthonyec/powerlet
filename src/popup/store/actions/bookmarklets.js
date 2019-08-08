@@ -1,6 +1,8 @@
+export const SET_BOOKMARKLETS = 'SET_BOOKMARKLETS';
+
 function setBookmarklets(bookmarklets = []) {
   return {
-    type: 'SET_BOOKMARKLETS',
+    type: SET_BOOKMARKLETS,
     payload: bookmarklets
   }
 }
@@ -38,6 +40,20 @@ export function fetchAllBookmarklets() {
       });
 
       dispatch(setBookmarklets(filteredResults));
+    });
+  }
+}
+
+export function addExampleBookmarklets() {
+  return (dispatch, getState, { browser }) => {
+    browser.bookmarks.create({
+      title: 'Scroll Page to Top',
+      url: 'javascript:window.scrollTo(0,0);'
+    });
+
+    browser.bookmarks.create({
+      title: 'Scroll Page to Bottom',
+      url: 'javascript:window.scrollTo(0,document.documentElement.scrollHeight)'
     });
   }
 }

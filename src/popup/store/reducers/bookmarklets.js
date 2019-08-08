@@ -1,4 +1,4 @@
-const SET_BOOKMARKLETS = 'SET_BOOKMARKLETS';
+import { SET_BOOKMARKLETS } from '../actions/bookmarklets';
 
 const defaultState = {
   all: []
