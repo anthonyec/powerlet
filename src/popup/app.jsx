@@ -36,6 +36,16 @@ export default function App() {
     window.close();
   };
 
+  const getPrevIndex = () => {
+    const calculatedIndex = selectedIndex - 1;
+    return calculatedIndex < 0 ? totalItems - 1 : calculatedIndex;
+  };
+
+  const getNextIndex = () => {
+    const calculatedIndex = selectedIndex + 1;
+    return calculatedIndex > totalItems - 1 ? 0 : calculatedIndex;
+  };
+
   const handleSpecialKey = (evt) => {
     switch(evt.keyCode) {
       case KEYS.ENTER:
@@ -44,14 +54,10 @@ export default function App() {
         }
         break;
       case KEYS.UP:
-        if (selectedIndex > 0) {
-          setSelectedIndex(selectedIndex - 1);
-        }
+        setSelectedIndex(getPrevIndex());
         break;
       case KEYS.DOWN:
-        if (selectedIndex < totalItems - 1) {
-          setSelectedIndex(selectedIndex + 1);
-        }
+        setSelectedIndex(getNextIndex());
         break;
       default:
     }
