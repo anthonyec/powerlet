@@ -111,10 +111,6 @@ export default function App() {
     setTotalItems(total);
   };
 
-  const handleItemMouseOverAndMove = (index) => {
-    setSelectedIndex(index);
-  };
-
   const handleExampleOnClick = () => {
     dispatch(addExampleBookmarklets());
     dispatch(fetchAllBookmarklets());
@@ -147,8 +143,6 @@ export default function App() {
             selected={selectedIndex}
             onItemClick={handleBookmarkletClick}
             onItemSelect={handleItemSelect}
-            onItemMouseOver={handleItemMouseOverAndMove}
-            onItemMouseMove={handleItemMouseOverAndMove}
           />
         </ScrollView>
       }

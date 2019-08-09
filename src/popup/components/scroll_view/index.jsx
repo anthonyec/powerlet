@@ -2,7 +2,12 @@ import React, { useEffect, useRef } from 'react';
 
 import './scroll_view.css';
 
-export default function ScrollView({ children, x = 0, y = 0, onScroll = () => {} }) {
+export default function ScrollView({
+  children,
+  x = 0,
+  y = 0,
+  onScroll = () => {}
+}) {
   const scrollViewRef = useRef();
 
   const handleOnScroll = () => {
