@@ -8,6 +8,7 @@ import {
 } from './store/actions/bookmarklets';
 import SearchList from './components/search_list';
 import ScrollView from './components/scroll_view';
+import OnboardScreen from './components/onboard_screen';
 
 import './reset.css';
 import './app.css';
@@ -111,11 +112,6 @@ export default function App() {
     setTotalItems(total);
   };
 
-  const handleExampleOnClick = () => {
-    dispatch(addExampleBookmarklets());
-    dispatch(fetchAllBookmarklets());
-  };
-
   const handleOnScroll = (x, y) => {
     setCurrentScrollViewY(y);
   };
@@ -145,19 +141,10 @@ export default function App() {
             onItemSelect={handleItemSelect}
           />
         </ScrollView>
+
       }
 
-      {bookmarklets.length === 0 &&
-        <div className="onboard">
-          <div className="onboard__message">
-            You don't have any bookmarks&nbsp;scripts.
-          </div>
-
-          <button onClick={handleExampleOnClick} className="onboard__button">
-            Add Example Scripts
-          </button>
-        </div>
-      }
+      {bookmarklets.length === 0 && <OnboardScreen />}
     </div>
   );
 }
