@@ -16,11 +16,11 @@ const KEYS = {
   ENTER: 13,
   UP: 38,
   DOWN: 40
-}
+};
 
 export default function App() {
   const inputEl = useRef(null);
-  const bookmarklets = useSelector((state) => state.bookmarklets.all)
+  const bookmarklets = useSelector((state) => state.bookmarklets.all);
   const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -30,14 +30,17 @@ export default function App() {
   const [currentItem, setCurrentItem] = useState();
 
   const selectedItemTop = selectedIndex * 40;
-  const selectedItemBottom = (selectedIndex * 40) + 40;
+  const selectedItemBottom = selectedIndex * 40 + 40;
 
   useEffect(() => {
     if (selectedIndex >= 0 && selectedItemTop < currentScrollViewY) {
       setScrollViewY(selectedItemTop);
     }
 
-    if (selectedIndex <= totalItems - 1 && selectedItemBottom > (currentScrollViewY + 400)) {
+    if (
+      selectedIndex <= totalItems - 1 &&
+      selectedItemBottom > currentScrollViewY + 400
+    ) {
       setScrollViewY(selectedItemBottom - 400);
     }
   }, [selectedIndex, totalItems]);
@@ -64,7 +67,7 @@ export default function App() {
   };
 
   const handleSpecialKey = (evt) => {
-    switch(evt.keyCode) {
+    switch (evt.keyCode) {
       case KEYS.ENTER:
         if (currentItem.url) {
           execute(currentItem.url);
@@ -85,8 +88,7 @@ export default function App() {
 
   const handleInputChange = (evt) => {
     if (evt.keyCode) {
-
-      switch(evt.keyCode) {
+      switch (evt.keyCode) {
         case KEYS.ENTER:
         case KEYS.UP:
         case KEYS.DOWN:
@@ -126,11 +128,8 @@ export default function App() {
         spellcheck="false"
       />
 
-      {bookmarklets.length !== 0 &&
-        <ScrollView
-          y={scrollViewY}
-          onScroll={handleOnScroll}
-        >
+      {bookmarklets.length !== 0 && (
+        <ScrollView y={scrollViewY} onScroll={handleOnScroll}>
           <SearchList
             query={searchQuery}
             items={bookmarklets}
@@ -139,8 +138,7 @@ export default function App() {
             onItemSelect={handleItemSelect}
           />
         </ScrollView>
-
-      }
+      )}
 
       {bookmarklets.length === 0 && <OnboardScreen />}
     </div>

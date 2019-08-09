@@ -4,7 +4,7 @@ function setBookmarklets(bookmarklets = []) {
   return {
     type: SET_BOOKMARKLETS,
     payload: bookmarklets
-  }
+  };
 }
 
 export function executeBookmarklet(url) {
@@ -12,8 +12,8 @@ export function executeBookmarklet(url) {
     let bookmarkletCode;
 
     try {
-      bookmarkletCode = decodeURIComponent(url)
-    } catch(err) {
+      bookmarkletCode = decodeURIComponent(url);
+    } catch (err) {
       bookmarkletCode = url;
     }
 
@@ -27,21 +27,24 @@ export function executeBookmarklet(url) {
     `;
 
     browser.tabs.executeScript({ code, runAt: 'document_start' });
-  }
+  };
 }
 
 export function fetchAllBookmarklets() {
   return (dispatch, getState, { browser }) => {
-    browser.bookmarks.search({
-      query: 'javascript:'
-    }, (results) => {
-      const filteredResults = results.filter((result) => {
-        return result.url.match(/^javascript\:/);
-      });
+    browser.bookmarks.search(
+      {
+        query: 'javascript:'
+      },
+      (results) => {
+        const filteredResults = results.filter((result) => {
+          return result.url.match(/^javascript\:/);
+        });
 
-      dispatch(setBookmarklets(filteredResults));
-    });
-  }
+        dispatch(setBookmarklets(filteredResults));
+      }
+    );
+  };
 }
 
 export function addExampleBookmarklets() {
@@ -55,5 +58,5 @@ export function addExampleBookmarklets() {
       title: 'Scroll Page to Bottom',
       url: 'javascript:window.scrollTo(0,document.documentElement.scrollHeight)'
     });
-  }
+  };
 }

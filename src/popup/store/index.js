@@ -11,4 +11,4 @@ export default (preloadedState = {}, dependencies = {}) => {
     {},
     applyMiddleware(thunk.withExtraArgument(dependencies))
   );
-}
+};

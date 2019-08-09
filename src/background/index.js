@@ -18,9 +18,7 @@ function iconRenderer() {
       return;
     }
 
-    img.src = match ?
-      'default_icon_dark@2x.png' :
-      'default_icon@2x.png' ;
+    img.src = match ? 'default_icon_dark@2x.png' : 'default_icon@2x.png';
 
     img.onload = () => {
       ctx.drawImage(img, 0, 0);
@@ -31,7 +29,7 @@ function iconRenderer() {
     };
 
     lastMatch = match;
-  }
+  };
 }
 
 const renderIcon = iconRenderer();

@@ -11,37 +11,34 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name].bundle.js',
+    filename: '[name].bundle.js'
   },
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
+        loader: 'babel-loader'
       },
       {
         test: /\.css$/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
-          use: 'css-loader',
-        }),
-      },
-    ],
+          use: 'css-loader'
+        })
+      }
+    ]
   },
   resolve: {
-    extensions: ['*', '.js', '.jsx'],
+    extensions: ['*', '.js', '.jsx']
   },
   plugins: [
-    new CopyPlugin([
-      './src/manifest.json',
-      './assets'
-    ]),
+    new CopyPlugin(['./src/manifest.json', './assets']),
     new HtmlWebpackPlugin({
       title: 'Powerlets',
       filename: 'popup.html',
       template: './src/popup/index.ejs'
     }),
     new ExtractTextPlugin('popup.css')
-  ],
+  ]
 };

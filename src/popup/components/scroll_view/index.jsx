@@ -30,5 +30,5 @@ export default function ScrollView({
     <div className="scroll-view" ref={scrollViewRef}>
       {children}
     </div>
-  )
+  );
 }

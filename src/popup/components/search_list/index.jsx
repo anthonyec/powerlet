@@ -26,9 +26,9 @@ export default function SearchList({
 
   const renderedItems = filteredItems.map((item, index) => {
     const isSelected = index === selected;
-    const className = isSelected ?
-    'search-list__item search-list__item--selected' :
-    'search-list__item';
+    const className = isSelected
+      ? 'search-list__item search-list__item--selected'
+      : 'search-list__item';
 
     return (
       <li
@@ -44,9 +44,5 @@ export default function SearchList({
     );
   });
 
-  return (
-    <ul className="search-list">
-      {renderedItems}
-    </ul>
-  )
+  return <ul className="search-list">{renderedItems}</ul>;
 }
