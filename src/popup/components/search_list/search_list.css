@@ -8,6 +8,12 @@
   user-select: none;
 }
 
+.search-list__item:hover:not(.search-list__item--selected) {
+  background: #f9fafb;
+  border-color: #f9fafb;
+
+}
+
 .search-list__item--selected {
   background: #E8EAED;
   border-color: #E8EAED;
