@@ -6,6 +6,8 @@ import {
   addExampleBookmarklets
 } from '../../store/actions/bookmarklets';
 
+import './onboard_screen.css';
+
 export default function OnboardScreen() {
   const dispatch = useDispatch();
 
@@ -15,12 +17,12 @@ export default function OnboardScreen() {
   };
 
   return (
-    <div className="onboard">
-      <div className="onboard__message">
+    <div className="onboard-screen">
+      <div className="onboard-screen__message">
         You don't have any bookmark&nbsp;scripts.
       </div>
 
-      <button onClick={handleExampleOnClick} className="onboard__button">
+      <button onClick={handleExampleOnClick} className="onboard-screen__button">
         Add Example Scripts
       </button>
     </div>

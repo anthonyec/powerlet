@@ -1,3 +1,53 @@
 .onboard-screen {
+  text-align: center;
+  padding: 25px 14px;
+}
 
+.onboard-screen__message {
+  margin-bottom: 20px;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.onboard-screen__button {
+  border: 1px solid #DFE1E4;
+  border-radius: 4px;
+  background: transparent;
+  cursor: pointer;
+  color: #2A7CEA;
+  font-size: 13px;
+  font-weight: bold;
+  padding: 8px 12px;
+}
+
+.onboard-screen__button:focus {
+  box-shadow: 0px 0px 0px 2px rgba(0,120,255,0.31);
+  outline: none;
+}
+
+.onboard-screen__button:hover {
+  background-color: #F7FAFE;
+  border-color: #D8E7FC;
+}
+
+.onboard-screen__button:active {
+  background-color: #E8F0FC;
+  border-color: #8FBAF6;
+}
+
+@media (prefers-color-scheme: dark) {
+  .onboard-screen__button {
+    color: #8DB8FE;
+    border-color: #575A5F;
+  }
+
+  .onboard-screen__button:hover {
+    background-color: #8DB8FE;
+    border-color: #575A5F;
+  }
+
+  .onboard-screen__button:active {
+    background-color: #8DB8FE;
+    border-color: #575A5F;
+  }
 }
