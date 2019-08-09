@@ -3,8 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import {
   fetchAllBookmarklets,
-  executeBookmarklet,
-  addExampleBookmarklets
+  executeBookmarklet
 } from './store/actions/bookmarklets';
 import SearchList from './components/search_list';
 import ScrollView from './components/scroll_view';
