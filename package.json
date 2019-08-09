@@ -5,12 +5,14 @@
   "main": "src/index.js",
   "scripts": {
     "start": "webpack -w --mode=development",
+    "format": "prettier --loglevel warn --write '**/*.{js,json,jsx,md}'",
     "build": "webpack --mode=production"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "deep-filter": "^1.0.2",
+    "prettier": "^1.18.2",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
