@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import Fuse from 'fuse.js';
 
 import './search_list.css';
 
@@ -12,13 +13,24 @@ export default function SearchList({
   setItemRef = () => {},
   selected = -1
 }) {
-  const filteredItems = items.filter((item) => {
-    if (!query) {
-      return true;
-    }
+  const fuseRef = useRef();
 
-    return item.title.toLowerCase().includes(query.toLowerCase());
-  });
+  useEffect(() => {
+    fuseRef.current = new Fuse(items, {
+      shouldSort: true,
+      threshold: 0.4,
+      tokenize: true,
+      location: 0,
+      distance: 0,
+      maxPatternLength: 32,
+      minMatchCharLength: 1,
+      includeMatches: true,
+      keys: ['title']
+    });
+  }, [items]);
+
+  const filteredItems =
+    query && fuseRef.current ? fuseRef.current.search(query) : items;
 
   useEffect(() => {
     onItemSelect(filteredItems[selected], filteredItems.length);
