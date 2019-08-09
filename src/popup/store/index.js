@@ -1,13 +1,11 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 
-import bookmarklets from './reducers/bookmarklets';
+import reducers from './reducers';
 
 export default (preloadedState = {}, dependencies = {}) => {
   return createStore(
-    combineReducers({
-      bookmarklets
-    }),
+    reducers,
     {},
     applyMiddleware(thunk.withExtraArgument(dependencies))
   );
