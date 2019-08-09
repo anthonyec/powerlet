@@ -18,13 +18,11 @@ export default function SearchList({
   useEffect(() => {
     fuseRef.current = new Fuse(items, {
       shouldSort: true,
-      threshold: 0.4,
-      tokenize: true,
-      location: 0,
-      distance: 0,
+      threshold: 0.6,
+      location: 2,
+      distance: 100,
       maxPatternLength: 32,
-      minMatchCharLength: 1,
-      includeMatches: true,
+      minMatchCharLength: 0,
       keys: ['title']
     });
   }, [items]);
