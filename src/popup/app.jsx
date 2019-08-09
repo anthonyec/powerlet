@@ -7,6 +7,7 @@ import {
   addExampleBookmarklets
 } from './store/actions/bookmarklets';
 import SearchList from './components/search_list';
+import ScrollView from './components/scroll_view';
 
 import './reset.css';
 import './app.css';
@@ -24,8 +25,23 @@ export default function App() {
   const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [scrollViewY, setScrollViewY] = useState(0);
+  const [currentScrollViewY, setCurrentScrollViewY] = useState(0);
   const [totalItems, setTotalItems] = useState(0);
   const [currentItem, setCurrentItem] = useState();
+
+  const selectedItemTop = selectedIndex * 40;
+  const selectedItemBottom = (selectedIndex * 40) + 40;
+
+  useEffect(() => {
+    if (selectedIndex >= 0 && selectedItemTop < currentScrollViewY) {
+      setScrollViewY(selectedItemTop);
+    }
+
+    if (selectedIndex <= totalItems - 1 && selectedItemBottom > (currentScrollViewY + 400)) {
+      setScrollViewY(selectedItemBottom - 400);
+    }
+  }, [selectedIndex, totalItems]);
 
   useEffect(() => {
     inputEl.current.focus();
@@ -54,13 +70,16 @@ export default function App() {
         if (currentItem.url) {
           execute(currentItem.url);
         }
+
         break;
       case KEYS.UP:
         setSelectedIndex(getPrevIndex());
         break;
+
       case KEYS.DOWN:
         setSelectedIndex(getNextIndex());
         break;
+
       default:
     }
   };
@@ -101,6 +120,10 @@ export default function App() {
     dispatch(fetchAllBookmarklets());
   };
 
+  const handleOnScroll = (x, y) => {
+    setCurrentScrollViewY(y);
+  };
+
   return (
     <div className="app">
       <input
@@ -114,15 +137,20 @@ export default function App() {
       />
 
       {bookmarklets.length !== 0 &&
-        <SearchList
-          query={searchQuery}
-          items={bookmarklets}
-          selected={selectedIndex}
-          onItemClick={handleBookmarkletClick}
-          onItemSelect={handleItemSelect}
-          onItemMouseOver={handleItemMouseOverAndMove}
-          onItemMouseMove={handleItemMouseOverAndMove}
-        />
+        <ScrollView
+          y={scrollViewY}
+          onScroll={handleOnScroll}
+        >
+          <SearchList
+            query={searchQuery}
+            items={bookmarklets}
+            selected={selectedIndex}
+            onItemClick={handleBookmarkletClick}
+            onItemSelect={handleItemSelect}
+            onItemMouseOver={handleItemMouseOverAndMove}
+            onItemMouseMove={handleItemMouseOverAndMove}
+          />
+        </ScrollView>
       }
 
       {bookmarklets.length === 0 &&

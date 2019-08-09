@@ -9,6 +9,7 @@ export default function SearchList({
   onItemSelect = () => {},
   onItemMouseOver = () => {},
   onItemMouseMove = () => {},
+  setItemRef = () => {},
   selected = -1
 }) {
   const filteredItems = items.filter((item) => {
@@ -32,6 +33,7 @@ export default function SearchList({
     return (
       <li
         key={item.id}
+        ref={setItemRef}
         className={className}
         onClick={onItemClick.bind(null, item.url)}
         onMouseOver={onItemMouseOver.bind(null, index)}
