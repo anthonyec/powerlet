@@ -11,7 +11,6 @@
 .search-list__item:hover:not(.search-list__item--selected) {
   background: #f9fafb;
   border-color: #f9fafb;
-
 }
 
 .search-list__item--selected {
@@ -24,6 +23,11 @@
    color: #E8EAED;
    border-color: #3F4042;
  }
+
+ .search-list__item:hover:not(.search-list__item--selected) {
+    background: #313233;
+    border-color: #313233;
+  }
 
  .search-list__item--selected {
     background: #444547;
