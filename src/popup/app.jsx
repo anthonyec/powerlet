@@ -126,6 +126,7 @@ export default function App() {
         autocorrect="off"
         autocapitalize="off"
         spellcheck="false"
+        placeholder="Search scripts…"
       />
 
       {bookmarklets.length !== 0 && (
