@@ -36,3 +36,15 @@ const renderIcon = iconRenderer();
 
 setInterval(renderIcon, 1000);
 renderIcon();
+console.log(chrome.runtime);
+chrome.runtime.onMessage((message, sender) => {
+  switch (message.type) {
+    case 'ADD_BOOKMARKLET':
+      const { title, url } = message.payload;
+      chrome.bookmarks.create({ title, url });
+
+      break;
+
+    default:
+  }
+});

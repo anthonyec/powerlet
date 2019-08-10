@@ -33,7 +33,11 @@ module.exports = {
     extensions: ['*', '.js', '.jsx']
   },
   plugins: [
-    new CopyPlugin(['./src/manifest.json', './assets']),
+    new CopyPlugin([
+      './src/manifest.json',
+      './assets',
+      './src/help/examples.html'
+    ]),
     new HtmlWebpackPlugin({
       title: 'Powerlets',
       filename: 'popup.html',

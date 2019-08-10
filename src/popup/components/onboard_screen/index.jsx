@@ -1,10 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import {
-  fetchAllBookmarklets,
-  addExampleBookmarklets
-} from '../../store/actions/bookmarklets';
+import { navigateTo } from '../../store/actions/ui';
 
 import './onboard_screen.css';
 
@@ -12,8 +9,7 @@ export default function OnboardScreen() {
   const dispatch = useDispatch();
 
   const handleExampleOnClick = () => {
-    dispatch(addExampleBookmarklets());
-    dispatch(fetchAllBookmarklets());
+    dispatch(navigateTo('examples.html'));
   };
 
   return (
@@ -23,7 +19,7 @@ export default function OnboardScreen() {
       </div>
 
       <button onClick={handleExampleOnClick} className="onboard-screen__button">
-        Add Example Scripts
+        Get started
       </button>
     </div>
   );
