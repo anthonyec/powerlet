@@ -2,14 +2,10 @@
   "manifest_version": 2,
   "name": "Powerlets",
   "version": "0.0.1",
-  "description": "Quick access to your existing bookmarklets.",
+  "description": "Quick access to your existing bookmarklets",
   "permissions": [
-    "declarativeContent",
     "activeTab",
-    "bookmarks",
-    "http://*/*",
-    "https://*/",
-    "<all_urls>"
+    "bookmarks"
   ],
   "background": {
     "scripts": ["background.bundle.js"],
