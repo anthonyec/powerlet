@@ -5,6 +5,7 @@
 .search-field__input {
   background: transparent;
   border: 0;
+  box-shadow: 0px 0px 0px 1px #D8E7FC inset;
   width: 100%;
   padding: 12px 14px;
   font-size: 12px;
@@ -20,7 +21,7 @@
 
 @media (prefers-color-scheme: dark) {
   .search-field__input {
-    border-color: #3F4042;
+    box-shadow: 0px 0px 0px 1px #575A5F inset;
     color: white;
   }
 
