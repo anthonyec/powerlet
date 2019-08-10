@@ -36,7 +36,3 @@ const renderIcon = iconRenderer();
 
 setInterval(renderIcon, 1000);
 renderIcon();
-
-chrome.extension.onMessage.addListener((message) => {
-  console.log('message receive:', message);
-});
