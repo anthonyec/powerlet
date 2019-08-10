@@ -5,7 +5,6 @@
 
 .onboard-screen__message {
   margin-bottom: 20px;
-  font-size: 13px;
   line-height: 18px;
 }
 
@@ -15,7 +14,6 @@
   background: transparent;
   cursor: pointer;
   color: #2A7CEA;
-  font-size: 13px;
   font-weight: bold;
   padding: 8px 12px;
 }

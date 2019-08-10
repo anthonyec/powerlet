@@ -1,10 +1,12 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useCallbackRef } from 'use-callback-ref';
 
 import {
   fetchAllBookmarklets,
   executeBookmarklet
 } from './store/actions/bookmarklets';
+import SearchField from './components/search_field';
 import SearchList from './components/search_list';
 import ScrollView from './components/scroll_view';
 import OnboardScreen from './components/onboard_screen';
@@ -19,7 +21,6 @@ const KEYS = {
 };
 
 export default function App() {
-  const inputEl = useRef(null);
   const bookmarklets = useSelector((state) => state.bookmarklets.all);
   const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState('');
@@ -31,6 +32,15 @@ export default function App() {
 
   const selectedItemTop = selectedIndex * 40;
   const selectedItemBottom = selectedIndex * 40 + 40;
+
+  // https://dev.to/thekashey/the-same-useref-but-it-will-callback-8bo
+  const searchInputRef = useCallbackRef(null, (ref) => {
+    ref && ref.focus()
+  });
+
+  useEffect(() => {
+    dispatch(fetchAllBookmarklets());
+  }, []);
 
   useEffect(() => {
     if (selectedIndex >= 0 && selectedItemTop < currentScrollViewY) {
@@ -44,12 +54,6 @@ export default function App() {
       setScrollViewY(selectedItemBottom - 400);
     }
   }, [selectedIndex, totalItems]);
-
-  useEffect(() => {
-    inputEl.current.focus();
-
-    dispatch(fetchAllBookmarklets());
-  }, []);
 
   const execute = (url) => {
     dispatch(executeBookmarklet(url));
@@ -100,7 +104,7 @@ export default function App() {
     }
 
     setSelectedIndex(0);
-    setSearchQuery(inputEl.current.value);
+    setSearchQuery(searchInputRef.current.value);
   };
 
   const handleBookmarkletClick = (url) => {
@@ -118,14 +122,10 @@ export default function App() {
 
   return (
     <div className="app">
-      <input
-        ref={inputEl}
+      <SearchField
+        ref={searchInputRef}
         onKeyDown={handleInputChange}
         onChange={handleInputChange}
-        autocomplete="off"
-        autocorrect="off"
-        autocapitalize="off"
-        spellcheck="false"
         placeholder="Search scripts…"
       />
 
