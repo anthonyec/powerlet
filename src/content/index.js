@@ -11,21 +11,19 @@ document.addEventListener('keydown', (evt) => {
   }
 
   if (!isSpecialKey && bothSpecialKeysPressed) {
-    keys.push(key);
+    keys.push(String.fromCharCode(evt.which));
 
     clearTimeout(keyTimeout);
 
     keyTimeout = setTimeout(() => {
       keys = [];
-    }, 1000);
+    }, 500);
   }
 
-  console.log('content->keys', keys);
+  console.log(keys);
 });
 
 chrome.runtime.onMessage.addListener((message, sender, reply) => {
-  console.log('content->onMessage', message);
-
   switch (message.type) {
     case 'GET_PRESSED_KEYS':
       reply({

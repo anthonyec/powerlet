@@ -20,7 +20,6 @@ export function fetchPressedKeys() {
       browser.tabs.sendMessage(tabs[0].id, {
         type: 'GET_PRESSED_KEYS'
       }, (response) => {
-        console.log('popup->response', response.payload);
         dispatch(setPressedKeys(response.payload));
       });
     });
