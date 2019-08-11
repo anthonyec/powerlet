@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useCallbackRef } from 'use-callback-ref';
 
@@ -6,6 +6,7 @@ import {
   fetchAllBookmarklets,
   executeBookmarklet
 } from './store/actions/bookmarklets';
+import { fetchPressedKeys } from './store/actions/ui';
 import SearchField from './components/search_field';
 import SearchList from './components/search_list';
 import ScrollView from './components/scroll_view';
@@ -13,7 +14,6 @@ import OnboardScreen from './components/onboard_screen';
 
 import './reset.css';
 import './app.css';
-import { fetchPressedKeys } from './store/actions/ui';
 
 const KEYS = {
   ENTER: 13,
@@ -37,7 +37,7 @@ export default function App() {
 
   // https://dev.to/thekashey/the-same-useref-but-it-will-callback-8bo
   const searchInputRef = useCallbackRef(null, (ref) => {
-    ref && ref.focus()
+    ref && ref.focus();
   });
 
   useEffect(() => {
@@ -46,8 +46,8 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    console.log(keysPressed);
-    setSearchQuery(keysPressed + searchQuery);
+    const length = searchInputRef.current.value.length;
+    searchInputRef.current.setSelectionRange(length, length);
   }, [keysPressed]);
 
   useEffect(() => {
@@ -135,7 +135,7 @@ export default function App() {
         onKeyDown={handleInputChange}
         onChange={handleInputChange}
         placeholder="Search scripts…"
-        defaultValue={searchQuery}
+        defaultValue={keysPressed}
       />
 
       {bookmarklets.length !== 0 && (

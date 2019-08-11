@@ -1,4 +1,5 @@
 export const SET_PRESSED_KEYS = 'SET_PRESSED_KEYS';
+export const SET_QUERY = 'SET_QUERY';
 
 export function navigateTo(url) {
   return (dispatch, getState, { browser }) => {
@@ -8,7 +9,7 @@ export function navigateTo(url) {
 
 export function setPressedKeys(keys) {
   return {
-    type: 'SET_PRESSED_KEYS',
+    type: SET_PRESSED_KEYS,
     payload: keys
   }
 }
