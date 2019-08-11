@@ -3,6 +3,7 @@ import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 import bookmarklets from './bookmarklets';
+import ui from './ui';
 
 const bookmarkletsPersistConfig = {
   key: 'bookmarklets',
@@ -11,5 +12,6 @@ const bookmarkletsPersistConfig = {
 };
 
 export default combineReducers({
-  bookmarklets: persistReducer(bookmarkletsPersistConfig, bookmarklets)
+  bookmarklets: persistReducer(bookmarkletsPersistConfig, bookmarklets),
+  ui
 });

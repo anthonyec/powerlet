@@ -5,7 +5,8 @@ import './search_field.css';
 function SearchField({
   onKeyDown = () => {},
   onChange = () => {},
-  placeholder = ''
+  placeholder = '',
+  defaultValue = ''
 }, ref) {
   return (
     <div className="search-field">
@@ -16,6 +17,7 @@ function SearchField({
         onKeyDown={onKeyDown}
         onChange={onChange}
         placeholder={placeholder}
+        defaultValue={defaultValue}
         autocomplete="off"
         autocorrect="off"
         autocapitalize="off"

@@ -13,6 +13,7 @@ import OnboardScreen from './components/onboard_screen';
 
 import './reset.css';
 import './app.css';
+import { fetchPressedKeys } from './store/actions/ui';
 
 const KEYS = {
   ENTER: 13,
@@ -22,6 +23,7 @@ const KEYS = {
 
 export default function App() {
   const bookmarklets = useSelector((state) => state.bookmarklets.all);
+  const keysPressed = useSelector((state) => state.ui.keys);
   const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -39,8 +41,14 @@ export default function App() {
   });
 
   useEffect(() => {
+    dispatch(fetchPressedKeys());
     dispatch(fetchAllBookmarklets());
   }, []);
+
+  useEffect(() => {
+    console.log(keysPressed);
+    setSearchQuery(keysPressed + searchQuery);
+  }, [keysPressed]);
 
   useEffect(() => {
     if (selectedIndex >= 0 && selectedItemTop < currentScrollViewY) {
@@ -127,6 +135,7 @@ export default function App() {
         onKeyDown={handleInputChange}
         onChange={handleInputChange}
         placeholder="Search scripts…"
+        defaultValue={searchQuery}
       />
 
       {bookmarklets.length !== 0 && (
