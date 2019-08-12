@@ -6,7 +6,6 @@ import {
   fetchAllBookmarklets,
   executeBookmarklet
 } from './store/actions/bookmarklets';
-import { fetchPressedKeys } from './store/actions/ui';
 import SearchField from './components/search_field';
 import SearchList from './components/search_list';
 import ScrollView from './components/scroll_view';
@@ -43,7 +42,6 @@ export default function App() {
   });
 
   useEffect(() => {
-    dispatch(fetchPressedKeys());
     dispatch(fetchAllBookmarklets());
   }, []);
 
