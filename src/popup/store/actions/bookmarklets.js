@@ -26,7 +26,14 @@ export function executeBookmarklet(url) {
       }
     `;
 
-    browser.tabs.executeScript({ code, runAt: 'document_start' });
+    browser.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      browser.tabs.sendMessage(tabs[0].id, {
+        type: 'INJECT_BOOKMARKLET',
+        payload: {
+          code
+        }
+      });
+    });
   };
 }
 

@@ -1,5 +1,27 @@
 const api = {
   tabs: {
+    move: ([tabIds, moveProperties], sender, id) => {
+      chrome.tabs.move(tabIds, moveProperties, (...args) => {
+        chrome.tabs.sendMessage(sender.tab.id, {
+          type: 'CALLBACK_API_METHOD',
+          payload: {
+            id,
+            args
+          }
+        });
+      });
+    },
+    query: ([queryInfo], sender, id) => {
+      chrome.tabs.query(queryInfo, (...args) => {
+        chrome.tabs.sendMessage(sender.tab.id, {
+          type: 'CALLBACK_API_METHOD',
+          payload: {
+            id,
+            args
+          }
+        });
+      });
+    },
     getCurrent: ([], sender, id) => {
       chrome.tabs.get(sender.tab.id, (...args) => {
         chrome.tabs.sendMessage(sender.tab.id, {

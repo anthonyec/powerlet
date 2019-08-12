@@ -41,6 +41,16 @@ chrome.runtime.onMessage.addListener((message, sender, reply) => {
       document.dispatchEvent(event);
 
       break;
+
+    case 'INJECT_BOOKMARKLET':
+      const bookmarkletScript = document.createElement('script');
+
+      bookmarkletScript.innerHTML = message.payload.code;
+
+      document.body.appendChild(bookmarkletScript);
+      document.body.removeChild(bookmarkletScript);
+
+      break;
     default:
       break;
   }
@@ -77,6 +87,8 @@ $script.innerHTML = `
 
   window.POWERLET_API = {
     tabs: {
+      move: dispatchPowerleMethod.bind(null, 'tabs', 'move'),
+      query: dispatchPowerleMethod.bind(null, 'tabs', 'query'),
       getCurrent: dispatchPowerleMethod.bind(null, 'tabs', 'getCurrent'),
       update: dispatchPowerleMethod.bind(null, 'tabs', 'update')
     }
