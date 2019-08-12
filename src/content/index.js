@@ -1,27 +1,30 @@
-let keys = [];
-let keyTimeout;
+const getKeyDownHandler = () => {
+  let keys = [];
+  let keyTimeout;
 
-document.addEventListener('keydown', (evt) => {
-  const key = evt.key;
-  const isSpecialKey = evt.key === 'Meta' || evt.key === 'Shift';
-  const bothSpecialKeysPressed = keys.includes('Meta') && keys.includes('Shift');
+  return function handleKeyDown() {
+    const key = evt.key;
+    const isSpecialKey = evt.key === 'Meta' || evt.key === 'Shift';
+    const bothSpecialKeysPressed =
+      keys.includes('Meta') && keys.includes('Shift');
 
-  if (isSpecialKey && !bothSpecialKeysPressed) {
-    keys.push(key);
-  }
+    if (isSpecialKey && !bothSpecialKeysPressed) {
+      keys.push(key);
+    }
 
-  if (!isSpecialKey && bothSpecialKeysPressed) {
-    keys.push(String.fromCharCode(evt.which));
+    if (!isSpecialKey && bothSpecialKeysPressed) {
+      keys.push(String.fromCharCode(evt.which));
+    }
 
     clearTimeout(keyTimeout);
 
     keyTimeout = setTimeout(() => {
       keys = [];
-    }, 500);
-  }
+    }, 1000);
+  };
+};
 
-  console.log(keys);
-});
+document.addEventListener('keydown', getKeyDownHandler());
 
 chrome.runtime.onMessage.addListener((message, sender, reply) => {
   switch (message.type) {
@@ -34,20 +37,4 @@ chrome.runtime.onMessage.addListener((message, sender, reply) => {
     default:
       break;
   }
-});
-
-const $links = document.querySelectorAll('a[href*="javascript:"]');
-
-Array.from($links).forEach(($link) => {
-  $link.addEventListener('click', (evt) => {
-    evt.preventDefault();
-
-    chrome.runtime.sendMessage({
-      action: 'ADD_BOOKMARKLET',
-      payload: {
-        title: evt.currentTarget.innerText,
-        url: evt.currentTarget.href
-      }
-    });
-  });
 });

@@ -2,12 +2,15 @@ import React, { forwardRef } from 'react';
 
 import './search_field.css';
 
-function SearchField({
-  onKeyDown = () => {},
-  onChange = () => {},
-  placeholder = '',
-  defaultValue = ''
-}, ref) {
+function SearchField(
+  {
+    onKeyDown = () => {},
+    onChange = () => {},
+    placeholder = '',
+    defaultValue = ''
+  },
+  ref
+) {
   return (
     <div className="search-field">
       <input
@@ -25,6 +28,6 @@ function SearchField({
       />
     </div>
   );
-};
+}
 
 export default forwardRef(SearchField);
