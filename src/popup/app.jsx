@@ -47,6 +47,8 @@ export default function App() {
 
   useEffect(() => {
     const length = searchInputRef.current.value.length;
+
+    setSearchQuery(keysPressed);
     searchInputRef.current.setSelectionRange(length, length);
   }, [keysPressed]);
 

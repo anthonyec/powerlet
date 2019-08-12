@@ -1,30 +1,29 @@
-const getKeyDownHandler = () => {
-  let keys = [];
-  let keyTimeout;
+let keys = [];
+let keyTimeout;
 
-  return function handleKeyDown() {
-    const key = evt.key;
-    const isSpecialKey = evt.key === 'Meta' || evt.key === 'Shift';
-    const bothSpecialKeysPressed =
-      keys.includes('Meta') && keys.includes('Shift');
+const ignoreKeys = [27, 9, 20, 16, 17, 18, 91, 93, 37, 40, 39, 38, 13, 8];
 
-    if (isSpecialKey && !bothSpecialKeysPressed) {
-      keys.push(key);
-    }
+document.addEventListener('keydown', (evt) => {
+  const code = evt.keyCode;
+  const key = evt.key;
+  const isSpecialKey = evt.key === 'Meta' || evt.key === 'Shift';
+  const bothSpecialKeysPressed =
+    keys.includes('Meta') && keys.includes('Shift');
 
-    if (!isSpecialKey && bothSpecialKeysPressed) {
-      keys.push(String.fromCharCode(evt.which));
-    }
+  if (isSpecialKey && !bothSpecialKeysPressed) {
+    keys.push(key);
+  }
 
-    clearTimeout(keyTimeout);
+  if (!isSpecialKey && bothSpecialKeysPressed && !ignoreKeys.includes(code)) {
+    keys.push(key);
+  }
 
-    keyTimeout = setTimeout(() => {
-      keys = [];
-    }, 1000);
-  };
-};
+  clearTimeout(keyTimeout);
 
-document.addEventListener('keydown', getKeyDownHandler());
+  keyTimeout = setTimeout(() => {
+    keys = [];
+  }, 500);
+});
 
 chrome.runtime.onMessage.addListener((message, sender, reply) => {
   switch (message.type) {
