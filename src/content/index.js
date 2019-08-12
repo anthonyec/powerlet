@@ -33,7 +33,61 @@ chrome.runtime.onMessage.addListener((message, sender, reply) => {
         payload: keys
       });
       break;
+    case 'CALLBACK_API_METHOD':
+      const event = new CustomEvent('powerlet_method:' + message.payload.id, {
+        detail: message.payload
+      });
+
+      document.dispatchEvent(event);
+
+      break;
     default:
       break;
   }
 });
+
+const $script = document.createElement('script');
+
+$script.innerHTML = `
+  let calleeId = 0;
+
+  const dispatchPowerleMethod = (namespace, method, ...args) => {
+    calleeId += 1;
+
+    return new Promise((resolve, reject) => {
+      const event = new CustomEvent('powerlet_method', {
+        detail: {
+          id: calleeId,
+          namespace,
+          method,
+          args
+        }
+      });
+
+      document.dispatchEvent(event);
+
+      const resolveCallback = (evt) => {
+        resolve(...evt.detail.args);
+        document.removeEventListener('powerlet_method:' + calleeId, resolveCallback);
+      };
+
+      document.addEventListener('powerlet_method:' + calleeId, resolveCallback);
+    });
+  };
+
+  window.POWERLET_API = {
+    tabs: {
+      getCurrent: dispatchPowerleMethod.bind(null, 'tabs', 'getCurrent'),
+      update: dispatchPowerleMethod.bind(null, 'tabs', 'update')
+    }
+  };
+`;
+
+document.body.appendChild($script);
+
+document.addEventListener('powerlet_method', (evt) => {
+  chrome.runtime.sendMessage({
+    type: 'INVOKE_API_METHOD',
+    payload: evt.detail
+  })
+}, false);

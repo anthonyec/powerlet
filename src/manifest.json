@@ -3,7 +3,7 @@
   "name": "Powerlets",
   "version": "0.0.1",
   "description": "Quick access to your existing bookmarklets",
-  "permissions": ["activeTab", "bookmarks"],
+  "permissions": ["activeTab", "bookmarks", "tabs"],
   "background": {
     "scripts": ["background.bundle.js"],
     "persistent": false
