@@ -2,11 +2,15 @@ import React, { forwardRef } from 'react';
 
 import './search_field.css';
 
-function SearchField({
-  onKeyDown = () => {},
-  onChange = () => {},
-  placeholder = ''
-}, ref) {
+function SearchField(
+  {
+    onKeyDown = () => {},
+    onChange = () => {},
+    placeholder = '',
+    defaultValue = ''
+  },
+  ref
+) {
   return (
     <div className="search-field">
       <input
@@ -16,6 +20,7 @@ function SearchField({
         onKeyDown={onKeyDown}
         onChange={onChange}
         placeholder={placeholder}
+        defaultValue={defaultValue}
         autocomplete="off"
         autocorrect="off"
         autocapitalize="off"
@@ -23,6 +28,6 @@ function SearchField({
       />
     </div>
   );
-};
+}
 
 export default forwardRef(SearchField);

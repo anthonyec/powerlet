@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useCallbackRef } from 'use-callback-ref';
 
@@ -6,6 +6,7 @@ import {
   fetchAllBookmarklets,
   executeBookmarklet
 } from './store/actions/bookmarklets';
+import { fetchPressedKeys } from './store/actions/ui';
 import SearchField from './components/search_field';
 import SearchList from './components/search_list';
 import ScrollView from './components/scroll_view';
@@ -22,6 +23,7 @@ const KEYS = {
 
 export default function App() {
   const bookmarklets = useSelector((state) => state.bookmarklets.all);
+  const keysPressed = useSelector((state) => state.ui.keys);
   const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -35,12 +37,20 @@ export default function App() {
 
   // https://dev.to/thekashey/the-same-useref-but-it-will-callback-8bo
   const searchInputRef = useCallbackRef(null, (ref) => {
-    ref && ref.focus()
+    ref && ref.focus();
   });
 
   useEffect(() => {
+    dispatch(fetchPressedKeys());
     dispatch(fetchAllBookmarklets());
   }, []);
+
+  useEffect(() => {
+    const length = searchInputRef.current.value.length;
+
+    setSearchQuery(keysPressed);
+    searchInputRef.current.setSelectionRange(length, length);
+  }, [keysPressed]);
 
   useEffect(() => {
     if (selectedIndex >= 0 && selectedItemTop < currentScrollViewY) {
@@ -127,6 +137,7 @@ export default function App() {
         onKeyDown={handleInputChange}
         onChange={handleInputChange}
         placeholder="Search scripts…"
+        defaultValue={keysPressed}
       />
 
       {bookmarklets.length !== 0 && (
