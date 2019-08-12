@@ -35,8 +35,8 @@ module.exports = {
   plugins: [
     new CopyPlugin([
       './src/manifest.json',
-      './assets',
-      './src/help/examples.html'
+      './src/pages/examples.html',
+      './assets'
     ]),
     new HtmlWebpackPlugin({
       title: 'Powerlets',
