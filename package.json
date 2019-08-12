@@ -1,7 +1,7 @@
 {
   "name": "powerlets",
   "version": "1.0.0",
-  "description": "",
+  "description": "Quickly access and run your bookmark scripts",
   "main": "src/index.js",
   "scripts": {
     "start": "webpack -w --mode=development",
@@ -11,10 +11,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "deep-filter": "^1.0.2",
     "fuse.js": "^3.4.5",
     "prettier": "^1.18.2",
-    "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-redux": "^7.1.0",
