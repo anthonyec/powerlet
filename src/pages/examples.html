@@ -4,12 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Powerlets - Getting started</title>
+  <title>Getting started - Powerlets</title>
 
   <style>
     body {
-      background: #202124;
-      color: #EEF0F3;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+
+    h1, h2, h3 {
+      font-weight: normal;
+    }
+
+    h1 {
+      font-size: 48px;
+    }
+
+    h2 {
+      font-size: 22px;
+      margin-bottom: 35px;
     }
 
     main {
@@ -18,32 +30,46 @@
     }
 
     .bookmarklet {
-      background: #292A2D;
-      border-radius: 4px;
-      box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 1px 5px rgba(27, 31, 35, .15), 0 0 1px rgba(106, 115, 125, .35);
+      border-radius: 6px;
+      color: #959da5;
       display: inline-block;
-      color: #9EA4AA;
       font-size: 16px;
-      padding: 10px 15px;
+      font-weight: 500;
+      padding: 12px 24px;
       text-decoration: none;
+      margin-bottom: 20px;
+      margin-right: 10px;
     }
 
+    .bookmarklet:hover {
+      color: #2A7CEA;
+    }
 
+    @media(prefers-color-scheme: dark) {
+      body {
+        background: #202124;
+        color: #EEF0F3;
+      }
+
+      .bookmarklet {
+        background: #292A2D;
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+        color: #9EA4AA;
+      }
+    }
   </style>
 </head>
 <body>
   <main>
     <h1>
-      Getting started scripts
+      Getting Started
     </h1>
 
     <h2>
-      Here are some scripts you can add to Powerlets to get you started.
+      To add a script, drag it to your Bookmarks Bar.
     </h2>
 
-    <h3>
-      Navigation
-    </h3>
     <a class="bookmarklet" href="javascript:window.scrollTo(0,0);">
       Scroll to Top
     </a>
@@ -52,15 +78,28 @@
       Scroll to Bottom
     </a>
 
-    <h3>
-      Debugging
-    </h3>
     <a class="bookmarklet" href="javascript:(function(){window.getElementSize=window.getElementSize||{};if(typeof getElementSize.isActive==='undefined'){getElementSize.isActive=!1;getElementSize.style=document.createElement('style');getElementSize.style.innerText=`.get-element-size{z-index:1000000000;position:absolute;top:0;left:0;opacity:0;pointer-events:none;outline:0!important}.get-element-size__overlay{width:1px;height:1px;background-color:rgba(255,0,0,.25);transform-origin:0 0;transition:transform 50ms ease;outline:0!important}.get-element-size__label{padding:.25rem .5rem;border:.125rem solid rgba(255,255,255,1);border-radius:.25rem;background-color:rgba(0,0,0,1);font-family:BlinkMacSystemFont,'Segoe UI',sans-serif;color:rgba(255,255,255,1);font-size:1rem;line-height:1.5rem;transform-origin:0 0;outline:0!important}`;document.head.appendChild(getElementSize.style);getElementSize.container=document.createElement('div');getElementSize.container.classList.add('get-element-size');document.body.appendChild(getElementSize.container);getElementSize.overlay=document.createElement('div');getElementSize.overlay.classList.add('get-element-size__overlay');getElementSize.container.appendChild(getElementSize.overlay);getElementSize.label=document.createElement('div');getElementSize.label.classList.add('get-element-size__label');getElementSize.container.appendChild(getElementSize.label);getElementSize.update=(event)=>{let rect=event.target.getBoundingClientRect();let overlayX=window.pageXOffset+rect.left;let overlayY=window.pageYOffset+rect.top;let overlayWidth=rect.width;let overlayHeight=rect.height;getElementSize.overlay.style.transform=`translate(${overlayX}px, ${overlayY}px) scale(${overlayWidth}, ${overlayHeight})`;let labelX=window.pageXOffset+event.clientX+8;let labelY=window.pageYOffset+event.clientY+16;getElementSize.label.style.transform=`translate(${labelX}px, ${labelY}px)`;let elementWidth=Math.round(rect.width);let elementHeight=Math.round(rect.height);getElementSize.label.innerText=`${elementWidth} × ${elementHeight}`;getElementSize.container.style.opacity='1'}}if(getElementSize.isActive){getElementSize.isActive=!1;document.removeEventListener('mousemove',getElementSize.update);getElementSize.container.style.opacity='0';return}getElementSize.isActive=!0;document.addEventListener('mousemove',getElementSize.update)}())">
       Toggle Element Size
     </a>
 
     <a class="bookmarklet" href="javascript:(function(){window.showElementOutlines=window.showElementOutlines||{};if(typeof showElementOutlines.isActive==='undefined'){showElementOutlines.isActive=!1;showElementOutlines.style=document.createElement('style');showElementOutlines.style.innerHTML='* {outline: 1px solid red !important}'}if(showElementOutlines.isActive){showElementOutlines.isActive=!1;document.head.removeChild(showElementOutlines.style);return}showElementOutlines.isActive=!0;document.head.appendChild(showElementOutlines.style)})()">
       Toggle Outlines
+    </a>
+
+    <a class="bookmarklet" href="javascript:(function(){function getSelectedNode(){if(window.getSelection().focusNode===null)return null;return window.getSelection().focusNode.parentNode}function getNodeFontStack(node){return window.getComputedStyle(node).fontFamily}function getFirstAvailableFont(fonts){for(let font of fonts){let fontName=font.trim().replace(/"/g,'');let isAvailable=document.fonts.check(`16px ${fontName}`);if(!isAvailable)continue;return fontName}}let node=getSelectedNode();if(!node){window.alert('Please select a string of text and try again.');return}let fonts=getNodeFontStack(node).split(',');let firstAvailableFont=getFirstAvailableFont(fonts);window.alert(`Font: ${firstAvailableFont}`)}())">
+      Get Font Name
+    </a>
+
+    <a class="bookmarklet" href="javascript:alert(%27Window inner dimensions:%5Cn%5Cn   %27%2Bdocument.body.clientWidth%2B%27 x %27%2Bdocument.body.clientHeight)">
+      Get Window Size
+    </a>
+
+    <a class="bookmarklet" href="javascript: (function() { const text = prompt('Text to encode:'); if (!text) { return; } alert(btoa(text)); })();">
+      Encode Base64
+    </a>
+
+    <a class="bookmarklet" href="javascript: (function() { const text = prompt('Text to decode:'); if (!text) { return; } alert(decodeURI(text)); })();">
+      Decode Base64
     </a>
   </main>
 

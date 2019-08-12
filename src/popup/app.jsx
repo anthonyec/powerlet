@@ -18,7 +18,9 @@ import './app.css';
 const KEYS = {
   ENTER: 13,
   UP: 38,
-  DOWN: 40
+  DOWN: 40,
+  RIGHT: 39,
+  LEFT: 37
 };
 
 export default function App() {
@@ -103,6 +105,10 @@ export default function App() {
   const handleInputChange = (evt) => {
     if (evt.keyCode) {
       switch (evt.keyCode) {
+        case KEYS.LEFT:
+        case KEYS.RIGHT:
+          return;
+
         case KEYS.ENTER:
         case KEYS.UP:
         case KEYS.DOWN:
