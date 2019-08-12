@@ -22,7 +22,7 @@ document.addEventListener('keydown', (evt) => {
 
   keyTimeout = setTimeout(() => {
     keys = [];
-  }, 500);
+  }, 300);
 });
 
 chrome.runtime.onMessage.addListener((message, sender, reply) => {
