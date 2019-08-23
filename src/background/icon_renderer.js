@@ -33,7 +33,7 @@ function createIconRenderer() {
     const isDarkMode = matchMedia('(prefers-color-scheme: dark)').matches;
 
     // Don't bother drawing and setting the icon if the color scheme has not
-    // changed from las time.
+    // changed from last time.
     if (isDarkMode === wasDarkMode) {
       return;
     }
