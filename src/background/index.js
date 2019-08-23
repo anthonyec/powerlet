@@ -1,38 +1,68 @@
-const $canvas = document.createElement('canvas');
-const ctx = $canvas.getContext('2d');
+function createCanvasContext(scale = 1, baseSize = 19) {
+  const $canvas = document.createElement('canvas');
+  const ctx = $canvas.getContext('2d');
 
-const WIDTH = 19 * window.devicePixelRatio;
-const HEIGHT = 19 * window.devicePixelRatio;
+  ctx.canvas.width = baseSize * scale;
+  ctx.canvas.height = baseSize * scale;
 
-ctx.canvas.width = WIDTH;
-ctx.canvas.height = HEIGHT;
+  return ctx;
+}
 
-function iconRenderer() {
-  let lastMatch;
-
-  return () => {
+function drawImageOnContext(src, context) {
+  return new Promise((resolve, reject) => {
+    const width = context.canvas.width;
+    const height = context.canvas.height;
     const img = new Image();
-    const match = matchMedia('(prefers-color-scheme: dark)').matches;
 
-    if (match === lastMatch) {
+    img.src = src;
+
+    img.onload = () => {
+      context.drawImage(img, 0, 0, width, height);
+
+      const imageData = context.getImageData(0, 0, width, height);
+
+      resolve(imageData);
+    };
+  });
+}
+
+function createIconRenderer() {
+  let wasDarkMode = null;
+
+  return async () => {
+    const isDarkMode = matchMedia('(prefers-color-scheme: dark)').matches;
+
+    // Don't bother drawing and setting the icon if the color scheme has not
+    // changed from las time.
+    if (isDarkMode === wasDarkMode) {
       return;
     }
 
-    img.src = match ? 'default_icon_dark@2x.png' : 'default_icon@2x.png';
+    const iconSrc = isDarkMode
+      ? 'default_icon_dark@2x.png'
+      : 'default_icon@2x.png';
 
-    img.onload = () => {
-      ctx.drawImage(img, 0, 0);
+    const ctx19 = createCanvasContext(1);
+    const ctx38 = createCanvasContext(2);
 
-      chrome.browserAction.setIcon({
-        imageData: ctx.getImageData(0, 0, WIDTH, HEIGHT)
-      });
-    };
+    // Use the same retina size icon for both 19x19 and 38x38 icons. It looks
+    // fine to me scaled down.
+    const imageData19 = await drawImageOnContext(iconSrc, ctx19);
+    const imageData38 = await drawImageOnContext(iconSrc, ctx38);
 
-    lastMatch = match;
+    chrome.browserAction.setIcon({
+      imageData: {
+        '19': imageData19,
+        '38': imageData38
+      }
+    });
+
+    // Remeber if this time was dark mode.
+    wasDarkMode = isDarkMode;
   };
 }
 
-const renderIcon = iconRenderer();
+const renderIcon = createIconRenderer();
 
 setInterval(renderIcon, 1000);
 renderIcon();
