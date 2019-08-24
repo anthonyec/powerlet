@@ -38,17 +38,19 @@ function createIconRenderer() {
       return;
     }
 
-    const iconSrc = isDarkMode
+    const iconSrc19 = isDarkMode
+      ? 'default_icon_dark.png'
+      : 'default_icon.png';
+
+    const iconSrc38 = isDarkMode
       ? 'default_icon_dark@2x.png'
       : 'default_icon@2x.png';
 
     const ctx19 = createCanvasContext(1);
     const ctx38 = createCanvasContext(2);
 
-    // Use the same retina size icon for both 19x19 and 38x38 icons. It looks
-    // fine to me scaled down.
-    const imageData19 = await drawImageOnContext(iconSrc, ctx19);
-    const imageData38 = await drawImageOnContext(iconSrc, ctx38);
+    const imageData19 = await drawImageOnContext(iconSrc19, ctx19);
+    const imageData38 = await drawImageOnContext(iconSrc38, ctx38);
 
     chrome.browserAction.setIcon({
       imageData: {
