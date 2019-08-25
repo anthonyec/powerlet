@@ -1,5 +1,5 @@
 # Powerlets
-⚡️ Chrome Extension to quickly find and run bookmarklets
+⚡️ Chrome Extension to quickly find and run bookmarklets.
 
 ## Requirments
 - NodeJS >=10.16
@@ -27,4 +27,4 @@ npm run build
 - Select the `/dist` folder after running the build script
 
 ## Testing
-Sorry, there arn't any. I wrote this in a couple of nights and during one long haul flight.
+Sorry, there aren't any. I wrote this in a couple of nights and during one long haul flight.
