@@ -59,7 +59,7 @@ function createIconRenderer() {
       }
     });
 
-    // Remeber if this time was dark mode.
+    // Remember if this time was dark mode.
     wasDarkMode = isDarkMode;
   };
 }
