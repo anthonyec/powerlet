@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
   "name": "Powerlets",
-  "version": "1.0.0",
-  "description": "Quickly access and run your bookmark scripts",
+  "version": "1.0.1",
+  "description": "Quickly find and run your bookmarklets.",
   "permissions": ["activeTab", "bookmarks"],
   "background": {
     "scripts": ["background.bundle.js"],

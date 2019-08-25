@@ -1,6 +1,6 @@
 {
   "name": "powerlets",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Quickly access and run your bookmark scripts",
   "main": "src/index.js",
   "scripts": {
