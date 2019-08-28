@@ -6,6 +6,8 @@ import {
   fetchAllBookmarklets,
   executeBookmarklet
 } from './store/actions/bookmarklets';
+import { fetchShortcuts } from './store/actions/ui';
+
 import SearchField from './components/search_field';
 import SearchList from './components/search_list';
 import ScrollView from './components/scroll_view';
@@ -24,6 +26,17 @@ const KEYS = {
 
 export default function App() {
   const bookmarklets = useSelector((state) => state.bookmarklets.all);
+  const browserActionShortcut = useSelector((state) => {
+    const browserAction = state.ui.shortcuts.find((shortcut) => {
+      return shortcut.name === '_execute_browser_action';
+    });
+
+    if (browserAction) {
+      return browserAction.shortcut;
+    }
+  });
+
+  console.log(browserActionShortcut);
   const keysPressed = useSelector((state) => state.ui.keys);
   const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState('');
@@ -43,6 +56,7 @@ export default function App() {
 
   useEffect(() => {
     dispatch(fetchAllBookmarklets());
+    dispatch(fetchShortcuts());
   }, []);
 
   useEffect(() => {
@@ -157,6 +171,22 @@ export default function App() {
       )}
 
       {bookmarklets.length === 0 && <OnboardScreen />}
+
+      {browserActionShortcut &&
+        <div className="message">
+          {browserActionShortcut} to open, ↑↓ to navigate, ⮐ to run, ESC to dismiss
+        </div>
+      }
+
+      {!browserActionShortcut &&
+        <div className="message">
+          Add a shortcut to show Powerlets with the keyboard!
+
+          <button>
+            Add shortcut
+          </button>
+        </div>
+      }
     </div>
   );
 }

@@ -5,8 +5,7 @@
   "description": "Quickly find and run your bookmarklets.",
   "permissions": ["activeTab", "bookmarks"],
   "background": {
-    "scripts": ["background.bundle.js"],
-    "persistent": false
+    "scripts": ["background.bundle.js"]
   },
   "browser_action": {
     "default_popup": "popup.html",
