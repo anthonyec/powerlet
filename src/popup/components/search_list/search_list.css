@@ -1,7 +1,7 @@
 .search-list {}
 
 .search-list__item {
-  padding: 10px 18px;
+  padding: var(--item-padding);
   line-height: 20px;
   user-select: none;
 }

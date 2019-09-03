@@ -26,5 +26,7 @@
 }
 
 .button:focus {
+  border-color: var(--global-focus-border-color);
+  box-shadow: var(--global-focus-box-shadow);
   outline: 0;
 }

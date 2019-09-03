@@ -1,9 +1,13 @@
 :root {
   --global-background: #FFFFFF;
   --global-color: #2A2B2E;
+  --global-focus-border-color: #2088FF;
+  --global-focus-box-shadow: 0 0 0 2px rgba(32, 136, 255, 0.3);
 
   --item-hover-background: #EAEBEB;
   --item-selected-background: #EAEBEB;
+
+  --item-padding: 10px 15px;
 
   --button-normal-background: #FFFFFF;
   --button-hover-background: #FAFAFA;
@@ -16,6 +20,12 @@
   --button-normal-color: #2C7CEA;
   --button-hover-color: #1D74E9;
   --button-active-color: #1D74E9;
+
+  --input-normal-background: #FFFFFF;
+
+  --input-normal-color: #2A2B2E;
+
+  --input-normal-border-color: #DFDFDF;
 
    /* Less padding on top to optically align in the center. */
   --button-padding: 7px 15px 8px;
@@ -41,6 +51,12 @@
     --button-normal-color: #8DB8FE;
     --button-hover-color: #8DB8FE;
     --button-active-color: #85AAE9;
+
+    --input-normal-background: #1D1D1F;
+
+    --input-normal-color: #E1E1E1;
+
+    --input-normal-border-color: #1D1D1F;
   }
 }
 
