@@ -2,6 +2,7 @@
 
 .search-list__item {
   padding: var(--item-padding);
+  font-size: 12px;
   line-height: 20px;
   user-select: none;
 }
