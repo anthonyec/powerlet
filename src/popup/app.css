@@ -4,7 +4,7 @@
   --global-focus-border-color: #2088FF;
   --global-focus-box-shadow: 0 0 0 2px rgba(32, 136, 255, 0.3);
 
-  --item-hover-background: #EAEBEB;
+  --item-hover-background: #F6F7F7;
   --item-selected-background: #EAEBEB;
 
   --item-padding: 10px 15px;
@@ -62,8 +62,6 @@
 }
 
 .app {
-  background: white;
-
   background-color: var(--global-background);
   color: var(--global-color);
   min-width: 250px;

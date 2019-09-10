@@ -6,18 +6,13 @@
   background-color: var(--input-normal-background);
   color: var(--input-normal-color);
   border-color: var(--input-normal-border-color);
-
+  font-size: var(--button-font-size);
   border-width: 1px;
   border-style: solid;
   border-radius: 0px;
-
-  font-size: var(--button-font-size);
   font-family: inherit;
-
-  /* box-shadow: 0px 0px 0px 1px #D8E7FC inset; */
   width: 100%;
   padding: 10px 8px;
-  /* line-height: 20px; */
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   outline: none;
 }
@@ -26,15 +21,3 @@
   border-color: var(--global-focus-border-color);
   box-shadow: var(--global-focus-box-shadow);
 }
-
-
-/* @media (prefers-color-scheme: dark) {
-  .search-field__input {
-    box-shadow: 0px 0px 0px 1px #575A5F inset;
-    color: white;
-  }
-
-  .search-field__input:focus {
-    box-shadow: 0px 0px 0px 2px rgba(0, 120, 255, 0.8) inset;
-  }
-} */
