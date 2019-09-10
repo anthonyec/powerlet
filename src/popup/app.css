@@ -36,6 +36,7 @@
   :root {
     --global-background: #292A2D;
     --global-color: #E1E1E1;
+    --global-focus-box-shadow: 0 0 0 1px rgba(32, 136, 255, 1);
 
     --item-hover-background: #313233;
     --item-selected-background: #38393C;
