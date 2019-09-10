@@ -61,8 +61,6 @@
 }
 
 .app {
-  background: white;
-
   background-color: var(--global-background);
   color: var(--global-color);
   min-width: 250px;

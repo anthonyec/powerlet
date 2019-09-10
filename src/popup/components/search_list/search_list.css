@@ -8,17 +8,11 @@
 }
 
 .search-list__item:hover:not(.search-list__item--selected) {
-  background: #f9fafb;
-  border-color: #f9fafb;
-
   background: var(--item-hover-background);
   border-color: var(--item-hover-background);
 }
 
 .search-list__item--selected {
-  background: #E8EAED;
-  border-color: #E8EAED;
-
   background: var(--item-selected-background);
   border-color: var(--item-selected-background);
 }
