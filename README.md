@@ -1,30 +1,43 @@
 # Powerlets
+
 ⚡️ Chrome Extension to quickly find and run bookmarklets.
 
 ## Requirments
+
 - NodeJS >=10.16
-- Google Chrome
+- Google Chrome or Firefox
 
 ## Setup
-```js
-npm i
+
+Install the dependencies.
+
+```bash
+$ npm i
 ```
 
-```js
-npm run start
+```bash
+$ npm run build
 ```
 
+After every change, run build.
 
-## Building
-```js
-npm run build
-```
+## Loading extension in web browser locally
 
-## Load extension in Google Chrome
-- Go to `chrome://extensions/`
+❗️Run the build script at least once before loading extensions into the browser.
+
+### Google Chrome
+
+- Navigate to `chrome://extensions/`
 - Toggle on "Developer mode"
 - Click "Load unpacked"
-- Select the `/dist` folder after running the build script
+- Select the `/dist` folder
+
+### Firefox
+
+- Navigate to `about:debugging#/runtime/this-firefox`
+- Click "Load Temporary Add-on..."
+- Select any file in the `/dist` folder
 
 ## Testing
-Sorry, there aren't any. I wrote this in a couple of nights and during one long haul flight.
+
+Sorry, there aren't any. I wrote this in a couple of nights and during a long haul flight.
