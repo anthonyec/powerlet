@@ -1,11 +1,20 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Fuse from 'fuse.js';
 
 import './search_list.css';
 
+// Return an array of concatenated ids. This is used for useEffect which only
+// shallow compares. Thus would always render when an array is used instead
+// of a string or number.
+// E.g [{ id: 3 }, { id: 2 }] becomes '32'.
+function getArrayAsStringOfIds(array) {
+  return array.map((item) => item.id).join('');
+}
+
 export default function SearchList({
   items = [],
   query = '',
+  onChange = () => {},
   onItemClick = () => {},
   onItemSelect = () => {},
   onItemMouseOver = () => {},
@@ -32,7 +41,11 @@ export default function SearchList({
 
   useEffect(() => {
     onItemSelect(filteredItems[selected], filteredItems.length);
-  }, [selected, filteredItems.length]);
+  }, [selected]);
+
+  useEffect(() => {
+    onChange(filteredItems[selected], filteredItems.length);
+  }, [getArrayAsStringOfIds(filteredItems)]);
 
   const renderedItems = filteredItems.map((item, index) => {
     const isSelected = index === selected;
