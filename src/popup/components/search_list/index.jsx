@@ -3,6 +3,10 @@ import Fuse from 'fuse.js';
 
 import './search_list.css';
 
+// Return an array of concatenated ids. This is used for useEffect which only
+// shallow compares. Thus would always render when an array is used instead
+// of a string or number.
+// E.g [{ id: 3 }, { id: 2 }] becomes '32'.
 function getArrayAsStringOfIds(array) {
   return array.map((item) => item.id).join('');
 }
