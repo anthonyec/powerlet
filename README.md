@@ -41,3 +41,15 @@ $ npm run build
 ## Testing
 
 Sorry, there aren't any. I wrote this in a couple of nights and during a long haul flight.
+
+## Releasing
+
+This is more notes for myself so I don't forget this manual process.
+
+- Squash and merge PR branch
+- Pull master locally
+- Run NPM version major/minor/patch
+- Update version in manifest to the same one from package.json
+- Commit ammend
+- Push!
+- Draft release with new tag
