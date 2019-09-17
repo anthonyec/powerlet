@@ -32,7 +32,7 @@ export default function SearchList({
 
   useEffect(() => {
     onItemSelect(filteredItems[selected], filteredItems.length);
-  }, [selected, filteredItems.length]);
+  }, [selected, filteredItems]);
 
   const renderedItems = filteredItems.map((item, index) => {
     const isSelected = index === selected;
