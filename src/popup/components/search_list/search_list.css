@@ -1,35 +1,22 @@
 .search-list {}
 
 .search-list__item {
-  color: #202124;
-  padding: 10px 18px;
+  padding: var(--item-padding);
+  min-height: 40px;
+  font-size: 12px;
   line-height: 20px;
   user-select: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .search-list__item:hover:not(.search-list__item--selected) {
-  background: #f9fafb;
-  border-color: #f9fafb;
+  background: var(--item-hover-background);
+  border-color: var(--item-hover-background);
 }
 
 .search-list__item--selected {
-  background: #E8EAED;
-  border-color: #E8EAED;
-}
-
-@media (prefers-color-scheme: dark) {
- .search-list__item {
-   color: #E8EAED;
-   border-color: #3F4042;
- }
-
- .search-list__item:hover:not(.search-list__item--selected) {
-    background: #313233;
-    border-color: #313233;
-  }
-
- .search-list__item--selected {
-    background: #444547;
-    border-color: #444547;
-  }
+  background: var(--item-selected-background);
+  border-color: var(--item-selected-background);
 }

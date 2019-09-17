@@ -140,7 +140,7 @@ export default function App() {
         ref={searchInputRef}
         onKeyDown={handleInputChange}
         onChange={handleInputChange}
-        placeholder="Search scripts…"
+        placeholder="Search scripts"
         defaultValue={keysPressed}
       />
 

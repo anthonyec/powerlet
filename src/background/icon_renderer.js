@@ -38,9 +38,7 @@ function createIconRenderer() {
       return;
     }
 
-    const iconSrc19 = isDarkMode
-      ? 'default_icon_dark.png'
-      : 'default_icon.png';
+    const iconSrc19 = isDarkMode ? 'default_icon_dark.png' : 'default_icon.png';
 
     const iconSrc38 = isDarkMode
       ? 'default_icon_dark@2x.png'

@@ -1,4 +1,5 @@
 .scroll-view {
+  padding: 0 0 8px;
   max-height: 400px;
   overflow-y: scroll;
 }

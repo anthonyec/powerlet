@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 
 import { navigateTo } from '../../store/actions/ui';
+import Button from '../button';
 
 import './onboard_screen.css';
 
@@ -15,12 +16,12 @@ export default function OnboardScreen() {
   return (
     <div className="onboard-screen">
       <div className="onboard-screen__message">
-        You don't have any bookmark&nbsp;scripts.
+        You don't have any
+        <br />
+        bookmark&nbsp;scripts.
       </div>
 
-      <button onClick={handleExampleOnClick} className="onboard-screen__button">
-        Get started
-      </button>
+      <Button onClick={handleExampleOnClick}>Add scripts</Button>
     </div>
   );
 }

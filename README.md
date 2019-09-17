@@ -15,11 +15,11 @@ Install the dependencies.
 $ npm i
 ```
 
+After every change, run build.
+
 ```bash
 $ npm run build
 ```
-
-After every change, run build.
 
 ## Loading extension in web browser locally
 

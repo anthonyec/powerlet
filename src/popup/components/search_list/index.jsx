@@ -62,7 +62,7 @@ export default function SearchList({
         onMouseOver={onItemMouseOver.bind(null, index)}
         onMouseMove={onItemMouseMove.bind(null, index)}
       >
-        {item.title}
+        {item.title || 'Untitled script'}
       </li>
     );
   });
