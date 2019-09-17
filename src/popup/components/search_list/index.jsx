@@ -3,9 +3,14 @@ import Fuse from 'fuse.js';
 
 import './search_list.css';
 
+function getArrayAsStringOfIds(array) {
+  return array.map((item) => item.id).join('');
+}
+
 export default function SearchList({
   items = [],
   query = '',
+  onChange = () => {},
   onItemClick = () => {},
   onItemSelect = () => {},
   onItemMouseOver = () => {},
@@ -32,7 +37,11 @@ export default function SearchList({
 
   useEffect(() => {
     onItemSelect(filteredItems[selected], filteredItems.length);
-  }, [selected, filteredItems]);
+  }, [selected]);
+
+  useEffect(() => {
+    onChange(filteredItems[selected], filteredItems.length);
+  }, [getArrayAsStringOfIds(filteredItems)]);
 
   const renderedItems = filteredItems.map((item, index) => {
     const isSelected = index === selected;
