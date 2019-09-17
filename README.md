@@ -1,8 +1,14 @@
+<div align="center">
+
 # Powerlets
 
 ⚡️ Chrome Extension to quickly find and run bookmarklets.
 
-![Screenshot of Powerlets](screenshot.png)
+  <img src="screenshot.png" width="640">
+
+  Available on [Chrome Web Store](https://chrome.google.com/webstore/detail/powerlets/ofecodkcadbenmiknnidnfepbblapgkn)
+
+</div>
 
 ## Requirments
 
