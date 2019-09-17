@@ -150,6 +150,7 @@ export default function App() {
             query={searchQuery}
             items={bookmarklets}
             selected={selectedIndex}
+            onChange={handleItemSelect}
             onItemClick={handleBookmarkletClick}
             onItemSelect={handleItemSelect}
           />
