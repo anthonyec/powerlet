@@ -16,12 +16,12 @@ export default function OnboardScreen() {
   return (
     <div className="onboard-screen">
       <div className="onboard-screen__message">
-        You don't have any<br />bookmark&nbsp;scripts.
+        You don't have any
+        <br />
+        bookmark&nbsp;scripts.
       </div>
 
-      <Button onClick={handleExampleOnClick}>
-        Add scripts
-      </Button>
+      <Button onClick={handleExampleOnClick}>Add scripts</Button>
     </div>
   );
 }
