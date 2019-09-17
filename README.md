@@ -2,6 +2,8 @@
 
 ⚡️ Chrome Extension to quickly find and run bookmarklets.
 
+![Screenshot of Powerlets](screenshot.png)
+
 ## Requirments
 
 - NodeJS >=10.16
@@ -50,6 +52,6 @@ This is more notes for myself so I don't forget this manual process.
 - Pull master locally
 - Run NPM version major/minor/patch
 - Update version in manifest to the same one from package.json
-- Commit ammend
+- Commit amend
 - Push!
 - Draft release with new tag
