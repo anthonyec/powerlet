@@ -1,9 +1,10 @@
 .onboard-screen {
   text-align: center;
-  padding: 25px 14px;
+  padding: 24px 16px 24px;
 }
 
 .onboard-screen__message {
-  margin-bottom: 20px;
-  line-height: 18px;
+  margin-top: -10px;
+  margin-bottom: 18px; /* 24px */
+  line-height: 20px;
 }
