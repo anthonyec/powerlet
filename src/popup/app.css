@@ -30,6 +30,9 @@
    /* Less padding on top to optically align in the center. */
   --button-padding: 7px 15px 8px;
   --button-font-size: 13px;
+
+  --dialog-border-color: #E8EAED;
+  --dialog-background: #F8F9FA;
 }
 
 @media(prefers-color-scheme: dark) {
@@ -58,6 +61,9 @@
     --input-normal-color: #E1E1E1;
 
     --input-normal-border-color: #1D1D1F;
+
+    --dialog-border-color: #202124;
+    --dialog-background: #323639;
   }
 }
 

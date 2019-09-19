@@ -1,6 +1,6 @@
 .dialog {
-  background: #F8F9FA;
-  border-top: 1px solid #E8EAED;
+  background: var(--dialog-background);
+  border-top: 1px solid var(--dialog-border-color);
   text-align: center;
   padding: 24px 16px 24px;
 }
