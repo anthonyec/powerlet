@@ -32,6 +32,8 @@
    /* Less padding on top to optically align in the center. */
   --button-padding: 7px 15px 8px;
   --button-font-size: 13px;
+
+  --input-placeholder-color: #757575;
 }
 
 @media(prefers-color-scheme: dark) {
