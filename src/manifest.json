@@ -10,6 +10,7 @@
   },
   "browser_action": {
     "default_popup": "popup.html",
+    "default_title": "Powerlets (⌘K)",
     "default_icon": {
       "19": "default_icon.png",
       "38": "default_icon@2x.png"
