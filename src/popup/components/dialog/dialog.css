@@ -1,0 +1,22 @@
+.dialog {
+  background: #F8F9FA;
+  border-top: 1px solid #E8EAED;
+  text-align: center;
+  padding: 24px 16px 24px;
+}
+
+.dialog__message {
+  margin-bottom: 18px; /* Looks like 24px */
+  line-height: 20px;
+  border-radius: 6px;
+}
+
+.dialog__message h2 {
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.dialog__message p {
+  opacity: 0.8;
+}
