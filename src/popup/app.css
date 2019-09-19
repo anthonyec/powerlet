@@ -27,6 +27,8 @@
 
   --input-normal-border-color: #B1B1B1;
 
+  /* --input-placeholder-color: #919191; */
+
    /* Less padding on top to optically align in the center. */
   --button-padding: 7px 15px 8px;
   --button-font-size: 13px;
@@ -38,8 +40,8 @@
     --global-color: #E1E1E1;
     --global-focus-box-shadow: 0 0 0 1px rgba(32, 136, 255, 1);
 
-    --item-hover-background: #313233;
-    --item-selected-background: #38393C;
+    --item-hover-background: #38393C;
+    --item-selected-background: #59595F;
 
     --button-normal-background: #292A2D;
     --button-hover-background: #303339;
@@ -57,7 +59,9 @@
 
     --input-normal-color: #E1E1E1;
 
-    --input-normal-border-color: #1D1D1F;
+    --input-normal-border-color: #757575;
+
+    --input-placeholder-color: #919191;
   }
 }
 
