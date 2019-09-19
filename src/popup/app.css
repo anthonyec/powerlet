@@ -17,19 +17,17 @@
   --button-hover-border-color: #D7D9DD;
   --button-active-border-color: #C5D2E3;
 
+  /* Less padding on top to optically align in the center. */
+  --button-padding: 7px 15px 8px;
+  --button-font-size: 13px;
   --button-normal-color: #2C7CEA;
   --button-hover-color: #1D74E9;
   --button-active-color: #1D74E9;
 
   --input-normal-background: #FFFFFF;
-
   --input-normal-color: #2A2B2E;
-
   --input-normal-border-color: #B1B1B1;
-
-   /* Less padding on top to optically align in the center. */
-  --button-padding: 7px 15px 8px;
-  --button-font-size: 13px;
+  --input-placeholder-color: #757575;
 
   --dialog-border-color: #E8EAED;
   --dialog-background: #F8F9FA;
@@ -41,8 +39,8 @@
     --global-color: #E1E1E1;
     --global-focus-box-shadow: 0 0 0 1px rgba(32, 136, 255, 1);
 
-    --item-hover-background: #313233;
-    --item-selected-background: #38393C;
+    --item-hover-background: #38393C;
+    --item-selected-background: #4C4E52;
 
     --button-normal-background: #292A2D;
     --button-hover-background: #303339;
@@ -57,10 +55,9 @@
     --button-active-color: #85AAE9;
 
     --input-normal-background: #1D1D1F;
-
     --input-normal-color: #E1E1E1;
-
-    --input-normal-border-color: #1D1D1F;
+    --input-normal-border-color: #757575;
+    --input-placeholder-color: #919191;
 
     --dialog-border-color: #202124;
     --dialog-background: #323639;
