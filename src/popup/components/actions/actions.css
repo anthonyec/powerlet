@@ -1,0 +1,9 @@
+.actions {}
+
+.actions__item {
+  margin-bottom: 8px;
+}
+
+.actions__item:last-child {
+  margin-bottom: -5px;
+}
