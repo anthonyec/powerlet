@@ -1,8 +1,8 @@
-export const SET_NEW_STARTER = 'SET_NEW_STARTER';
+export const SET_MESSAGE_AS_SEEN = 'SET_MESSAGE_AS_SEEN';
 
-export function setNewStarter(isNewStarter) {
+export function setMessageAsSeen(messageName) {
   return {
-    type: SET_NEW_STARTER,
-    payload: isNewStarter
+    type: SET_MESSAGE_AS_SEEN,
+    payload: messageName
   };
 }

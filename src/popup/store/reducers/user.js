@@ -1,16 +1,20 @@
-import { SET_NEW_STARTER } from '../actions/user';
+import { SET_MESSAGE_AS_SEEN } from '../actions/user';
 
 const defaultState = {
-  isNewStarter: true
+  seenMessages: []
 };
 
 export default function userReducer(state = defaultState, action) {
-  switch (action.type) {
-    case SET_NEW_STARTER:
-      return Object.assign({}, state, {
-        isNewStarter: action.payload
-      });
-    default:
-      return state;
+  if (action.type === SET_MESSAGE_AS_SEEN) {
+    if (!state.seenMessages.includes(action.payload)) {
+      return {
+        ...state,
+        seenMessages: [...state.seenMessages, action.payload]
+      };
+    }
+
+    return state;
   }
+
+  return state;
 }

@@ -15,7 +15,7 @@ const bookmarkletsPersistConfig = {
 const userPersistConfig = {
   key: 'user',
   storage,
-  whitelist: ['isNewStarter']
+  whitelist: ['seenMessages']
 };
 
 export default combineReducers({
