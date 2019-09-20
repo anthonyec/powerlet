@@ -4,6 +4,7 @@ import storage from 'redux-persist/lib/storage';
 
 import bookmarklets from './bookmarklets';
 import ui from './ui';
+import user from './user';
 
 const bookmarkletsPersistConfig = {
   key: 'bookmarklets',
@@ -11,7 +12,14 @@ const bookmarkletsPersistConfig = {
   whitelist: ['all']
 };
 
+const userPersistConfig = {
+  key: 'user',
+  storage,
+  whitelist: ['isNewStarter']
+};
+
 export default combineReducers({
   bookmarklets: persistReducer(bookmarkletsPersistConfig, bookmarklets),
+  user: persistReducer(userPersistConfig, user),
   ui
 });
