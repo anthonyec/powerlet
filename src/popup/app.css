@@ -28,6 +28,9 @@
   --input-normal-color: #2A2B2E;
   --input-normal-border-color: #B1B1B1;
   --input-placeholder-color: #757575;
+
+  --dialog-border-color: #E8EAED;
+  --dialog-background: #F8F9FA;
 }
 
 @media(prefers-color-scheme: dark) {
@@ -55,6 +58,9 @@
     --input-normal-color: #E1E1E1;
     --input-normal-border-color: #757575;
     --input-placeholder-color: #919191;
+
+    --dialog-border-color: #202124;
+    --dialog-background: #323639;
   }
 }
 

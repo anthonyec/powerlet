@@ -6,10 +6,11 @@ import {
   fetchAllBookmarklets,
   executeBookmarklet
 } from './store/actions/bookmarklets';
+
 import SearchField from './components/search_field';
 import SearchList from './components/search_list';
 import ScrollView from './components/scroll_view';
-import OnboardScreen from './components/onboard_screen';
+import OnboardingMessages from './components/onboarding_messages';
 
 import './reset.css';
 import './app.css';
@@ -157,7 +158,7 @@ export default function App() {
         </ScrollView>
       )}
 
-      {bookmarklets.length === 0 && <OnboardScreen />}
+      <OnboardingMessages />
     </div>
   );
 }
