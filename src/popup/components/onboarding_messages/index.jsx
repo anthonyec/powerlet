@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { navigateTo } from '../../store/actions/ui';
+import { setNewStarter, setMessageAsSeen } from '../../store/actions/user';
 
 import Button from '../button';
 import Dialog from '../dialog';
@@ -11,15 +12,29 @@ export default function OnboardingMessages() {
   const bookmarkletsCount = useSelector(
     (state) => state.bookmarklets.all.length
   );
+  const isNewStarter = useSelector(
+    (state) => !state.user.seenMessages.includes('new_starter')
+  );
+
+  const seenEmptyState = useSelector((state) =>
+    state.user.seenMessages.includes('empty_state')
+  );
 
   const showEmptyMessage = bookmarkletsCount === 0;
-  const showNewStarterMessage = bookmarkletsCount > 0 && bookmarkletsCount <= 8;
+  const showNewStarterMessage =
+    isNewStarter &&
+    !seenEmptyState &&
+    bookmarkletsCount > 0 &&
+    bookmarkletsCount <= 8;
 
   const handleExampleOnClick = () => {
     dispatch(navigateTo('examples.html'));
+    dispatch(setMessageAsSeen('empty_state'));
   };
 
-  const handleGotItOnClick = () => {};
+  const handleGotItOnClick = () => {
+    dispatch(setMessageAsSeen('new_starter'));
+  };
 
   return (
     <React.Fragment>

@@ -7,13 +7,6 @@ export function navigateTo(url) {
   };
 }
 
-export function setNewStarter(isNewStarter) {
-  return {
-    type: SET_NEW_STARTER,
-    payload: isNewStarter
-  };
-}
-
 export function setPressedKeys(keys) {
   return {
     type: SET_PRESSED_KEYS,
