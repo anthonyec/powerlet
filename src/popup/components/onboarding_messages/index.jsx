@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { navigateTo } from '../../store/actions/ui';
-import { setNewStarter, setMessageAsSeen } from '../../store/actions/user';
+import { setMessageAsSeen } from '../../store/actions/user';
 
 import Button from '../button';
 import Dialog from '../dialog';
