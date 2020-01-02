@@ -7,10 +7,15 @@ function SearchField(
     onKeyDown = () => {},
     onChange = () => {},
     placeholder = '',
-    defaultValue = ''
+    defaultValue = '',
+    shortcut = ''
   },
   ref
 ) {
+  const shortcutClassName = shortcut
+    ? 'search-field__shortcut'
+    : 'search-field__shortcut search-field__shortcut--hidden';
+
   return (
     <div className="search-field">
       <input
@@ -26,6 +31,7 @@ function SearchField(
         autocapitalize="off"
         spellcheck="false"
       />
+      <div className={shortcutClassName}>⌥⌘K</div>
     </div>
   );
 }

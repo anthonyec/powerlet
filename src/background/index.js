@@ -13,7 +13,7 @@ function updateTitleWithShortcut() {
       Command: '⌘',
       Period: '.',
       Comma: ','
-    }
+    };
 
     chrome.commands.getAll(function(commands) {
       const normalizedCommands = commands.map((command) => {

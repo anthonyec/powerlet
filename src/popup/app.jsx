@@ -143,7 +143,8 @@ export default function App() {
         onChange={handleInputChange}
         placeholder="Search scripts"
         defaultValue={keysPressed}
-      />
+        shortcut={!searchQuery ? '⌥⌘K' : ''}
+      ></SearchField>
 
       {bookmarklets.length !== 0 && (
         <ScrollView y={scrollViewY} onScroll={handleOnScroll}>

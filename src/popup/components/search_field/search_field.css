@@ -1,5 +1,6 @@
 .search-field {
   padding: 8px;
+  position: relative;
 }
 
 .search-field__input {
@@ -20,4 +21,27 @@
 .search-field__input:focus {
   border-color: var(--global-focus-border-color);
   box-shadow: var(--global-focus-box-shadow);
+}
+
+.search-field__shortcut {
+  color: var(--global-focus-border-color);
+  display: flex;
+  align-items: center;
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  bottom: 8px;
+  padding: 10px 8px;
+  pointer-events: none;
+  visibility: visible;
+  opacity: 1;
+  user-select: none;
+  transform: translateX(0);
+  transition: all 150ms ease-in-out;
+}
+
+.search-field__shortcut--hidden, .search-field__input:not(:focus) + .search-field__shortcut {
+  visibility: hidden;
+  opacity: 0;
+  transform: translateX(5px);
 }
