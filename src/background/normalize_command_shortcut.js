@@ -1,18 +1,16 @@
-export default function normalizeCommandShortcut(command = '') {
-  const macMapping = {
-    MacCtrl: '^',
-    Command: '⌘',
-    Alt: '⌥',
-    Shift: '⇧'
-  };
+// Note, this does not ordered keys correctly according to OS conventions.
+// Firefox provides wrong order even though in preferences it shows
+// correct order.
+export default function normalizeCommandShortcut(
+  command = '',
+  replacements = {}
+) {
+  let normalized = command;
 
-  const normalized = command.split('+').map((key) => {
-    if (macMapping[key]) {
-      return macMapping[key];
-    }
+  Object.keys(replacements).forEach((replacement) => {
+    const regex = new RegExp(`\\${replacement}`, 'g');
+    normalized = normalized.replace(regex, replacements[replacement]);
+  }, '');
 
-    return key;
-  });
-
-  return normalized.join('');
+  return normalized;
 }
