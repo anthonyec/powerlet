@@ -10,7 +10,7 @@
   },
   "browser_action": {
     "default_popup": "popup.html",
-    "default_title": "Powerlets (⌘K)",
+    "default_title": "Powerlets",
     "default_icon": {
       "19": "default_icon.png",
       "38": "default_icon@2x.png"
@@ -23,10 +23,10 @@
   "commands": {
     "_execute_browser_action": {
       "suggested_key": {
-        "windows": "Ctrl+K",
-        "mac": "Command+K",
-        "chromeos": "Ctrl+K",
-        "linux": "Ctrl+K"
+        "windows": "Shift+Ctrl+K",
+        "mac": "Shift+Command+K",
+        "chromeos": "Shift+Ctrl+K",
+        "linux": "Shift+Ctrl+K"
       }
     }
   }
