@@ -31,7 +31,7 @@ function SearchField(
         autocapitalize="off"
         spellcheck="false"
       />
-      <div className={shortcutClassName}>⌥⌘K</div>
+      <div className={shortcutClassName}>{shortcut}</div>
     </div>
   );
 }
