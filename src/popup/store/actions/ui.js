@@ -1,5 +1,6 @@
 export const SET_PRESSED_KEYS = 'SET_PRESSED_KEYS';
 export const SET_QUERY = 'SET_QUERY';
+export const SET_COMMAND_KEYS = 'SET_COMMAND_KEYS';
 
 export function navigateTo(url) {
   return (dispatch, getState, { browser }) => {
@@ -14,6 +15,13 @@ export function setPressedKeys(keys) {
   };
 }
 
+export function setCommandKeys(commands) {
+  return {
+    type: SET_COMMAND_KEYS,
+    payload: commands
+  }
+}
+
 export function fetchPressedKeys() {
   return (dispatch, getState, { browser }) => {
     browser.tabs.query({ active: true, currentWindow: true }, function(tabs) {
@@ -26,6 +34,14 @@ export function fetchPressedKeys() {
           dispatch(setPressedKeys(response.payload));
         }
       );
+    });
+  };
+}
+
+export function fetchCommandKeys() {
+  return (dispatch, getState, { browser }) => {
+    browser.commands.getAll(function(commands) {
+      dispatch(setCommandKeys(commands));
     });
   };
 }

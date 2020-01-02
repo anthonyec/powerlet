@@ -1,7 +1,8 @@
-import { SET_PRESSED_KEYS } from '../actions/ui';
+import { SET_PRESSED_KEYS, SET_COMMAND_KEYS } from '../actions/ui';
 
 const defaultState = {
-  keys: ''
+  keys: '',
+  commands: []
 };
 
 export default function uiReducer(state = defaultState, action) {
@@ -13,6 +14,10 @@ export default function uiReducer(state = defaultState, action) {
 
       return Object.assign({}, state, {
         keys: filteredKeys.join('')
+      });
+    case SET_COMMAND_KEYS:
+      return Object.assign({}, state, {
+        commands: action.payload
       });
     default:
       return state;

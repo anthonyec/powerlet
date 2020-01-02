@@ -26,6 +26,7 @@ const KEYS = {
 export default function App() {
   const bookmarklets = useSelector((state) => state.bookmarklets.all);
   const keysPressed = useSelector((state) => state.ui.keys);
+  const commands = useSelector((state) => state.ui.commands);
   const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -44,6 +45,7 @@ export default function App() {
 
   useEffect(() => {
     dispatch(fetchAllBookmarklets());
+    dispatch(fetchCommandKeys());
   }, []);
 
   useEffect(() => {
@@ -135,6 +137,10 @@ export default function App() {
     setCurrentScrollViewY(y);
   };
 
+  const defaultShortcut = commands.find((command) => {
+    return (command.name = '_execute_browser_action');
+  });
+
   return (
     <div className="app">
       <SearchField
@@ -143,7 +149,7 @@ export default function App() {
         onChange={handleInputChange}
         placeholder="Search scripts"
         defaultValue={keysPressed}
-        shortcut={!searchQuery ? '⌥⌘K' : ''}
+        shortcut={!searchQuery && defaultShortcut && defaultShortcut.shortcut ? defaultShortcut.shortcut : ''}
       ></SearchField>
 
       {bookmarklets.length !== 0 && (
