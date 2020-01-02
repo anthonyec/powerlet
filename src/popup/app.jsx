@@ -13,6 +13,7 @@ import OnboardScreen from './components/onboard_screen';
 
 import './reset.css';
 import './app.css';
+import { fetchCommandKeys } from './store/actions/ui';
 
 const KEYS = {
   ENTER: 13,
@@ -43,6 +44,7 @@ export default function App() {
 
   useEffect(() => {
     dispatch(fetchAllBookmarklets());
+    dispatch(fetchCommandKeys());
   }, []);
 
   useEffect(() => {
