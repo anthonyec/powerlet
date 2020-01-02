@@ -44,7 +44,6 @@ export default function App() {
 
   useEffect(() => {
     dispatch(fetchAllBookmarklets());
-    dispatch(fetchCommandKeys());
   }, []);
 
   useEffect(() => {
