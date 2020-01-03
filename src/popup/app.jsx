@@ -8,12 +8,13 @@ import './app.css';
 
 export default function App() {
   const path = window.location.hash.replace('#', '');
+  const screens = {
+    '': Popup,
+    settings: Settings
+  };
 
-  let Screen = Popup;
-
-  if (path === 'settings') {
-    Screen = Settings;
-  }
+  // Render Popup by default if hash does not match.
+  const Screen = screens[path] ? screens[path] : Popup;
 
   return (
     <div className="app">
