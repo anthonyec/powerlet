@@ -1,20 +1,20 @@
 import React, { Suspense } from 'react';
 
-import Popup from './screens/popup';
-const Settings = React.lazy(() => import('./screens/settings'));
+import HomeScreen from './screens/home';
+const SettingsScreen = React.lazy(() => import('./screens/settings'));
 
 import './reset.css';
 import './app.css';
 
 export default function App() {
   const path = window.location.hash.replace('#', '');
+  const defaultScreen = HomeScreen;
   const screens = {
-    '': Popup,
-    settings: Settings
+    '': defaultScreen,
+    settings: SettingsScreen
   };
 
-  // Render Popup by default if hash does not match.
-  const Screen = screens[path] ? screens[path] : Popup;
+  const Screen = screens[path] ? screens[path] : defaultScreen;
 
   return (
     <div className="app">

@@ -11,7 +11,7 @@ import SearchList from '../../components/search_list';
 import ScrollView from '../../components/scroll_view';
 import OnboardScreen from '../../components/onboard_screen';
 
-import './popup.css';
+import './home.css';
 
 const KEYS = {
   ENTER: 13,
@@ -21,7 +21,7 @@ const KEYS = {
   LEFT: 37
 };
 
-export default function Popup() {
+export default function HomeScreen() {
   const bookmarklets = useSelector((state) => state.bookmarklets.all);
   const keysPressed = useSelector((state) => state.ui.keys);
   const dispatch = useDispatch();
@@ -134,7 +134,7 @@ export default function Popup() {
   };
 
   return (
-    <div className="popup">
+    <div className="home-screen">
       <SearchField
         ref={searchInputRef}
         onKeyDown={handleInputChange}

@@ -2,9 +2,9 @@ import React from 'react';
 
 import './settings.css';
 
-export default function Settings() {
+export default function SettingsScreen() {
   return (
-    <div className="settings">
+    <div className="settings-screen">
       Shortcut <input value="⇧⌘K" disabled />
       <button>
         Edit
