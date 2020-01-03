@@ -2,12 +2,11 @@
   <img src="logo.png" width="420" alt="Powerlets">
   <br><br>
 
-  **Chrome Extension to quickly find and run bookmarklets.**
+**Chrome Extension to quickly find and run bookmarklets.**
 
-  Available on **[Chrome Web Store](https://chrome.google.com/webstore/detail/powerlets/ofecodkcadbenmiknnidnfepbblapgkn)**
+Available on **[Chrome Web Store](https://chrome.google.com/webstore/detail/powerlets/ofecodkcadbenmiknnidnfepbblapgkn)**
 
   <img src="screenshot.png" width="640" alt="Screenshot of the extension showing search results">
-
 
 </div>
 
