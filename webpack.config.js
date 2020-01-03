@@ -1,4 +1,5 @@
 const path = require('path');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
@@ -10,8 +11,8 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name].bundle.js',
-    chunkFilename: '[name].bundle.js'
+    filename: '[name].[contentHash:5].bundle.js',
+    chunkFilename: '[name].[contentHash:5].bundle.js'
   },
   optimization: {
     namedModules: true,
@@ -37,6 +38,7 @@ module.exports = {
     extensions: ['*', '.js', '.jsx']
   },
   plugins: [
+    new CleanWebpackPlugin(),
     new CopyPlugin([
       './src/manifest.json',
       './src/pages/examples.html',
