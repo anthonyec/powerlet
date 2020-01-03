@@ -28,6 +28,8 @@
   --input-normal-color: #2A2B2E;
   --input-normal-border-color: #B1B1B1;
   --input-placeholder-color: #757575;
+
+  --section-border-color: rgba(0, 0, 0, 0.06);
 }
 
 @media(prefers-color-scheme: dark) {
@@ -55,6 +57,8 @@
     --input-normal-color: #E1E1E1;
     --input-normal-border-color: #757575;
     --input-placeholder-color: #919191;
+
+    --section-border-color: rgba(255, 255, 255, 0.06);
   }
 }
 
