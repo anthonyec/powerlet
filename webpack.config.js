@@ -10,7 +10,12 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name].bundle.js'
+    filename: '[name].bundle.js',
+    chunkFilename: '[name].bundle.js'
+  },
+  optimization: {
+    namedModules: true,
+    namedChunks: true
   },
   module: {
     rules: [
@@ -40,8 +45,12 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'Powerlets',
       filename: 'popup.html',
-      template: './src/popup/index.ejs'
+      template: './src/popup/index.ejs',
+      excludeChunks: ['background']
     }),
-    new ExtractTextPlugin('popup.css')
+    new ExtractTextPlugin({
+      filename: 'popup.css',
+      allChunks: true
+    })
   ]
 };

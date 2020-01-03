@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 
 import Popup from './screens/popup';
-import Settings from './screens/settings';
+const Settings = React.lazy(() => import('./screens/settings'));
 
 import './reset.css';
 import './app.css';
@@ -17,7 +17,9 @@ export default function App() {
 
   return (
     <div className="app">
-      <Screen />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Screen />
+      </Suspense>
     </div>
   );
 }
