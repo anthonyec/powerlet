@@ -8,13 +8,12 @@ import './app.css';
 
 export default function App() {
   const path = window.location.hash.replace('#', '');
-  const defaultScreen = HomeScreen;
   const screens = {
-    '': defaultScreen,
+    home: HomeScreen,
     settings: SettingsScreen
   };
 
-  const Screen = screens[path] ? screens[path] : defaultScreen;
+  const Screen = screens[path] ? screens[path] : screens.home;
 
   return (
     <div className="app">
