@@ -6,7 +6,7 @@ import Button from '../button';
 
 import './onboard_message.css';
 
-export default function OnboardScreen() {
+export default function OnboardMessage() {
   const dispatch = useDispatch();
 
   const handleExampleOnClick = () => {

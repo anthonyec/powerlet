@@ -9,7 +9,7 @@ import {
 import SearchField from '../../components/search_field';
 import SearchList from '../../components/search_list';
 import ScrollView from '../../components/scroll_view';
-import OnboardScreen from '../../components/onboard_message';
+import OnboardMessage from '../../components/onboard_message';
 
 import './home_screen.css';
 
@@ -156,7 +156,7 @@ export default function HomeScreen() {
         </ScrollView>
       )}
 
-      {bookmarklets.length === 0 && <OnboardScreen />}
+      {bookmarklets.length === 0 && <OnboardMessage />}
     </div>
   );
 }
