@@ -12,7 +12,7 @@ import ScrollView from '../../components/scroll_view';
 import OnboardScreen from '../../components/onboard_screen';
 
 import '../../reset.css';
-import '../../app.css';
+import './home_screen.css';
 
 const KEYS = {
   ENTER: 13,
@@ -135,7 +135,7 @@ export default function HomeScreen() {
   };
 
   return (
-    <div className="app">
+    <div className="home-screen">
       <SearchField
         ref={searchInputRef}
         onKeyDown={handleInputChange}
