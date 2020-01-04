@@ -22,7 +22,7 @@ const KEYS = {
   LEFT: 37
 };
 
-export default function App() {
+export default function HomeScreen() {
   const bookmarklets = useSelector((state) => state.bookmarklets.all);
   const keysPressed = useSelector((state) => state.ui.keys);
   const dispatch = useDispatch();

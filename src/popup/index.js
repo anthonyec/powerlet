@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { persistStore } from 'redux-persist';
 
 import createStore from './store/index';
-import App from './screens/home_screen';
+import HomeScreen from './screens/home_screen';
 
 const store = createStore(
   {},
@@ -17,7 +17,7 @@ persistStore(store);
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <HomeScreen />
   </Provider>,
   document.getElementById('root')
 );
