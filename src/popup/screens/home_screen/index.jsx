@@ -11,7 +11,6 @@ import SearchList from '../../components/search_list';
 import ScrollView from '../../components/scroll_view';
 import OnboardScreen from '../../components/onboard_screen';
 
-import '../../reset.css';
 import './home_screen.css';
 
 const KEYS = {
