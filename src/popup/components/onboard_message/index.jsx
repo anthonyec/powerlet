@@ -4,9 +4,9 @@ import { useDispatch } from 'react-redux';
 import { navigateTo } from '../../store/actions/ui';
 import Button from '../button';
 
-import './onboard_screen.css';
+import './onboard_message.css';
 
-export default function OnboardScreen() {
+export default function OnboardMessage() {
   const dispatch = useDispatch();
 
   const handleExampleOnClick = () => {
@@ -14,8 +14,8 @@ export default function OnboardScreen() {
   };
 
   return (
-    <div className="onboard-screen">
-      <div className="onboard-screen__message">
+    <div className="onboard-message">
+      <div className="onboard-message__message">
         You don't have any
         <br />
         bookmark&nbsp;scripts.
