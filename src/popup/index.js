@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { persistStore } from 'redux-persist';
 
 import createStore from './store/index';
-import App from './app';
+import App from './screens/home_screen';
 
 const store = createStore(
   {},

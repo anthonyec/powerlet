@@ -5,14 +5,14 @@ import { useCallbackRef } from 'use-callback-ref';
 import {
   fetchAllBookmarklets,
   executeBookmarklet
-} from './store/actions/bookmarklets';
-import SearchField from './components/search_field';
-import SearchList from './components/search_list';
-import ScrollView from './components/scroll_view';
-import OnboardScreen from './components/onboard_screen';
+} from '../../store/actions/bookmarklets';
+import SearchField from '../../components/search_field';
+import SearchList from '../../components/search_list';
+import ScrollView from '../../components/scroll_view';
+import OnboardScreen from '../../components/onboard_screen';
 
-import './reset.css';
-import './app.css';
+import '../../reset.css';
+import '../../app.css';
 
 const KEYS = {
   ENTER: 13,
