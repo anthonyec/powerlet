@@ -15,9 +15,6 @@
       "38": "default_icon@2x.png"
     }
   },
-  "options_ui": {
-    "page": "popup.html#settings"
-  },
   "icons": {
     "36": "extension_icon_36.png",
     "128": "extension_icon_128.png"
