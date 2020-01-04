@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { navigateTo } from '../../store/actions/ui';
 import Button from '../button';
 
-import './onboard_screen.css';
+import './onboard_message.css';
 
 export default function OnboardScreen() {
   const dispatch = useDispatch();
