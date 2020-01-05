@@ -1,4 +1,5 @@
 const path = require('path');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
@@ -10,7 +11,12 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name].bundle.js'
+    filename: '[name].bundle.js',
+    chunkFilename: '[name].[contentHash:5].bundle.js'
+  },
+  optimization: {
+    namedModules: true,
+    namedChunks: true
   },
   module: {
     rules: [
@@ -32,6 +38,7 @@ module.exports = {
     extensions: ['*', '.js', '.jsx']
   },
   plugins: [
+    new CleanWebpackPlugin(),
     new CopyPlugin([
       './src/manifest.json',
       './src/pages/examples.html',
@@ -40,8 +47,12 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'Powerlets',
       filename: 'popup.html',
-      template: './src/popup/index.ejs'
+      template: './src/popup/index.ejs',
+      excludeChunks: ['background']
     }),
-    new ExtractTextPlugin('popup.css')
+    new ExtractTextPlugin({
+      filename: 'popup.css',
+      allChunks: true
+    })
   ]
 };
