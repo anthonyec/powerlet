@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 
-import HomeScreen from './screens/home';
+import HomeScreen from './screens/home_screen';
 const SettingsScreen = React.lazy(() => import('./screens/settings'));
 
 import './reset.css';
