@@ -1,0 +1,23 @@
+.link {
+  border: 1px solid transparent;
+  border-radius: 3px;
+  color: var(--link-normal-color);
+  font-size: var(--link-font-size);
+  font-weight: 500;
+  text-decoration: none;
+  padding: 2px 3px;
+}
+
+.link:hover {
+  color: var(--link-hover-color);
+}
+
+.link:active {
+  color: var(--link-active-color);
+}
+
+.link:focus {
+  border-color: var(--global-focus-border-color);
+  box-shadow: var(--global-focus-box-shadow);
+  outline: 0;
+}

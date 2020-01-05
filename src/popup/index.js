@@ -6,6 +6,8 @@ import { persistStore } from 'redux-persist';
 import createStore from './store/index';
 import App from './app';
 
+import './reset.css';
+
 const store = createStore(
   {},
   {
