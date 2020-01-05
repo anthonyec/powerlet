@@ -23,7 +23,6 @@ const KEYS = {
 
 export default function HomeScreen() {
   const bookmarklets = useSelector((state) => state.bookmarklets.all);
-  const keysPressed = useSelector((state) => state.ui.keys);
   const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -43,13 +42,6 @@ export default function HomeScreen() {
   useEffect(() => {
     dispatch(fetchAllBookmarklets());
   }, []);
-
-  useEffect(() => {
-    const length = searchInputRef.current.value.length;
-
-    setSearchQuery(keysPressed);
-    searchInputRef.current.setSelectionRange(length, length);
-  }, [keysPressed]);
 
   useEffect(() => {
     if (selectedIndex >= 0 && selectedItemTop < currentScrollViewY) {
@@ -140,7 +132,6 @@ export default function HomeScreen() {
         onKeyDown={handleInputChange}
         onChange={handleInputChange}
         placeholder="Search scripts"
-        defaultValue={keysPressed}
       />
 
       {bookmarklets.length !== 0 && (
