@@ -38,7 +38,7 @@ export default function SettingsScreen() {
             </div>
           }
           <div className="settings-screen__controls-item">
-            {shortcut && <Button onClick={handleShortcutEditClick}>Edit</Button>}
+            {shortcut && <Button onClick={handleShortcutEditClick}>Change</Button>}
             {!shortcut && <Button onClick={handleShortcutEditClick}>Add shortcut</Button>}
           </div>
         </div>
