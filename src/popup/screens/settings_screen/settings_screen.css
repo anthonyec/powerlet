@@ -1,11 +1,11 @@
 .settings-screen {
   width: 100%;
-  min-width: 500px;
   padding: 0;
 }
 
-.settings-screen__title {
+.settings-screen__section-title {
   font-size: 13px;
+  line-height: 1.2;
 }
 
 .settings-screen__section {
