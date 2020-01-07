@@ -11,6 +11,7 @@
   font-size: var(--button-font-size);
   font-weight: 500;
   min-width: 76px;
+  flex-grow: 0;
 }
 
 .button:hover {
