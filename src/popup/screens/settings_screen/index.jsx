@@ -12,6 +12,9 @@ import './settings_screen.css';
 export default function SettingsScreen() {
   const dispatch = useDispatch();
   const shortcuts = useSelector((state) => state.ui.shortcuts);
+  const isFirefox = window.navigator.userAgent
+    .toLocaleLowerCase()
+    .includes('firefox');
 
   useEffect(() => {
     dispatch(fetchShortcutKeys());
@@ -25,22 +28,38 @@ export default function SettingsScreen() {
     return (shortcut.name = '_execute_browser_action');
   });
 
-  const shortcut = defaultShortcut && defaultShortcut.shortcut ? defaultShortcut.shortcut : null;
+  const shortcut =
+    defaultShortcut && defaultShortcut.shortcut
+      ? defaultShortcut.shortcut
+      : null;
 
   return (
     <div className="settings-screen">
       <section className="settings-screen__section">
-        <h1 className="settings-screen__section-title">Keyboard shortcut</h1>
+        <h1 className="settings-screen__section-title">
+          Keyboard shortcut <br />
+          {isFirefox && (
+            <Link href="https://support.mozilla.org/en-US/kb/manage-extension-shortcuts-firefox">
+              How to change shortcut in Firefox
+            </Link>
+          )}
+        </h1>
         <div className="settings-screen__controls">
-          {shortcut &&
+          {shortcut && (
             <div className="settings-screen__controls-item">
               <TextField value={shortcut} />
             </div>
-          }
-          <div className="settings-screen__controls-item">
-            {shortcut && <Button onClick={handleShortcutEditClick}>Change</Button>}
-            {!shortcut && <Button onClick={handleShortcutEditClick}>Add shortcut</Button>}
-          </div>
+          )}
+          {!isFirefox && (
+            <div className="settings-screen__controls-item">
+              {shortcut && (
+                <Button onClick={handleShortcutEditClick}>Change</Button>
+              )}
+              {!shortcut && (
+                <Button onClick={handleShortcutEditClick}>Add shortcut</Button>
+              )}
+            </div>
+          )}
         </div>
       </section>
 
