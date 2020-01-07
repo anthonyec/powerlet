@@ -12,6 +12,8 @@ import ScrollView from '../../components/scroll_view';
 import OnboardMessage from '../../components/onboard_message';
 
 import './home_screen.css';
+import Button from '../../components/button';
+import { openEditor } from '../../store/actions/ui';
 
 const KEYS = {
   ENTER: 13,
@@ -125,8 +127,14 @@ export default function HomeScreen() {
     setCurrentScrollViewY(y);
   };
 
+  const handleOpenEditorClick = () => {
+    dispatch(openEditor());
+    window.close();
+  };
+
   return (
     <div className="home-screen">
+      <Button onClick={handleOpenEditorClick}>Open Editor</Button>
       <SearchField
         ref={searchInputRef}
         onKeyDown={handleInputChange}
