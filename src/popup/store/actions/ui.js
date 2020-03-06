@@ -9,8 +9,8 @@ export function openEditor() {
     browser.windows.create({
       url: browser.runtime.getURL('popup.html#editor'),
       type: 'popup',
-      width: 520,
-      height: 400,
+      width: 500,
+      height: 532,
       top: 100,
       left: 100
     }, (win) => {
