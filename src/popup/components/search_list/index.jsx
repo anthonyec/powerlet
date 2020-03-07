@@ -20,7 +20,8 @@ export default function SearchList({
   onItemMouseOver = () => {},
   onItemMouseMove = () => {},
   setItemRef = () => {},
-  selected = -1
+  selected = -1,
+  renderItemActions
 }) {
   const fuseRef = useRef();
 
@@ -62,7 +63,13 @@ export default function SearchList({
         onMouseOver={onItemMouseOver.bind(null, index)}
         onMouseMove={onItemMouseMove.bind(null, index)}
       >
-        {item.title || 'Untitled script'}
+        <div className="search-list__text">
+          {item.title || 'Untitled script'}
+        </div>
+
+        <div className="search-list__actions">
+          {renderItemActions(item, isSelected)}
+        </div>
       </li>
     );
   });

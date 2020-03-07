@@ -9,6 +9,8 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  display: flex;
+  justify-content: space-between;
 }
 
 .search-list__item:hover:not(.search-list__item--selected) {
@@ -19,4 +21,13 @@
 .search-list__item--selected {
   background: var(--item-selected-background);
   border-color: var(--item-selected-background);
+}
+
+.search-list__text {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.search-list__actions {
 }
