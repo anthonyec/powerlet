@@ -27,7 +27,7 @@ export default function SearchList({
   const [currentMouseOverIndex, setCurrentMouseOverIndex] = useState(-1);
 
   const handleItemMouseOver = (index) => {
-    onItemMouseOver.bind(null, index)
+    onItemMouseOver.bind(null, index);
     setCurrentMouseOverIndex(index);
   };
 
