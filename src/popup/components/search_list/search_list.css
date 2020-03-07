@@ -1,8 +1,9 @@
 .search-list {}
 
 .search-list__item {
-  padding: var(--item-padding);
-  min-height: 40px;
+  padding-left: var(--item-padding-left-right);
+  padding-right: var(--item-padding-left-right);
+  height: 40px;
   font-size: 12px;
   line-height: 20px;
   user-select: none;
@@ -11,6 +12,7 @@
   text-overflow: ellipsis;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .search-list__item:hover:not(.search-list__item--selected) {
