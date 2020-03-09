@@ -17,7 +17,7 @@ export function fetchBookmarklet(id = '') {
 
         const file = {
           title: results[0].title,
-          code: results[0].url
+          code: decodeURIComponent(results[0].url)
         };
 
         dispatch(setCurrentFile(file));

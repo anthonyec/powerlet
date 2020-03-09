@@ -12,6 +12,8 @@ import ScrollView from '../../components/scroll_view';
 import OnboardMessage from '../../components/onboard_message';
 
 import './home_screen.css';
+import ItemActions from '../../components/item_actions';
+import { openEditorWindow } from '../../store/actions/ui';
 
 const KEYS = {
   ENTER: 13,
@@ -125,6 +127,11 @@ export default function HomeScreen() {
     setCurrentScrollViewY(y);
   };
 
+  const handleOnEditClick = (id) => {
+    dispatch(openEditorWindow(id));
+    window.close();
+  };
+
   return (
     <div className="home-screen">
       <SearchField
@@ -143,6 +150,15 @@ export default function HomeScreen() {
             onChange={handleItemSelect}
             onItemClick={handleBookmarkletClick}
             onItemSelect={handleItemSelect}
+            renderItemActions={
+              (item, isSelected, isMouseOver) => {
+                if (isSelected || isMouseOver) {
+                  return <ItemActions
+                    onEditClick={handleOnEditClick.bind(null, item.id)}
+                  />
+                }
+              }
+            }
           />
         </ScrollView>
       )}

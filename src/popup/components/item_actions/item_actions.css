@@ -31,6 +31,7 @@
 
 .item-actions__button:hover {
   color: var(--button-hover-color);
+  border-color: var(--button-hover-border-color);
 }
 
 .item-actions__button:active {

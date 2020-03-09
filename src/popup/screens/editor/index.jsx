@@ -7,10 +7,10 @@ import './editor.css';
 
 export default function Editor({ route = { params: {}, base: ''} }) {
   const dispatch = useDispatch();
-  const script = useSelector((state) => state.editor.openScript);
+  const currentFile = useSelector((state) => state.editor.currentFile);
 
   useLayoutEffect(() => {
-    window.document.title = 'Script Editor';
+    window.document.title = 'Edit Script';
   }, []);
 
   useEffect(() => {
@@ -21,9 +21,9 @@ export default function Editor({ route = { params: {}, base: ''} }) {
 
   return (
     <div className="editor-screen">
-      <input type="text" value={script.title}/>
+      <input type="text" value={currentFile && currentFile.title}/>
       <br />
-      <textarea cols="30" rows="10" value={script.code} />
+      <textarea cols="60" rows="20" value={currentFile && currentFile.code} />
     </div>
   );
 }
