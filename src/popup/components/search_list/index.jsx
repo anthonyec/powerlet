@@ -21,7 +21,7 @@ export default function SearchList({
   onItemMouseMove = () => {},
   setItemRef = () => {},
   selected = -1,
-  renderItemActions
+  renderItemActions = () => {}
 }) {
   const fuseRef = useRef();
   const [currentMouseOverIndex, setCurrentMouseOverIndex] = useState(-1);
