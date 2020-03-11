@@ -1,6 +1,5 @@
 .text-field {
   display: flex;
-  padding: 8px;
 }
 
 .text-field__label {

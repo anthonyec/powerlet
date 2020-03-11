@@ -48,15 +48,19 @@ export default function Editor({ route = { params: {}, base: '' } }) {
 
   return (
     <div className="editor-screen">
-      <TextField
-        label="Name"
-        defaultValue={currentFile && currentFile.title}
-        onChange={handleTitleOnChange}
-      />
-      <CodeEditor
-        defaultValue={currentFile && currentFile.code}
-        onChange={handleCodeEditorOnChange}
-      />
+      <div className="editor-screen__section">
+        <TextField
+          label="Name"
+          defaultValue={currentFile && currentFile.title}
+          onChange={handleTitleOnChange}
+        />
+      </div>
+      <div className="editor-screen__section editor-screen__section--full">
+        <CodeEditor
+          defaultValue={currentFile && currentFile.code}
+          onChange={handleCodeEditorOnChange}
+        />
+      </div>
     </div>
   );
 }
