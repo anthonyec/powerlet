@@ -150,15 +150,15 @@ export default function HomeScreen() {
             onChange={handleItemSelect}
             onItemClick={handleBookmarkletClick}
             onItemSelect={handleItemSelect}
-            renderItemActions={
-              (item, isSelected, isMouseOver) => {
-                if (isSelected || isMouseOver) {
-                  return <ItemActions
+            renderItemActions={(item, isSelected, isMouseOver) => {
+              if (isSelected || isMouseOver) {
+                return (
+                  <ItemActions
                     onEditClick={handleOnEditClick.bind(null, item.id)}
                   />
-                }
+                );
               }
-            }
+            }}
           />
         </ScrollView>
       )}

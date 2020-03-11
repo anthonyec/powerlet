@@ -3,7 +3,7 @@ export default function zipObject(arrA, arrB) {
 
   // Intentionally not using reduce ;--)
   arrA.forEach((value, index) => {
-    const key = arrB[index]
+    const key = arrB[index];
     props[key] = value;
   });
 
