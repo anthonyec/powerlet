@@ -17,7 +17,13 @@ export default function CodeEditor({ defaultValue, onChange = () => {} }) {
 
   return (
     <div className="code-editor">
-      <textarea className="code-editor__input" cols="60" rows="20" onChange={handleOnChange} value={value} />
+      <textarea
+        className="code-editor__input"
+        cols="60"
+        rows="20"
+        onChange={handleOnChange}
+        value={value}
+      />
     </div>
   );
 }
