@@ -20,9 +20,11 @@ export default function TextField({
   };
 
   return (
-    <div>
-      {label}:
-      <input type="text" value={value} onChange={handleOnChange} />
+    <div className="text-field">
+      <div className="text-field__label">
+        {label}
+      </div>
+      <input className="text-field__input" type="text" value={value} onChange={handleOnChange} />
     </div>
   );
 }

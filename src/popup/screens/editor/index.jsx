@@ -59,7 +59,7 @@ export default function Editor({ route = { params: {}, base: '' } }) {
   return (
     <div className="editor-screen">
       <TextField
-        label="Title"
+        label="Name"
         defaultValue={currentFile && currentFile.title}
         onChange={handleTitleOnChange}
       />
