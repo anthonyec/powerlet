@@ -5,6 +5,7 @@ import { fetchBookmarklet, saveCurrentFile } from '../../store/actions/editor';
 import Button from '../../components/button';
 
 import './editor.css';
+import CodeEditor from '../../components/code_editor';
 
 export default function Editor({ route = { params: {}, base: '' } }) {
   const dispatch = useDispatch();
