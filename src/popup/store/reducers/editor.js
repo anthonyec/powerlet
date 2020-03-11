@@ -1,7 +1,9 @@
-import { SET_CURRENT_FILE } from '../actions/editor';
+import { SET_CURRENT_FILE, SET_LOADING } from '../actions/editor';
 
 const defaultState = {
+  isLoading: false,
   currentFile: {
+    id: '',
     title: '',
     code: ''
   }
@@ -12,6 +14,13 @@ export default function editorReducer(state = defaultState, action) {
     return {
       ...state,
       currentFile: action.payload
+    };
+  }
+
+  if (action.type === SET_LOADING) {
+    return {
+      ...state,
+      isLoading: action.payload
     };
   }
 
