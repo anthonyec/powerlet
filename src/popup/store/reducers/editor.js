@@ -1,4 +1,8 @@
-import { SET_CURRENT_FILE, SET_LOADING } from '../actions/editor';
+import {
+  SET_CURRENT_FILE,
+  SET_LOADING,
+  UPDATE_CURRENT_FILE
+} from '../actions/editor';
 
 const defaultState = {
   isLoading: false,
@@ -21,6 +25,21 @@ export default function editorReducer(state = defaultState, action) {
     return {
       ...state,
       isLoading: action.payload
+    };
+  }
+
+  if (action.type === UPDATE_CURRENT_FILE) {
+    const mergedFileWithUpdates = {
+      ...state.currentFile,
+      ...action.payload,
+
+      // Ensure ID is not overwritten.
+      id: state.currentFile.id
+    };
+
+    return {
+      ...state,
+      currentFile: mergedFileWithUpdates
     };
   }
 

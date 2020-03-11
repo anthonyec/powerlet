@@ -1,7 +1,7 @@
 import React, { useLayoutEffect, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { fetchBookmarklet, saveCurrentFile } from '../../store/actions/editor';
+import { fetchBookmarklet, saveCurrentFile, updateCurrentFile } from '../../store/actions/editor';
 import Button from '../../components/button';
 
 import './editor.css';
@@ -22,11 +22,18 @@ export default function Editor({ route = { params: {}, base: '' } }) {
     }
   }, [route.params.id]);
 
-  const handleDeleteOnClick = () => {
-    // dispatch(deleteCurrentFile());
+  const handleSaveOnClick = () => {
+    dispatch(saveCurrentFile());
+    window.close();
   };
 
-  const handleSaveOnClick = () => {
+  const handleCodeEditorOnChange = (value) => {
+    console.log('handleCodeEditorOnChange', value);
+
+    dispatch(updateCurrentFile({
+      code: value
+    }));
+
     dispatch(saveCurrentFile());
   };
 
@@ -34,15 +41,13 @@ export default function Editor({ route = { params: {}, base: '' } }) {
     <div className="editor-screen">
       <input type="text" readOnly value={currentFile && currentFile.title} />
       <br />
-      <textarea
-        cols="60"
-        rows="20"
-        readOnly
-        value={currentFile && currentFile.code}
+      <CodeEditor
+        defaultValue={currentFile && currentFile.code}
+        onChange={handleCodeEditorOnChange}
       />
       <br />
       <Button onClick={handleSaveOnClick} disabled={isLoading}>
-        Save
+        Done
       </Button>
       {isLoading ? 'Loading' : null}
     </div>

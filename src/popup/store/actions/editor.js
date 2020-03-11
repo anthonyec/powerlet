@@ -1,4 +1,5 @@
 export const SET_CURRENT_FILE = 'SET_CURRENT_FILE';
+export const UPDATE_CURRENT_FILE = 'UPDATE_CURRENT_FILE';
 export const SET_LOADING = 'SET_LOADING';
 
 function fileToBookmarklet(file = { title: '', code: '' }) {
@@ -16,9 +17,18 @@ function bookmarkletToFile(bookmarklet = { id: '', title: '', url: '' }) {
   };
 }
 
-function setCurrentFile(file = {}) {
+function setCurrentFile(file = { id: '', title: '', code: '' }) {
   return {
     type: SET_CURRENT_FILE,
+    payload: file
+  };
+}
+
+export function updateCurrentFile(file = {}) {
+  console.log('updateCurrentFile', file);
+
+  return {
+    type: UPDATE_CURRENT_FILE,
     payload: file
   };
 }
@@ -59,10 +69,16 @@ export function saveCurrentFile() {
 
     const newFile = fileToBookmarklet(currentFile);
 
+    console.log('save', currentFile, 'as', newFile);
+
     dispatch(setLoading(true));
 
     browser.bookmarks.update(id, newFile, (results) => {
       dispatch(setLoading(false));
+
+      if (browser.runtime.lastError) {
+        console.warn('Failed to save!', browser.runtime.lastError.message);
+      }
     });
   };
 }
