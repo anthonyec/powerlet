@@ -43,14 +43,21 @@ export function fetchBookmarklet(id = '') {
     dispatch(setLoading(true));
 
     browser.bookmarks.get(id, (results) => {
-      if (!results.length) {
+      dispatch(setLoading(false));
+
+      if (browser.runtime.lastError) {
+        console.warn('Failed to fetch!', browser.runtime.lastError.message);
+        return;
+      }
+
+      if (!results || !results.length) {
+        console.warn('No bookmarklet found for id', id);
         return;
       }
 
       const file = bookmarkletToFile(results[0]);
 
       dispatch(setCurrentFile(file));
-      dispatch(setLoading(false));
     });
   };
 }
