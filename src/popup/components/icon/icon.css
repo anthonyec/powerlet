@@ -1,0 +1,9 @@
+.icon {
+  color: #5F6369;
+}
+
+@media(prefers-color-scheme: dark) {
+  .icon {
+    color: #9AA0A7;
+  }
+}

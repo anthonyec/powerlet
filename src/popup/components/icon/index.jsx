@@ -1,6 +1,8 @@
 import React from 'react';
 
-export default function Icon({ name = '' }) {
+import './icon.css';
+
+function getIcon(name = '') {
   switch (name) {
     case 'pencil':
       return (
@@ -39,4 +41,8 @@ export default function Icon({ name = '' }) {
     default:
       return null;
   }
+}
+
+export default function Icon({ name = '' }) {
+  return <div className="icon">{getIcon(name)}</div>;
 }
