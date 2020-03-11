@@ -4,9 +4,11 @@ import thunk from 'redux-thunk';
 import reducers from './reducers';
 
 export default (preloadedState = {}, dependencies = {}) => {
-  return createStore(
+  const store = createStore(
     reducers,
     {},
     applyMiddleware(thunk.withExtraArgument(dependencies))
   );
+
+  return store;
 };

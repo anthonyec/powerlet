@@ -15,7 +15,6 @@ import './editor.css';
 export default function Editor({ route = { params: {}, base: '' } }) {
   const dispatch = useDispatch();
   const currentFile = useSelector((state) => state.editor.currentFile);
-  const isLoading = useSelector((state) => state.editor.isLoading);
 
   useLayoutEffect(() => {
     window.document.title = 'Edit Script';
@@ -27,14 +26,7 @@ export default function Editor({ route = { params: {}, base: '' } }) {
     }
   }, [route.params.id]);
 
-  const handleSaveOnClick = () => {
-    dispatch(saveCurrentFile());
-    window.close();
-  };
-
   const handleCodeEditorOnChange = (value) => {
-    console.log('handleCodeEditorOnChange', value);
-
     dispatch(
       updateCurrentFile({
         code: value
@@ -45,8 +37,6 @@ export default function Editor({ route = { params: {}, base: '' } }) {
   };
 
   const handleTitleOnChange = (value) => {
-    console.log('handleTitleOnChange', value);
-
     dispatch(
       updateCurrentFile({
         title: value
@@ -67,8 +57,6 @@ export default function Editor({ route = { params: {}, base: '' } }) {
         defaultValue={currentFile && currentFile.code}
         onChange={handleCodeEditorOnChange}
       />
-      <br />
-      {isLoading ? 'Loading' : null}
     </div>
   );
 }

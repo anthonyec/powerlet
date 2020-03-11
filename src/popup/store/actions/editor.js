@@ -25,8 +25,6 @@ function setCurrentFile(file = { id: '', title: '', code: '' }) {
 }
 
 export function updateCurrentFile(file = {}) {
-  console.log('updateCurrentFile', file);
-
   return {
     type: UPDATE_CURRENT_FILE,
     payload: file
@@ -68,8 +66,6 @@ export function saveCurrentFile() {
     }
 
     const newFile = fileToBookmarklet(currentFile);
-
-    console.log('save', currentFile, 'as', newFile);
 
     dispatch(setLoading(true));
 
