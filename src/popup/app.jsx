@@ -33,7 +33,7 @@ export default function App() {
 
   return (
     <div className="app">
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<div />}>
         <Screen route={route} />
       </Suspense>
     </div>
