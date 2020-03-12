@@ -4,7 +4,6 @@
   "version": "1.1.1",
   "description": "Quickly find and run your bookmarklets.",
   "permissions": ["activeTab", "bookmarks"],
-  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
   "background": {
     "scripts": ["background.bundle.js"],
     "persistent": false
