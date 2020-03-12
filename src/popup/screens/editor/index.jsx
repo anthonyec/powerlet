@@ -17,7 +17,7 @@ export default function Editor({ route = { params: {}, base: '' } }) {
   const currentFile = useSelector((state) => state.editor.currentFile);
 
   useLayoutEffect(() => {
-    window.document.title = 'Edit Script';
+    window.document.title = 'Edit script';
   }, []);
 
   useEffect(() => {

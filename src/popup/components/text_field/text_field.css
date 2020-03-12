@@ -4,7 +4,7 @@
 
 .text-field__label {
   display: flex;
-  width: 50px;
+  width: 56px;
   height: 32px;
   align-items: center;
 }
@@ -14,6 +14,7 @@
   color: var(--input-normal-color);
   border-color: var(--input-normal-border-color);
   font-size: var(--button-font-size);
+
   border-width: 1px;
   border-style: solid;
   border-radius: 3px;
