@@ -24,9 +24,13 @@ export default function App() {
     editor: ['id']
   };
 
+  const zippedParams = screenParams[base]
+    ? zipObject(params, screenParams[base])
+    : [];
+
   const route = {
     base,
-    params: zipObject(params, screenParams[base])
+    params: zippedParams
   };
 
   const Screen = screens[base] ? screens[base] : screens.home;
