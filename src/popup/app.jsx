@@ -4,7 +4,7 @@ import zipObject from '../utils/zipObject';
 
 import HomeScreen from './screens/home_screen';
 const SettingsScreen = React.lazy(() => import('./screens/settings'));
-const EditorScreen = React.lazy(() => import('./screens/editor'));
+const EditorScreen = React.lazy(() => import('./screens/editor_screen'));
 
 import './reset.css';
 import './app.css';
