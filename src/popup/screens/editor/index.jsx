@@ -10,7 +10,7 @@ import {
 import CodeEditor from '../../components/code_editor';
 import TextField from '../../components/text_field';
 
-import './editor.css';
+import './editor_screen.css';
 
 export default function Editor({ route = { params: {}, base: '' } }) {
   const dispatch = useDispatch();
