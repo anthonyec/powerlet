@@ -58,6 +58,10 @@ export default function HomeScreen() {
     }
   }, [selectedIndex, totalItems]);
 
+  useEffect(() => {
+    setSelectedIndex(0);
+  }, [searchQuery]);
+
   const execute = (url) => {
     dispatch(executeBookmarklet(url));
     window.close();
@@ -110,7 +114,6 @@ export default function HomeScreen() {
       }
     }
 
-    setSelectedIndex(0);
     setSearchQuery(searchInputRef.current.value);
   };
 
