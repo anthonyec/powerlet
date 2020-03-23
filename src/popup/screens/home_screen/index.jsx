@@ -10,6 +10,7 @@ import SearchField from '../../components/search_field';
 import SearchList from '../../components/search_list';
 import ScrollView from '../../components/scroll_view';
 import OnboardMessage from '../../components/onboard_message';
+import Toolbar from '../../components/toolbar';
 
 import './home_screen.css';
 
@@ -151,6 +152,7 @@ export default function HomeScreen() {
       )}
 
       {bookmarklets.length === 0 && <OnboardMessage />}
+      <Toolbar />
     </div>
   );
 }
