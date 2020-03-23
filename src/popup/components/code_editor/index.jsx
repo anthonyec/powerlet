@@ -21,6 +21,7 @@ export default function CodeEditor({ defaultValue, onChange = () => {} }) {
         className="code-editor__input"
         onChange={handleOnChange}
         value={value}
+        spellCheck={false}
       />
     </div>
   );
