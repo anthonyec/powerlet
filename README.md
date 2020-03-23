@@ -56,8 +56,8 @@ This is more notes for myself so I don't forget this manual process.
 
 - Squash and merge PR branch
 - Pull master locally
-- Run NPM version major/minor/patch
-- Update version in manifest to the same one from package.json
+- Run `npm version <major|minor|patch>`
+- Check version in `manifest.json` has been automatically updated
 - Commit amend
 - Push!
 - Draft release with new tag
