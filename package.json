@@ -6,7 +6,8 @@
   "scripts": {
     "start": "webpack -w --mode=development",
     "format": "prettier --loglevel warn --write '**/*.{js,json,jsx,md}'",
-    "build": "webpack --mode=production"
+    "build": "webpack --mode=production",
+    "version": "node ./scripts/version.js && npm run format && git add ./src/manifest.json"
   },
   "author": "",
   "license": "ISC",
