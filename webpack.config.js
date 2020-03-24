@@ -1,5 +1,4 @@
 const path = require('path');
-const { SourceMapDevToolPlugin } = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -54,7 +53,6 @@ module.exports = {
     new ExtractTextPlugin({
       filename: 'popup.css',
       allChunks: true
-    }),
-    new SourceMapDevToolPlugin({})
+    })
   ]
 };
