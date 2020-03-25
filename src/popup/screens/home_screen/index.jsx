@@ -10,9 +10,9 @@ import SearchField from '../../components/search_field';
 import SearchList from '../../components/search_list';
 import ScrollView from '../../components/scroll_view';
 import OnboardMessage from '../../components/onboard_message';
+import ItemActions from '../../components/item_actions';
 
 import './home_screen.css';
-import ItemActions from '../../components/item_actions';
 import { openEditorWindow } from '../../store/actions/ui';
 
 const KEYS = {

@@ -26,8 +26,10 @@
 }
 
 .search-list__text {
+  /* outline: 1px solid red; */
   width: 100%;
   overflow: hidden;
+  margin-bottom: -1px;
   text-overflow: ellipsis;
 }
 

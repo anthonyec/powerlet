@@ -1,3 +1,7 @@
 .icon {
   color: var(--icon-normal-fill);
 }
+
+.icon svg {
+  display: block;
+}

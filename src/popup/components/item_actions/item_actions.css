@@ -1,21 +1,19 @@
 .item-actions {}
 
 .item-actions__button {
-  background-color: transparent;
-  border-color: transparent;
   color: var(--button-normal-color);
 
+  background-color: transparent;
+  border-style: solid;
+  border-width: 1px;
+  border-color: transparent;
   border-radius: 100px;
-  padding: 5px;
-  font-size: var(--button-font-size);
-
   width: 28px;
   height: 28px;
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
 }
 
 /* Big hit area */
@@ -41,9 +39,10 @@
 .item-actions__button:focus {
   border-color: var(--global-focus-border-color);
   box-shadow: var(--global-focus-box-shadow);
+
   outline: 0;
 }
 
 .item-actions__button svg {
-  height: 14px;
+  height: 12px;
 }

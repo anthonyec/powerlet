@@ -9,7 +9,7 @@
   font-size: var(--button-font-size);
   border-width: 1px;
   border-style: solid;
-  border-radius: 0px;
+  border-radius: 3px;
   font-family: inherit;
   width: 100%;
   padding: 10px 8px;
