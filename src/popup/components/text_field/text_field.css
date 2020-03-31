@@ -1,27 +1,37 @@
-.search-field {
-  padding: 8px;
+.text-field {
+  display: flex;
 }
 
-.search-field__input {
+.text-field__label {
+  display: flex;
+  width: 56px;
+  height: 32px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.text-field__input {
   background-color: var(--input-normal-background);
   color: var(--input-normal-color);
   border-color: var(--input-normal-border-color);
   font-size: var(--button-font-size);
+
   border-width: 1px;
   border-style: solid;
   border-radius: 3px;
   font-family: inherit;
   width: 100%;
-  padding: 10px 8px;
+  padding: 0 8px;
+  height: 32px;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   outline: none;
 }
 
-.search-field__input:focus {
+.text-field__input:focus {
   border-color: var(--global-focus-border-color);
   box-shadow: var(--global-focus-box-shadow);
 }
 
-.search-field__input::placeholder {
+.text-field__input::placeholder {
   color: var(--input-placeholder-color);
 }

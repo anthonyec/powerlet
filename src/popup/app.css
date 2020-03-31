@@ -8,6 +8,7 @@
   --item-selected-background: #EAEBEB;
 
   --item-padding: 10px 15px;
+  --item-padding-left-right: 15px;
 
   --button-normal-background: #FFFFFF;
   --button-hover-background: #FAFAFA;
@@ -28,6 +29,8 @@
   --input-normal-color: #2A2B2E;
   --input-normal-border-color: #B1B1B1;
   --input-placeholder-color: #757575;
+
+  --icon-normal-fill: #5F6369;
 }
 
 @media(prefers-color-scheme: dark) {
@@ -55,6 +58,8 @@
     --input-normal-color: #E1E1E1;
     --input-normal-border-color: #757575;
     --input-placeholder-color: #919191;
+
+    --icon-normal-fill: #9AA0A7;
   }
 }
 
@@ -63,4 +68,5 @@ body {
   color: var(--global-color);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   font-size: 13px;
+  overflow: hidden;
 }

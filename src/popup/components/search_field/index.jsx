@@ -21,10 +21,10 @@ function SearchField(
         onChange={onChange}
         placeholder={placeholder}
         defaultValue={defaultValue}
-        autocomplete="off"
-        autocorrect="off"
-        autocapitalize="off"
-        spellcheck="false"
+        autoComplete="off"
+        autoCorrect="off"
+        autoCapitalize="off"
+        spellCheck="false"
       />
     </div>
   );

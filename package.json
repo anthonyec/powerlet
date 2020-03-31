@@ -6,33 +6,34 @@
   "scripts": {
     "start": "webpack -w --mode=development",
     "format": "prettier --loglevel warn --write '**/*.{js,json,jsx,md}'",
-    "build": "webpack --mode=production"
+    "build": "webpack --mode=production",
+    "version": "node ./scripts/version.js && npm run format && git add ./src/manifest.json"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "fuse.js": "^3.4.5",
-    "prettier": "^1.18.2",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-redux": "^7.1.0",
-    "redux": "^4.0.4",
-    "redux-persist": "^5.10.0",
+    "fuse.js": "^3.6.1",
+    "prettier": "^2.0.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-redux": "^7.2.0",
+    "redux": "^4.0.5",
+    "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0",
-    "use-callback-ref": "^1.0.1"
+    "use-callback-ref": "^1.2.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.7",
-    "@babel/preset-env": "^7.7.7",
-    "@babel/preset-react": "^7.7.4",
-    "babel-loader": "^8.0.6",
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.0",
+    "@babel/preset-react": "^7.9.1",
+    "babel-loader": "^8.1.0",
     "clean-webpack-plugin": "^3.0.0",
-    "copy-webpack-plugin": "^5.0.4",
+    "copy-webpack-plugin": "^5.1.1",
     "css-loader": "^0.28.11",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "html-webpack-plugin": "^3.2.0",
     "style-loader": "^0.20.3",
-    "webpack": "^4.41.5",
-    "webpack-cli": "^3.3.6"
+    "webpack": "^4.42.0",
+    "webpack-cli": "^3.3.11"
   }
 }
