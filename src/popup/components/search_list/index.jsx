@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Fuse from 'fuse.js';
 
 import './search_list.css';
@@ -20,9 +20,20 @@ export default function SearchList({
   onItemMouseOver = () => {},
   onItemMouseMove = () => {},
   setItemRef = () => {},
-  selected = -1
+  selected = -1,
+  renderItemActions = () => {}
 }) {
   const fuseRef = useRef();
+  const [currentMouseOverIndex, setCurrentMouseOverIndex] = useState(-1);
+
+  const handleItemMouseOver = (index) => {
+    onItemMouseOver.bind(null, index);
+    setCurrentMouseOverIndex(index);
+  };
+
+  const handleMouseLeave = () => {
+    setCurrentMouseOverIndex(-1);
+  };
 
   useEffect(() => {
     fuseRef.current = new Fuse(items, {
@@ -49,6 +60,7 @@ export default function SearchList({
 
   const renderedItems = filteredItems.map((item, index) => {
     const isSelected = index === selected;
+    const isMouseOver = index === currentMouseOverIndex;
     const className = isSelected
       ? 'search-list__item search-list__item--selected'
       : 'search-list__item';
@@ -59,10 +71,17 @@ export default function SearchList({
         ref={setItemRef}
         className={className}
         onClick={onItemClick.bind(null, item.url)}
-        onMouseOver={onItemMouseOver.bind(null, index)}
+        onMouseOver={handleItemMouseOver.bind(null, index)}
+        onMouseLeave={handleMouseLeave}
         onMouseMove={onItemMouseMove.bind(null, index)}
       >
-        {item.title || 'Untitled script'}
+        <div className="search-list__text">
+          {item.title || 'Untitled script'}
+        </div>
+
+        <div className="search-list__actions">
+          {renderItemActions(item, isSelected, isMouseOver)}
+        </div>
       </li>
     );
   });
