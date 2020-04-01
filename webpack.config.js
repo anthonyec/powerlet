@@ -1,6 +1,6 @@
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
@@ -11,8 +11,8 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name].bundle.js',
-    chunkFilename: '[name].[contentHash:5].bundle.js'
+    filename: '[name].[contenthash:5].bundle.js',
+    chunkFilename: '[name].[contentHash:5].chunk.js'
   },
   optimization: {
     namedModules: true,
@@ -27,10 +27,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: 'css-loader'
-        })
+        use: [MiniCssExtractPlugin.loader, 'css-loader']
       }
     ]
   },
@@ -50,8 +47,8 @@ module.exports = {
       template: './src/popup/index.ejs',
       excludeChunks: ['background']
     }),
-    new ExtractTextPlugin({
-      filename: 'popup.css',
+    new MiniCssExtractPlugin({
+      filename: 'popup.[contentHash:5].css',
       allChunks: true
     })
   ]
