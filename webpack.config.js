@@ -11,8 +11,8 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name].bundle.js',
-    chunkFilename: '[name].[contentHash:5].bundle.js'
+    filename: '[name].[contenthash:5].bundle.js',
+    chunkFilename: '[name].[contentHash:5].chunk.js'
   },
   optimization: {
     namedModules: true,
@@ -48,7 +48,7 @@ module.exports = {
       excludeChunks: ['background']
     }),
     new MiniCssExtractPlugin({
-      filename: 'popup.css',
+      filename: 'popup.[contentHash:5].css',
       allChunks: true
     })
   ]
