@@ -1,6 +1,6 @@
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
@@ -27,10 +27,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: 'css-loader'
-        })
+        use: [MiniCssExtractPlugin.loader, 'css-loader']
       }
     ]
   },
@@ -50,7 +47,7 @@ module.exports = {
       template: './src/popup/index.ejs',
       excludeChunks: ['background']
     }),
-    new ExtractTextPlugin({
+    new MiniCssExtractPlugin({
       filename: 'popup.css',
       allChunks: true
     })
