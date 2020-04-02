@@ -11,7 +11,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name].[contenthash:5].bundle.js',
+    filename: '[name].bundle.js',
     chunkFilename: '[name].[contentHash:5].chunk.js'
   },
   optimization: {
