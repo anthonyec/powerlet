@@ -15,6 +15,7 @@ import ItemActions from '../../components/item_actions';
 import './home_screen.css';
 import { openEditorWindow } from '../../store/actions/ui';
 
+const HIDE_EDITOR = true;
 const KEYS = {
   ENTER: 13,
   UP: 38,
@@ -154,7 +155,7 @@ export default function HomeScreen() {
             onItemClick={handleBookmarkletClick}
             onItemSelect={handleItemSelect}
             renderItemActions={(item, isSelected, isMouseOver) => {
-              if (isSelected || isMouseOver) {
+              if (!HIDE_EDITOR && (isSelected || isMouseOver)) {
                 return (
                   <ItemActions
                     onEditClick={handleOnEditClick.bind(null, item.id)}
