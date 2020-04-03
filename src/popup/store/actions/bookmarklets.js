@@ -48,17 +48,3 @@ export function fetchAllBookmarklets() {
     );
   };
 }
-
-export function addExampleBookmarklets() {
-  return (dispatch, getState, { browser }) => {
-    browser.bookmarks.create({
-      title: 'Scroll Page to Top',
-      url: 'javascript:window.scrollTo(0,0);'
-    });
-
-    browser.bookmarks.create({
-      title: 'Scroll Page to Bottom',
-      url: 'javascript:window.scrollTo(0,document.documentElement.scrollHeight)'
-    });
-  };
-}
