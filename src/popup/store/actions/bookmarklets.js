@@ -34,11 +34,13 @@ export function fetchAllBookmarklets() {
   return (dispatch, getState, { browser }) => {
     browser.bookmarks.search(
       {
+        // Use query because it's fuzzy, searching by URL only returns
+        // exact macthes.
         query: 'javascript:'
       },
       (results) => {
         const filteredResults = results.filter((result) => {
-          return result.url.match(/^javascript\:/);
+          return result.url && result.url.match(/^javascript\:/);
         });
 
         dispatch(setBookmarklets(filteredResults));
