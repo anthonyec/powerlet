@@ -39,12 +39,8 @@ export function fetchAllBookmarklets() {
         query: 'javascript:'
       },
       (results) => {
-        const resultsWithTitlesAndUrls = results.filter((result) => {
-          return result.title && result.url;
-        });
-
-        const filteredResults = resultsWithTitlesAndUrls.filter((result) => {
-          return result.url.match(/^javascript\:/);
+        const filteredResults = results.filter((result) => {
+          return result.url && result.url.match(/^javascript\:/);
         });
 
         dispatch(setBookmarklets(filteredResults));
