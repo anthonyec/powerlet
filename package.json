@@ -7,6 +7,7 @@
     "start": "webpack -w --mode=development",
     "format": "prettier --loglevel warn --write '**/*.{js,json,jsx,md}'",
     "build": "webpack --mode=production",
+    "test:e2e": "npm run build && mocha ./test/index.js",
     "version": "node ./scripts/version.js && npm run format && git add ./src/manifest.json"
   },
   "author": "",
@@ -32,6 +33,7 @@
     "css-loader": "^0.28.11",
     "html-webpack-plugin": "^3.2.0",
     "mini-css-extract-plugin": "^0.9.0",
+    "mocha": "^7.1.1",
     "puppeteer": "^2.1.1",
     "style-loader": "^0.20.3",
     "webpack": "^4.42.0",
