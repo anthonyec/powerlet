@@ -4,13 +4,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   fetchBookmarklet,
   saveCurrentFile,
-  updateCurrentFile
+  updateCurrentFile,
+  deleteCurrentFile
 } from '../../store/actions/editor';
 
 import CodeEditor from '../../components/code_editor';
 import TextField from '../../components/text_field';
 
 import './editor_screen.css';
+import Button from '../../components/button';
 
 export default function Editor({ route = { params: {}, base: '' } }) {
   const dispatch = useDispatch();
@@ -46,6 +48,15 @@ export default function Editor({ route = { params: {}, base: '' } }) {
     dispatch(saveCurrentFile());
   };
 
+  const handleOnDeleteClick = () => {
+    const deleteScript = confirm('Are you sure you want to delete this script permanently?');
+
+    if (deleteScript) {
+      dispatch(deleteCurrentFile());
+      window.close();
+    }
+  };
+
   return (
     <div className="editor-screen">
       <div className="editor-screen__section">
@@ -61,6 +72,7 @@ export default function Editor({ route = { params: {}, base: '' } }) {
           onChange={handleCodeEditorOnChange}
         />
       </div>
+      <Button onClick={handleOnDeleteClick}>Delete</Button>
     </div>
   );
 }
