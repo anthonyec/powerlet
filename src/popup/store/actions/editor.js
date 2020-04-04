@@ -1,3 +1,5 @@
+import { openEditorWindow } from './ui';
+
 export const SET_CURRENT_FILE = 'SET_CURRENT_FILE';
 export const UPDATE_CURRENT_FILE = 'UPDATE_CURRENT_FILE';
 export const SET_LOADING = 'SET_LOADING';
@@ -59,6 +61,29 @@ export function fetchBookmarklet(id = '') {
 
       dispatch(setCurrentFile(file));
     });
+  };
+}
+
+export function createNewBookmarklet() {
+  return (dispatch, getState, { browser }) => {
+    browser.bookmarks.create(
+      {
+        title: 'New script',
+        url:
+          'javascript: (function() { alert("This is your new script!"); } )();'
+      },
+      (bookmark) => {
+        if (browser.runtime.lastError) {
+          console.warn(
+            'Failed to create new bookmark!',
+            browser.runtime.lastError.message
+          );
+          return;
+        }
+
+        dispatch(openEditorWindow(bookmark.id));
+      }
+    );
   };
 }
 
