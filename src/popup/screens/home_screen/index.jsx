@@ -11,9 +11,11 @@ import SearchList from '../../components/search_list';
 import ScrollView from '../../components/scroll_view';
 import OnboardMessage from '../../components/onboard_message';
 import ItemActions from '../../components/item_actions';
+import Button from '../../components/button';
 
 import './home_screen.css';
 import { openEditorWindow } from '../../store/actions/ui';
+import { createNewBookmarklet } from '../../store/actions/editor';
 
 const HIDE_EDITOR = true;
 const KEYS = {
@@ -136,6 +138,11 @@ export default function HomeScreen() {
     window.close();
   };
 
+  const handleOnNewClick = () => {
+    dispatch(createNewBookmarklet());
+    window.close();
+  };
+
   return (
     <div className="home-screen">
       <SearchField
@@ -168,6 +175,8 @@ export default function HomeScreen() {
       )}
 
       {bookmarklets.length === 0 && <OnboardMessage />}
+
+      {!HIDE_EDITOR && <Button onClick={handleOnNewClick}>Create new script</Button>}
     </div>
   );
 }
