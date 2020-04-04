@@ -11,13 +11,13 @@ export default function OnboardMessage() {
 
   const handleExampleOnClick = () => {
     dispatch(navigateTo('examples.html'));
+    window.close();
   };
 
   return (
     <div className="onboard-message">
       <div className="onboard-message__message">
-        You don't have any
-        <br />
+        You don't have any <br />
         bookmark&nbsp;scripts.
       </div>
 
