@@ -87,6 +87,26 @@ export function createNewBookmarklet() {
   };
 }
 
+export function deleteCurrentFile() {
+  return (dispatch, getState, { browser }) => {
+    const currentFile = getState().editor.currentFile;
+    const { id } = currentFile;
+
+    if (!id) {
+      console.warn(`Not deleting bookmark because current file id is "${id}"`);
+      return;
+    }
+
+
+    browser.bookmarks.remove(id, () => {
+      if (browser.runtime.lastError) {
+        console.warn('Failed to delete!', browser.runtime.lastError.message);
+        return;
+      }
+    });
+  };
+};
+
 export function saveCurrentFile() {
   return (dispatch, getState, { browser }) => {
     const currentFile = getState().editor.currentFile;
