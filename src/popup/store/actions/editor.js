@@ -114,6 +114,31 @@ export function deleteCurrentFile() {
   };
 }
 
+export function changeBookmarkletFolder(parentId) {
+  return (dispatch, getState, { browser }) => {
+    const currentFile = getState().editor.currentFile;
+    const { id } = currentFile;
+
+    if (!parentId) {
+      console.warn(`"parentId" required!`);
+      return;
+    }
+
+    if (!id) {
+      console.warn(`Not moving bookmark because current file id is "${id}"`);
+      return;
+    }
+
+    browser.bookmarks.move(id, { parentId }, () => {
+      if (browser.runtime.lastError) {
+        console.warn('Failed to move!', browser.runtime.lastError.message);
+        return;
+      }
+    });
+  };
+}
+
+
 function recurse(results, level) {
   let children = [];
 
