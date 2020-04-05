@@ -44,10 +44,10 @@ function setLoading(isLoading = false) {
   };
 }
 
-function setFolders(tree = []) {
+function setFolders(folders = []) {
   return {
     type: SET_FOLDERS,
-    payload: tree
+    payload: folders
   };
 }
 
