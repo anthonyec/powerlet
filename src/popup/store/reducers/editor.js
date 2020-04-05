@@ -10,7 +10,8 @@ const defaultState = {
   currentFile: {
     id: '',
     title: '',
-    code: ''
+    code: '',
+    parentId: ''
   },
   folders: []
 };

@@ -12,11 +12,12 @@ function fileToBookmarklet(file = { title: '', code: '' }) {
   };
 }
 
-function bookmarkletToFile(bookmarklet = { id: '', title: '', url: '' }) {
+function bookmarkletToFile(bookmarklet = { id: '', title: '', url: '', parentId: '' }) {
   return {
     id: bookmarklet.id,
     title: bookmarklet.title,
-    code: bookmarklet.url
+    code: bookmarklet.url,
+    parentId: bookmarklet.parentId
   };
 }
 
@@ -134,6 +135,8 @@ export function changeBookmarkletFolder(parentId) {
         console.warn('Failed to move!', browser.runtime.lastError.message);
         return;
       }
+
+      dispatch(updateCurrentFile({ parentId }));
     });
   };
 }
