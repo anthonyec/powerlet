@@ -3,11 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import {
   fetchBookmarklet,
+  changeBookmarkletFolder,
+  deleteBookmarklet,
   saveCurrentFile,
   updateCurrentFile,
-  deleteBookmarklet,
-  fetchAllFolders,
-  changeBookmarkletFolder
+  fetchAllFolders
 } from '../../store/actions/editor';
 
 import CodeEditor from '../../components/code_editor';
