@@ -12,7 +12,9 @@ function fileToBookmarklet(file = { title: '', code: '' }) {
   };
 }
 
-function bookmarkletToFile(bookmarklet = { id: '', title: '', url: '', parentId: '' }) {
+function bookmarkletToFile(
+  bookmarklet = { id: '', title: '', url: '', parentId: '' }
+) {
   return {
     id: bookmarklet.id,
     title: bookmarklet.title,
@@ -140,7 +142,6 @@ export function changeBookmarkletFolder(parentId) {
     });
   };
 }
-
 
 function recurse(results, level) {
   let children = [];
