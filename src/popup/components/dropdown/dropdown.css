@@ -17,6 +17,7 @@
   flex-shrink: 0;
   display: flex;
   align-items: center;
+  overflow: hidden;
 }
 
 /* Triangle icon */
@@ -45,4 +46,11 @@
   height: 100%;
   position: absolute;
   opacity: 0;
+}
+
+.dropdown__label {
+  margin-right: 24px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
