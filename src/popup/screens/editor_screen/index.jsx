@@ -5,7 +5,7 @@ import {
   fetchBookmarklet,
   saveCurrentFile,
   updateCurrentFile,
-  deleteCurrentFile,
+  deleteBookmarklet,
   fetchAllFolders,
   changeBookmarkletFolder
 } from '../../store/actions/editor';
@@ -59,7 +59,7 @@ export default function Editor({ route = { params: {}, base: '' } }) {
     );
 
     if (deleteScript) {
-      dispatch(deleteCurrentFile());
+      dispatch(deleteBookmarklet(currentFile.id));
       window.close();
     }
   };
@@ -69,7 +69,7 @@ export default function Editor({ route = { params: {}, base: '' } }) {
   };
 
   const handleFolderOnChange = (evt) => {
-    dispatch(changeBookmarkletFolder(evt.currentTarget.value));
+    dispatch(changeBookmarkletFolder(currentFile.id, evt.currentTarget.value));
   };
 
   const folderOptions = folders.map((folder) => {
@@ -98,7 +98,7 @@ export default function Editor({ route = { params: {}, base: '' } }) {
           options={folderOptions}
         />
       </div>
-      <div className="editor-screen__section">
+      <div className="editor-screen__section editor-screen__section--space-between">
         <Button onClick={handleOnDeleteClick}>
           Delete
         </Button>

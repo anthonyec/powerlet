@@ -98,11 +98,8 @@ export function createNewBookmarklet() {
   };
 }
 
-export function deleteCurrentFile() {
+export function deleteBookmarklet(id = '') {
   return (dispatch, getState, { browser }) => {
-    const currentFile = getState().editor.currentFile;
-    const { id } = currentFile;
-
     if (!id) {
       console.warn(`Not deleting bookmark because current file id is "${id}"`);
       return;
@@ -117,18 +114,15 @@ export function deleteCurrentFile() {
   };
 }
 
-export function changeBookmarkletFolder(parentId) {
+export function changeBookmarkletFolder(id = '', parentId = '') {
   return (dispatch, getState, { browser }) => {
-    const currentFile = getState().editor.currentFile;
-    const { id } = currentFile;
-
-    if (!parentId) {
-      console.warn(`"parentId" required!`);
+    if (!id) {
+      console.warn(`Not moving bookmark because current file id is "${id}"`);
       return;
     }
 
-    if (!id) {
-      console.warn(`Not moving bookmark because current file id is "${id}"`);
+    if (!parentId) {
+      console.warn(`"parentId" required!`);
       return;
     }
 
