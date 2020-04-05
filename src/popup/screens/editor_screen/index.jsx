@@ -5,18 +5,22 @@ import {
   fetchBookmarklet,
   saveCurrentFile,
   updateCurrentFile,
-  deleteCurrentFile
+  deleteCurrentFile,
+  fetchAllFolders,
+  changeBookmarkletFolder
 } from '../../store/actions/editor';
 
 import CodeEditor from '../../components/code_editor';
 import TextField from '../../components/text_field';
+import Button from '../../components/button';
+import Dropdown from '../../components/dropdown';
 
 import './editor_screen.css';
-import Button from '../../components/button';
 
 export default function Editor({ route = { params: {}, base: '' } }) {
   const dispatch = useDispatch();
   const currentFile = useSelector((state) => state.editor.currentFile);
+  const folders = useSelector((state) => state.editor.folders);
 
   useLayoutEffect(() => {
     window.document.title = 'Edit script';
@@ -25,6 +29,7 @@ export default function Editor({ route = { params: {}, base: '' } }) {
   useEffect(() => {
     if (route.params.id) {
       dispatch(fetchBookmarklet(route.params.id));
+      dispatch(fetchAllFolders());
     }
   }, [route.params.id]);
 
@@ -49,13 +54,27 @@ export default function Editor({ route = { params: {}, base: '' } }) {
   };
 
   const handleOnDeleteClick = () => {
-    const deleteScript = confirm('Are you sure you want to delete this script permanently?');
+    const deleteScript = confirm(
+      'Are you sure you want to delete this script permanently?'
+    );
 
     if (deleteScript) {
       dispatch(deleteCurrentFile());
       window.close();
     }
   };
+
+  const handleOnDoneClick = () => {
+    window.close();
+  };
+
+  const handleFolderOnChange = (evt) => {
+    dispatch(changeBookmarkletFolder(evt.currentTarget.value));
+  };
+
+  const folderOptions = folders.map((folder) => {
+    return { value: folder.id, label: folder.title };
+  });
 
   return (
     <div className="editor-screen">
@@ -72,7 +91,19 @@ export default function Editor({ route = { params: {}, base: '' } }) {
           onChange={handleCodeEditorOnChange}
         />
       </div>
-      <Button onClick={handleOnDeleteClick}>Delete</Button>
+      <div className="editor-screen__section">
+        <Dropdown
+          onChange={handleFolderOnChange}
+          value={currentFile.parentId}
+          options={folderOptions}
+        />
+      </div>
+      <div className="editor-screen__section">
+        <Button onClick={handleOnDeleteClick}>
+          Delete
+        </Button>
+        <Button onClick={handleOnDoneClick}>Done</Button>
+      </div>
     </div>
   );
 }
