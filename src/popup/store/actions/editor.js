@@ -160,7 +160,11 @@ export function fetchAllFolders() {
     browser.bookmarks.getTree((results) => {
       const folders = recurse(results, 0);
 
-      dispatch(setFolders(folders));
+      const foldersWithoutRoot = folders.filter((folder) => {
+        return folder.level && folder.level !== 0;
+      });
+
+      dispatch(setFolders(foldersWithoutRoot));
     });
   };
 }
