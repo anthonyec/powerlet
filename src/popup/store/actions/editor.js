@@ -3,6 +3,7 @@ import { openEditorWindow } from './ui';
 export const SET_CURRENT_FILE = 'SET_CURRENT_FILE';
 export const UPDATE_CURRENT_FILE = 'UPDATE_CURRENT_FILE';
 export const SET_LOADING = 'SET_LOADING';
+export const SET_FOLDERS = 'SET_FOLDERS';
 
 function fileToBookmarklet(file = { title: '', code: '' }) {
   return {
@@ -37,6 +38,13 @@ function setLoading(isLoading = false) {
   return {
     type: SET_LOADING,
     payload: isLoading
+  };
+}
+
+function setFolders(tree = []) {
+  return {
+    type: SET_FOLDERS,
+    payload: tree
   };
 }
 
@@ -97,7 +105,6 @@ export function deleteCurrentFile() {
       return;
     }
 
-
     browser.bookmarks.remove(id, () => {
       if (browser.runtime.lastError) {
         console.warn('Failed to delete!', browser.runtime.lastError.message);
@@ -105,7 +112,35 @@ export function deleteCurrentFile() {
       }
     });
   };
-};
+}
+
+function recurse(results, level) {
+  let children = [];
+
+  results.forEach((result) => {
+    if (result.children) {
+      children.push({
+        level: level,
+        id: result.id,
+        title: result.title
+      });
+
+      children = [...children, ...recurse(result.children, level + 1)];
+    }
+  });
+
+  return children;
+}
+
+export function fetchAllFolders() {
+  return (dispatch, getState, { browser }) => {
+    browser.bookmarks.getTree((results) => {
+      const folders = recurse(results, 0);
+
+      dispatch(setFolders(folders));
+    });
+  };
+}
 
 export function saveCurrentFile() {
   return (dispatch, getState, { browser }) => {
