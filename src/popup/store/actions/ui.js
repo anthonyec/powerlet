@@ -14,8 +14,8 @@ export function openEditorWindow(id = '') {
       height: EDITOR_WINDOW_HEIGHT,
       url: `popup.html#editor/${id}`,
       type: 'popup',
-      left: Math.floor((screen.availWidth / 2) - (EDITOR_WINDOW_WIDTH / 2)),
-      top: Math.floor((screen.availHeight / 2) - (EDITOR_WINDOW_HEIGHT / 2))
+      left: Math.floor(screen.availWidth / 2 - EDITOR_WINDOW_WIDTH / 2),
+      top: Math.floor(screen.availHeight / 2 - EDITOR_WINDOW_HEIGHT / 2)
     });
   };
 }

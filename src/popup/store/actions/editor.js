@@ -3,6 +3,7 @@ import { openEditorWindow } from './ui';
 export const SET_CURRENT_FILE = 'SET_CURRENT_FILE';
 export const UPDATE_CURRENT_FILE = 'UPDATE_CURRENT_FILE';
 export const SET_LOADING = 'SET_LOADING';
+export const SET_FOLDERS = 'SET_FOLDERS';
 
 function fileToBookmarklet(file = { title: '', code: '' }) {
   return {
@@ -11,11 +12,14 @@ function fileToBookmarklet(file = { title: '', code: '' }) {
   };
 }
 
-function bookmarkletToFile(bookmarklet = { id: '', title: '', url: '' }) {
+function bookmarkletToFile(
+  bookmarklet = { id: '', title: '', url: '', parentId: '' }
+) {
   return {
     id: bookmarklet.id,
     title: bookmarklet.title,
-    code: bookmarklet.url
+    code: bookmarklet.url,
+    parentId: bookmarklet.parentId
   };
 }
 
@@ -37,6 +41,13 @@ function setLoading(isLoading = false) {
   return {
     type: SET_LOADING,
     payload: isLoading
+  };
+}
+
+function setFolders(folders = []) {
+  return {
+    type: SET_FOLDERS,
+    payload: folders
   };
 }
 
@@ -84,6 +95,77 @@ export function createNewBookmarklet() {
         dispatch(openEditorWindow(bookmark.id));
       }
     );
+  };
+}
+
+export function deleteBookmarklet(id = '') {
+  return (dispatch, getState, { browser }) => {
+    if (!id) {
+      console.warn(`Not deleting bookmark because current file id is "${id}"`);
+      return;
+    }
+
+    browser.bookmarks.remove(id, () => {
+      if (browser.runtime.lastError) {
+        console.warn('Failed to delete!', browser.runtime.lastError.message);
+        return;
+      }
+    });
+  };
+}
+
+export function changeBookmarkletFolder(id = '', parentId = '') {
+  return (dispatch, getState, { browser }) => {
+    if (!id) {
+      console.warn(`Not moving bookmark because current file id is "${id}"`);
+      return;
+    }
+
+    if (!parentId) {
+      console.warn(`"parentId" required!`);
+      return;
+    }
+
+    browser.bookmarks.move(id, { parentId }, () => {
+      if (browser.runtime.lastError) {
+        console.warn('Failed to move!', browser.runtime.lastError.message);
+        return;
+      }
+
+      dispatch(updateCurrentFile({ parentId }));
+    });
+  };
+}
+
+function recurse(results, level) {
+  let children = [];
+
+  results.forEach((result) => {
+    if (result.children) {
+      children.push({
+        level: level,
+        id: result.id,
+        title: result.title
+      });
+
+      children = [...children, ...recurse(result.children, level + 1)];
+    }
+  });
+
+  return children;
+}
+
+export function fetchAllFolders() {
+  return (dispatch, getState, { browser }) => {
+    browser.bookmarks.getTree((results) => {
+      const folders = recurse(results, 0);
+
+      const foldersWithoutRoot = folders.filter((folder) => {
+        return folder.level && folder.level !== 0;
+      });
+
+      dispatch(setFolders(foldersWithoutRoot));
+    });
   };
 }
 

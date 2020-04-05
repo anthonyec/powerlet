@@ -19,3 +19,8 @@
 .editor-screen__section--full {
   height: 100%;
 }
+
+.editor-screen__section--space-between {
+  display: flex;
+  justify-content:  space-between;
+}

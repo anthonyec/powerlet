@@ -1,7 +1,8 @@
 import {
   SET_CURRENT_FILE,
   SET_LOADING,
-  UPDATE_CURRENT_FILE
+  UPDATE_CURRENT_FILE,
+  SET_FOLDERS
 } from '../actions/editor';
 
 const defaultState = {
@@ -9,8 +10,10 @@ const defaultState = {
   currentFile: {
     id: '',
     title: '',
-    code: ''
-  }
+    code: '',
+    parentId: ''
+  },
+  folders: []
 };
 
 export default function editorReducer(state = defaultState, action) {
@@ -25,6 +28,13 @@ export default function editorReducer(state = defaultState, action) {
     return {
       ...state,
       isLoading: action.payload
+    };
+  }
+
+  if (action.type === SET_FOLDERS) {
+    return {
+      ...state,
+      folders: action.payload
     };
   }
 
