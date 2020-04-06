@@ -32,6 +32,8 @@
   --input-placeholder-color: #757575;
 
   --icon-normal-fill: #5F6369;
+
+  --toolbar-border-color: #E1E3E6;
 }
 
 @media(prefers-color-scheme: dark) {
@@ -61,6 +63,8 @@
     --input-placeholder-color: #919191;
 
     --icon-normal-fill: #9AA0A7;
+
+    --toolbar-border-color: #393D40;
   }
 }
 

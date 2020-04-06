@@ -1,6 +1,6 @@
 .toolbar {
+  border-top: 1px solid var(--toolbar-border-color);
   padding: 8px;
-  padding-top: 0;
   display: flex;
   justify-content: flex-start;
   position: relative;
