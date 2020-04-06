@@ -16,6 +16,9 @@ import Button from '../../components/button';
 import './home_screen.css';
 import { openEditorWindow } from '../../store/actions/ui';
 import { createNewBookmarklet } from '../../store/actions/editor';
+import Toolbar from '../../components/toolbar';
+import Icon from '../../components/icon';
+import ToolbarButton from '../../components/toolbar_button';
 
 const HIDE_EDITOR = true;
 const KEYS = {
@@ -176,7 +179,13 @@ export default function HomeScreen() {
 
       {bookmarklets.length === 0 && <OnboardMessage />}
 
-      {!HIDE_EDITOR && <Button onClick={handleOnNewClick}>Create new script</Button>}
+      {!HIDE_EDITOR &&
+        <Toolbar>
+          <ToolbarButton onClick={handleOnNewClick} icon={<Icon name="plus" />}>
+            Create new script
+          </ToolbarButton>
+        </Toolbar>
+      }
     </div>
   );
 }
