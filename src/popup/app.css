@@ -20,6 +20,7 @@
 
   /* Less padding on top to optically align in the center. */
   --button-padding: 7px 15px 8px;
+  --button-padding-left-right: 15px;
   --button-font-size: 13px;
   --button-normal-color: #2C7CEA;
   --button-hover-color: #1D74E9;
