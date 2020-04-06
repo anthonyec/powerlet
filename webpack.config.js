@@ -3,6 +3,10 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
+
+const APP_DIR = path.resolve(__dirname, './src');
+const MONACO_DIR = path.resolve(__dirname, './node_modules/monaco-editor');
 
 module.exports = {
   entry: {
@@ -26,8 +30,19 @@ module.exports = {
         loader: 'babel-loader'
       },
       {
+        include: APP_DIR,
         test: /\.css$/,
         use: [MiniCssExtractPlugin.loader, 'css-loader']
+      },
+      {
+        test: /\.css$/,
+        include: MONACO_DIR,
+        use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.ttf$/,
+        include: MONACO_DIR,
+        use: ['file-loader']
       }
     ]
   },
@@ -50,6 +65,9 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: 'popup.[contentHash:5].css',
       allChunks: true
+    }),
+    new MonacoWebpackPlugin({
+      languages: ['javascript']
     })
   ]
 };

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import MonacoEditor from 'react-monaco-editor';
 
 import './code_editor.css';
 
@@ -17,11 +18,12 @@ export default function CodeEditor({ defaultValue, onChange = () => {} }) {
 
   return (
     <div className="code-editor">
-      <textarea
-        className="code-editor__input"
-        onChange={handleOnChange}
+      <MonacoEditor
+        width="800"
+        height="600"
+        language="javascript"
+        theme="vs-dark"
         value={value}
-        spellCheck={false}
       />
     </div>
   );
