@@ -179,7 +179,7 @@ export default function HomeScreen() {
 
       {bookmarklets.length === 0 && <OnboardMessage />}
 
-      {!HIDE_EDITOR &&
+      {!HIDE_EDITOR && bookmarklets.length !== 0 &&
         <Toolbar>
           <ToolbarButton onClick={handleOnNewClick} icon={<Icon name="plus" />}>
             Create new script
