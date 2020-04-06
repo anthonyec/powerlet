@@ -1,7 +1,8 @@
 .toolbar {
-  border-top: 1px var(--button-normal-border-color) solid;
+  /* border-top: 1px var(--button-normal-border-color) solid; */
 
   padding: 8px;
+  padding-top: 0;
   display: flex;
   justify-content: flex-start;
 }
