@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import AceEditor from 'react-ace';
 
 import 'ace-builds/webpack-resolver';
-
-// import "ace-builds/src-noconflict/mode-javascript";
-// import "ace-builds/src-noconflict/theme-github";
+import "ace-builds/src-noconflict/mode-javascript";
+import "ace-builds/src-noconflict/theme-terminal";
 
 
 import './code_editor.css';
@@ -17,19 +16,21 @@ export default function CodeEditor({ defaultValue, onChange = () => {} }) {
     setValue(defaultValue);
   }, [defaultValue]);
 
-  const handleOnChange = (evt) => {
-    setValue(evt.target.value);
-    onChange(evt.target.value);
+  const handleOnChange = (value) => {
+    setValue(value);
+    onChange(value);
   };
 
   return (
     <div className="code-editor">
-      <AceEditor onChange={handleOnChange} value={value} />
-      <textarea
+      <AceEditor
         className="code-editor__input"
-        onChange={handleOnChange}
         value={value}
-        spellCheck={false}
+        mode="javascript"
+        theme="terminal"
+        fontSize="14"
+        tabSize="2"
+        onChange={handleOnChange}
       />
     </div>
   );
