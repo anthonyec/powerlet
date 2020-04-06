@@ -1,4 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import AceEditor from 'react-ace';
+
+import 'ace-builds/webpack-resolver';
+
+// import "ace-builds/src-noconflict/mode-javascript";
+// import "ace-builds/src-noconflict/theme-github";
+
 
 import './code_editor.css';
 
@@ -17,6 +24,7 @@ export default function CodeEditor({ defaultValue, onChange = () => {} }) {
 
   return (
     <div className="code-editor">
+      <AceEditor onChange={handleOnChange} value={value} />
       <textarea
         className="code-editor__input"
         onChange={handleOnChange}
