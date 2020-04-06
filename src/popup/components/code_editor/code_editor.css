@@ -7,17 +7,13 @@
   height: 100%;
 }
 
-.code-editor__input {
-  /* I could not avoid !important on third-party code :-( */
-  width: 100% !important;
-  height: 100% !important;
-}
-
-.code-editor__input:focus {
+.code-editor--focus {
   border-color: var(--global-focus-border-color);
   box-shadow: var(--global-focus-box-shadow);
 }
 
-.code-editor__input::placeholder {
-  color: var(--input-placeholder-color);
+.code-editor__input {
+  /* I could not avoid !important on third-party code :-( */
+  width: 100% !important;
+  height: 100% !important;
 }
