@@ -18,7 +18,7 @@
 }
 
 .toolbar-button:hover {
-  background-color: var(--button-hover-background);
+  background-color: var(--item-hover-background);
   color: var(--button-hover-color);
 }
 
