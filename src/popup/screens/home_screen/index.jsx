@@ -136,8 +136,8 @@ export default function HomeScreen() {
     setCurrentScrollViewY(y);
   };
 
-  const handleOnEditClick = (id) => {
-    dispatch(openEditorWindow(id));
+  const handleOnEditClick = async (id) => {
+    await dispatch(openEditorWindow(id));
     window.close();
   };
 
