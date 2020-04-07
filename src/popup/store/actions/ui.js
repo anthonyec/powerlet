@@ -1,5 +1,5 @@
-const EDITOR_WINDOW_WIDTH = 500;
-const EDITOR_WINDOW_HEIGHT = 450;
+const EDITOR_WINDOW_WIDTH = 700;
+const EDITOR_WINDOW_HEIGHT = 520;
 
 export function navigateTo(url) {
   return (dispatch, getState, { browser }) => {
