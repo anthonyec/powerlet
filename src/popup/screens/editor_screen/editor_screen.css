@@ -18,6 +18,7 @@
 
 .editor-screen__section--full {
   height: 100%;
+  overflow: scroll;
 }
 
 .editor-screen__section--space-between {

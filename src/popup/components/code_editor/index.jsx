@@ -17,6 +17,34 @@ const CODE_MIRROR_OPTIONS = {
 
 export default function CodeEditor({ defaultValue, onChange = () => {} }) {
   const [value, setValue] = useState(defaultValue);
+  const [options, setOptions] = useState(CODE_MIRROR_OPTIONS);
+
+  const handleOnColorSchemeChange = (evt) => {
+    const isDarkTheme = evt.matches;
+
+    if (isDarkTheme) {
+      setOptions({
+        ...CODE_MIRROR_OPTIONS,
+        theme: 'material'
+      });
+    } else {
+      setOptions({
+        ...CODE_MIRROR_OPTIONS,
+        theme: 'default'
+      });
+    }
+  };
+
+  useEffect(() => {
+    const schemeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+    handleOnColorSchemeChange(schemeMediaQuery);
+    schemeMediaQuery.addListener(handleOnColorSchemeChange);
+
+    return () => {
+      schemeMediaQuery.removeListener(handleOnColorSchemeChange);
+    }
+  }, []);
 
   // When `defaultValue` prop changes, change the local state with that value.
   useEffect(() => {
@@ -35,7 +63,7 @@ export default function CodeEditor({ defaultValue, onChange = () => {} }) {
         onBeforeChange={(editor, data, value) => {
           handleOnChange(value);
         }}
-        options={CODE_MIRROR_OPTIONS}
+        options={options}
       />
     </div>
   );
