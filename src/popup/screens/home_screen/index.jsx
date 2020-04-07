@@ -6,16 +6,19 @@ import {
   fetchAllBookmarklets,
   executeBookmarklet
 } from '../../store/actions/bookmarklets';
+import { openEditorWindow } from '../../store/actions/ui';
+import { createNewBookmarklet } from '../../store/actions/editor';
+
 import SearchField from '../../components/search_field';
 import SearchList from '../../components/search_list';
 import ScrollView from '../../components/scroll_view';
 import OnboardMessage from '../../components/onboard_message';
 import ItemActions from '../../components/item_actions';
+import Toolbar from '../../components/toolbar';
+import Icon from '../../components/icon';
 import Button from '../../components/button';
 
 import './home_screen.css';
-import { openEditorWindow } from '../../store/actions/ui';
-import { createNewBookmarklet } from '../../store/actions/editor';
 
 const HIDE_EDITOR = true;
 const KEYS = {
@@ -133,8 +136,8 @@ export default function HomeScreen() {
     setCurrentScrollViewY(y);
   };
 
-  const handleOnEditClick = (id) => {
-    dispatch(openEditorWindow(id));
+  const handleOnEditClick = async (id) => {
+    await dispatch(openEditorWindow(id));
     window.close();
   };
 
@@ -176,7 +179,17 @@ export default function HomeScreen() {
 
       {bookmarklets.length === 0 && <OnboardMessage />}
 
-      {!HIDE_EDITOR && <Button onClick={handleOnNewClick}>Create new script</Button>}
+      {!HIDE_EDITOR && bookmarklets.length !== 0 &&
+        <Toolbar>
+          <Button
+            type="toolbar"
+            icon={<Icon name="plus" />}
+            onClick={handleOnNewClick}
+          >
+            Create new script
+          </Button>
+        </Toolbar>
+      }
     </div>
   );
 }

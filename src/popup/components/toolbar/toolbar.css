@@ -1,0 +1,4 @@
+.toolbar {
+  border-top: 1px solid var(--toolbar-border-color);
+  padding: 8px;
+}

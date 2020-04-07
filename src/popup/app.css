@@ -20,6 +20,7 @@
 
   /* Less padding on top to optically align in the center. */
   --button-padding: 7px 15px 8px;
+  --button-padding-left-right: 15px;
   --button-font-size: 13px;
   --button-normal-color: #2C7CEA;
   --button-hover-color: #1D74E9;
@@ -31,6 +32,8 @@
   --input-placeholder-color: #757575;
 
   --icon-normal-fill: #5F6369;
+
+  --toolbar-border-color: #E1E3E6;
 }
 
 @media(prefers-color-scheme: dark) {
@@ -60,6 +63,8 @@
     --input-placeholder-color: #919191;
 
     --icon-normal-fill: #9AA0A7;
+
+    --toolbar-border-color: #393D40;
   }
 }
 
