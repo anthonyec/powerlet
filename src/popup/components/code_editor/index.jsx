@@ -21,18 +21,12 @@ export default function CodeEditor({ defaultValue, onChange = () => {} }) {
 
   const handleOnColorSchemeChange = (evt) => {
     const isDarkTheme = evt.matches;
+    const theme = isDarkTheme ? 'material' : 'default';
 
-    if (isDarkTheme) {
-      setOptions({
-        ...CODE_MIRROR_OPTIONS,
-        theme: 'material'
-      });
-    } else {
-      setOptions({
-        ...CODE_MIRROR_OPTIONS,
-        theme: 'default'
-      });
-    }
+    setOptions({
+      ...CODE_MIRROR_OPTIONS,
+      theme
+    });
   };
 
   useEffect(() => {
