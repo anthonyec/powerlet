@@ -1,30 +1,21 @@
 .code-editor {
   width: 100%;
   height: 100%;
+  position: relative;
 }
 
-.code-editor__input {
+.code-editor .CodeMirror {
   background-color: var(--input-normal-background);
-  color: var(--input-normal-color);
-  border-color: var(--input-normal-border-color);
+  border: 1px solid var(--input-normal-border-color);
   font-size: var(--button-font-size);
-  border-width: 1px;
-  border-style: solid;
   border-radius: 3px;
-  width: 100%;
-  padding: 8px;
-  font-family: monospace;
-  outline: none;
+  position: absolute;
   width: 100%;
   height: 100%;
-  resize: none;
+  font-size: 14px;
 }
 
-.code-editor__input:focus {
+.code-editor .CodeMirror-focused {
   border-color: var(--global-focus-border-color);
   box-shadow: var(--global-focus-box-shadow);
-}
-
-.code-editor__input::placeholder {
-  color: var(--input-placeholder-color);
 }
