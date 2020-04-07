@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import Editor from 'react-simple-code-editor';
+import { highlight, languages } from 'prismjs/components/prism-core';
+
+import 'prismjs/components/prism-clike';
+import 'prismjs/components/prism-javascript';
 
 import './code_editor.css';
+import './prism.css';
 
 export default function CodeEditor({ defaultValue, onChange = () => {} }) {
   const [value, setValue] = useState(defaultValue);
@@ -10,19 +16,22 @@ export default function CodeEditor({ defaultValue, onChange = () => {} }) {
     setValue(defaultValue);
   }, [defaultValue]);
 
-  const handleOnChange = (evt) => {
-    setValue(evt.target.value);
-    onChange(evt.target.value);
+  const handleOnValueChange = (value) => {
+    setValue(value);
+    onChange(value);
   };
 
   return (
     <div className="code-editor">
-      <textarea
-        className="code-editor__input"
-        onChange={handleOnChange}
+      <Editor
         value={value}
-        spellCheck={false}
+        onValueChange={handleOnValueChange}
+        highlight={code => highlight(code, languages.js)}
       />
+      {/* <Editor
+        value={value}
+        /> */}
+        {/* onValueChange={handleOnChange} */}
     </div>
   );
 }

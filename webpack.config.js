@@ -34,6 +34,7 @@ module.exports = {
   resolve: {
     extensions: ['*', '.js', '.jsx']
   },
+  devtool: 'eval-cheap-source-map',
   plugins: [
     new CleanWebpackPlugin(),
     new CopyPlugin([
