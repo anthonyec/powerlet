@@ -27,8 +27,11 @@ export default function CodeEditor({ defaultValue, onChange = () => {} }) {
     const schemeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
     handleOnColorSchemeChange(schemeMediaQuery);
-
     schemeMediaQuery.addListener(handleOnColorSchemeChange);
+
+    return () => {
+      schemeMediaQuery.removeListener(handleOnColorSchemeChange);
+    }
   }, []);
 
   // When `defaultValue` prop changes, change the local state with that value.
