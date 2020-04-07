@@ -10,11 +10,7 @@
   border-radius: 3px;
 }
 
-.code-editor__input:focus {
+.code-editor .CodeMirror-focused {
   border-color: var(--global-focus-border-color);
   box-shadow: var(--global-focus-box-shadow);
-}
-
-.code-editor__input::placeholder {
-  color: var(--input-placeholder-color);
 }
