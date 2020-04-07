@@ -1,6 +1,7 @@
 .code-editor {
   width: 100%;
   height: 100%;
+  position: relative;
 }
 
 .code-editor .CodeMirror {
@@ -8,6 +9,9 @@
   border: 1px solid var(--input-normal-border-color);
   font-size: var(--button-font-size);
   border-radius: 3px;
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
 
 .code-editor .CodeMirror-focused {
