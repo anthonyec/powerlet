@@ -36,6 +36,24 @@
   outline: 0;
 }
 
+.button--toolbar {
+  width: 100%;
+  border-color: transparent;
+}
+
+.button--toolbar:hover {
+  background-color: var(--item-hover-background);
+  border-color: transparent;
+}
+
+.button--toolbar:focus {
+  border-color: var(--global-focus-border-color);
+}
+
+.button--toolbar:active {
+  background-color: var(--button-active-background);
+}
+
 .button__icon svg {
   height: 14px;
   margin-right: 8px;

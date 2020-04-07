@@ -6,19 +6,19 @@ import {
   fetchAllBookmarklets,
   executeBookmarklet
 } from '../../store/actions/bookmarklets';
+import { openEditorWindow } from '../../store/actions/ui';
+import { createNewBookmarklet } from '../../store/actions/editor';
+
 import SearchField from '../../components/search_field';
 import SearchList from '../../components/search_list';
 import ScrollView from '../../components/scroll_view';
 import OnboardMessage from '../../components/onboard_message';
 import ItemActions from '../../components/item_actions';
+import Toolbar from '../../components/toolbar';
+import Icon from '../../components/icon';
 import Button from '../../components/button';
 
 import './home_screen.css';
-import { openEditorWindow } from '../../store/actions/ui';
-import { createNewBookmarklet } from '../../store/actions/editor';
-import Toolbar from '../../components/toolbar';
-import Icon from '../../components/icon';
-import ToolbarButton from '../../components/toolbar_button';
 
 const HIDE_EDITOR = true;
 const KEYS = {
@@ -181,9 +181,13 @@ export default function HomeScreen() {
 
       {!HIDE_EDITOR && bookmarklets.length !== 0 &&
         <Toolbar>
-          <ToolbarButton onClick={handleOnNewClick} icon={<Icon name="plus" />}>
+          <Button
+            type="toolbar"
+            icon={<Icon name="plus" />}
+            onClick={handleOnNewClick}
+          >
             Create new script
-          </ToolbarButton>
+          </Button>
         </Toolbar>
       }
     </div>
