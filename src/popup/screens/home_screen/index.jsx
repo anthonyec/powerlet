@@ -17,7 +17,7 @@ import './home_screen.css';
 import { openEditorWindow } from '../../store/actions/ui';
 import { createNewBookmarklet } from '../../store/actions/editor';
 
-const HIDE_EDITOR = false;
+const HIDE_EDITOR = true;
 const KEYS = {
   ENTER: 13,
   UP: 38,
