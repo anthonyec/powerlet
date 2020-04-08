@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 
-import zipObject from '../utils/zipObject';
+import zipObject from '../utils/zip_object';
 
 import HomeScreen from './screens/home_screen';
 const SettingsScreen = React.lazy(() => import('./screens/settings'));
