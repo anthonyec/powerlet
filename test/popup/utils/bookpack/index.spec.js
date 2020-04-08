@@ -1,6 +1,6 @@
 import assert from 'assert';
 
-import { prefixer } from '../../../../src/utils/bookpack';
+import { prefixer, uriComponent } from '../../../../src/utils/bookpack';
 
 describe('Bookpack', () => {
   describe('prefixer', () => {
@@ -57,6 +57,30 @@ describe('Bookpack', () => {
         const input = '(function() { alert("javascript: ") })();';
 
         const output = prefixer().unpack(input);
+
+        assert.strictEqual(output, expectedOutput);
+      });
+    });
+  });
+
+  describe('uriComponent', () => {
+    describe('pack', () => {
+      it('URI encodes the string', () => {
+        const expectedOutput = '(function()%20%7B%20alert(%22Hey!%22)%20%7D)()%3B';
+        const input = '(function() { alert("Hey!") })();';
+
+        const output = uriComponent().pack(input);
+
+        assert.strictEqual(output, expectedOutput);
+      });
+    });
+
+    describe('unpack', () => {
+      it('URI decodes the string', () => {
+        const expectedOutput = '(function() { alert("Hey!") })();';
+        const input = '(function()%20%7B%20alert(%22Hey!%22)%20%7D)()%3B';
+
+        const output = uriComponent().unpack(input);
 
         assert.strictEqual(output, expectedOutput);
       });

@@ -15,3 +15,15 @@ export function prefixer() {
     }
   }
 }
+
+export function uriComponent() {
+  return {
+    pack: (str) => {
+      return encodeURIComponent(str);
+    },
+
+    unpack: (str) => {
+      return decodeURIComponent(str)
+    }
+  }
+}
