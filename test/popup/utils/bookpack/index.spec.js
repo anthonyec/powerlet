@@ -1,6 +1,6 @@
 import assert from 'assert';
 
-import { prefixer, uriComponent } from '../../../../src/utils/bookpack';
+import { prefixer, uriComponent, format } from '../../../../src/utils/bookpack';
 
 describe('Bookpack', () => {
   describe('prefixer', () => {
@@ -66,8 +66,8 @@ describe('Bookpack', () => {
   describe('uriComponent', () => {
     describe('pack', () => {
       it('URI encodes the string', () => {
-        const expectedOutput = '(function()%20%7B%20alert(%22Hey!%22)%20%7D)()%3B';
-        const input = '(function() { alert("Hey!") })();';
+        const expectedOutput = '(function()%20%7B%20alert(%22Hey!%22)%3B%20%7D)()%3B';
+        const input = '(function() { alert("Hey!"); })();';
 
         const output = uriComponent().pack(input);
 
@@ -77,10 +77,32 @@ describe('Bookpack', () => {
 
     describe('unpack', () => {
       it('URI decodes the string', () => {
-        const expectedOutput = '(function() { alert("Hey!") })();';
-        const input = '(function()%20%7B%20alert(%22Hey!%22)%20%7D)()%3B';
+        const expectedOutput = '(function() { alert("Hey!"); })();';
+        const input = '(function()%20%7B%20alert(%22Hey!%22)%3B%20%7D)()%3B';
 
         const output = uriComponent().unpack(input);
+
+        assert.strictEqual(output, expectedOutput);
+      });
+    });
+  });
+
+  describe('format', () => {
+    describe('unpack', () => {
+      it('beutifies the code', () => {
+        const expectedOutput = `(function() {\n    alert("Hey!");\n})();`;
+        const input = '(function(){alert("Hey!");})();';
+        const output = format().unpack(input);
+
+        assert.strictEqual(output, expectedOutput);
+      });
+    });
+
+    describe('pack', () => {
+      it('minifies the code', () => {
+        const expectedOutput = '(function(){function doAlert(){alert("Hey!")}doAlert()})();';
+        const input = '(function() {\n    function doAlert() {\n      alert("Hey!");\n}    doAlert();\n})();';
+        const output = format().pack(input);
 
         assert.strictEqual(output, expectedOutput);
       });

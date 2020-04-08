@@ -1,3 +1,6 @@
+import { js as beutify } from 'js-beautify';
+import { minify, parse } from 'uglify-js';
+
 export function prefixer() {
   const prefixRegix = /^javascript\:\s?/;
 
@@ -24,6 +27,23 @@ export function uriComponent() {
 
     unpack: (str) => {
       return decodeURIComponent(str)
+    }
+  }
+}
+
+export function format() {
+  return {
+    pack: (str) => {
+      const result = minify(str, {
+        keep_fnames: true,
+        mangle: false,
+        compress: false
+      });
+
+      return result.code;
+    },
+    unpack: (str) => {
+      return beutify(str);
     }
   }
 }
