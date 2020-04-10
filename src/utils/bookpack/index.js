@@ -77,6 +77,7 @@ export function newlines() {
     unpack: (str) => {
       const match = str.match(packedRegex);
 
+      // TODO: Test this
       if (match && match.length === 1) {
         const comment = match[0];
         const indices = comment.replace('//@n', '').split(',').map((n) => parseInt(n));
@@ -90,6 +91,7 @@ export function newlines() {
         return newStr.replace(comment, '');
       }
 
+      // TODO: Test this
       return str;
     }
   };

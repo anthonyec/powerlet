@@ -119,7 +119,7 @@ describe('Bookpack', () => {
 
   describe('newlines', () => {
     describe('unpack', () => {
-      it.only('removes newlines and places them at end', () => {
+      it('adds newlines from packed comment found at the end of the string', () => {
         const input =
           '(function() {    function doAlert() {      alert("Hey!");    }    doAlert()    doAlert();})();//@n13,38,59,65,66,80,95';
         const expectedOutput =
@@ -132,7 +132,7 @@ describe('Bookpack', () => {
     });
 
     describe('pack', () => {
-      it('removes newlines and places them at end', () => {
+      it('removes newlines and packs them in a comment at the end of the string', () => {
         const input =
           '(function() {\n    function doAlert() {\n      alert("Hey!");\n    }\n\n    doAlert()\n    doAlert();\n})();';
         const expectedOutput =
