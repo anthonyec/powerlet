@@ -1,7 +1,7 @@
 import { js as beutify } from 'js-beautify';
 import { minify, parse } from 'uglify-js';
 
-export function prefixer() {
+export function prefixPipe() {
   const prefixRegix = /^javascript\:\s?/;
 
   return {
@@ -19,7 +19,7 @@ export function prefixer() {
   };
 }
 
-export function uriComponent() {
+export function uriComponentPipe() {
   return {
     pack: (str) => {
       return encodeURIComponent(str);
@@ -31,7 +31,7 @@ export function uriComponent() {
   };
 }
 
-export function format() {
+export function formatPipe() {
   return {
     pack: (str) => {
       const result = minify(str, {
@@ -48,7 +48,7 @@ export function format() {
   };
 }
 
-export function newlines() {
+export function newlinesPipe() {
   const packedRegex = /\/\/\@n(\d*\,?)+$/g;
   function getNewlineIndices(str) {
     let indices = [];
