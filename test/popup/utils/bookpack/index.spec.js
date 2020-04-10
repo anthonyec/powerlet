@@ -1,6 +1,11 @@
 import assert from 'assert';
 
-import { prefixer, uriComponent, format } from '../../../../src/utils/bookpack';
+import {
+  prefixer,
+  uriComponent,
+  format,
+  newlines
+} from '../../../../src/utils/bookpack';
 
 describe('Bookpack', () => {
   describe('prefixer', () => {
@@ -66,7 +71,8 @@ describe('Bookpack', () => {
   describe('uriComponent', () => {
     describe('pack', () => {
       it('URI encodes the string', () => {
-        const expectedOutput = '(function()%20%7B%20alert(%22Hey!%22)%3B%20%7D)()%3B';
+        const expectedOutput =
+          '(function()%20%7B%20alert(%22Hey!%22)%3B%20%7D)()%3B';
         const input = '(function() { alert("Hey!"); })();';
 
         const output = uriComponent().pack(input);
@@ -100,9 +106,26 @@ describe('Bookpack', () => {
 
     describe('pack', () => {
       it('minifies the code', () => {
-        const expectedOutput = '(function(){function doAlert(){alert("Hey!")}doAlert()})();';
-        const input = '(function() {\n    function doAlert() {\n      alert("Hey!");\n}    doAlert();\n})();';
+        const expectedOutput =
+          '(function(){function doAlert(){alert("Hey!")}doAlert()})();';
+        const input =
+          '(function() {\n    function doAlert() {\n      alert("Hey!");\n}    doAlert();\n})();';
         const output = format().pack(input);
+
+        assert.strictEqual(output, expectedOutput);
+      });
+    });
+  });
+
+  describe('newlines', () => {
+    describe('pack', () => {
+      it.only('removes newlines and places them at end', () => {
+        const input =
+          '(function() {\n    function doAlert() {\n      alert("Hey!");\n    }\n\n    doAlert()\n    doAlert();\n})();';
+        const expectedOutput =
+          '(function() {    function doAlert() {      alert("Hey!");    }    doAlert()    doAlert();})();//@n13,38,59,65,66,80,95';
+
+        const output = newlines().pack(input);
 
         assert.strictEqual(output, expectedOutput);
       });

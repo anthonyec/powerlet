@@ -10,13 +10,13 @@ export function prefixer() {
         return str;
       }
 
-      return `javascript:${str}`
+      return `javascript:${str}`;
     },
 
     unpack: (str) => {
       return str.replace(prefixRegix, '');
     }
-  }
+  };
 }
 
 export function uriComponent() {
@@ -26,9 +26,9 @@ export function uriComponent() {
     },
 
     unpack: (str) => {
-      return decodeURIComponent(str)
+      return decodeURIComponent(str);
     }
-  }
+  };
 }
 
 export function format() {
@@ -45,5 +45,29 @@ export function format() {
     unpack: (str) => {
       return beutify(str);
     }
+  };
+}
+
+export function newlines() {
+  function getNewlineIndices(str) {
+    let indices = [];
+
+    for (var i = 0; i < str.length; i++) {
+      if (str[i] === `\n`) {
+        indices.push(i);
+      }
+    }
+
+    return indices;
   }
+  return {
+    pack: (str) => {
+      const indices = getNewlineIndices(str);
+      const indicesString = indices.join(',');
+      const comment = `//@n${indicesString}`;
+
+      return str.replace(/\n/g, '') + comment;
+    },
+    unpack: (str) => {}
+  };
 }
