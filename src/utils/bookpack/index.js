@@ -1,6 +1,12 @@
 import { js as beutify } from 'js-beautify';
 import { minify, parse } from 'uglify-js';
 
+export function pack(str = '', pipeline = []) {
+  return pipeline.reduce((mem, pipe) => {
+    return pipe().pack(mem);
+  }, str);
+}
+
 export function prefixPipe() {
   const prefixRegix = /^javascript\:\s?/;
 

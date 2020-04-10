@@ -1,13 +1,67 @@
 import assert from 'assert';
+import sinon from 'sinon';
 
 import {
+  pack,
   prefixPipe,
   uriComponentPipe,
   formatPipe,
   newlinesPipe
 } from '../../../../src/utils/bookpack';
 
+const sandbox = sinon.createSandbox();
+
 describe('Bookpack', () => {
+  describe.only('pack', () => {
+    it('executes pipes in order', () => {
+      const packStub = { pack: () => {} };
+      const pipeStub1 = sandbox.stub().returns(packStub);
+      const pipeStub2 = sandbox.stub().returns(packStub);
+      const pipeStub3 = sandbox.stub().returns(packStub);
+
+      const pipeline = [pipeStub1, pipeStub2, pipeStub3];
+
+      pack('', pipeline);
+
+      sandbox.assert.callOrder(pipeStub1, pipeStub2, pipeStub3);
+    });
+
+    it('executes pack method on each pipe in order', () => {
+      const packStub1 = sandbox.stub();
+      const packStub2 = sandbox.stub();
+      const packStub3 = sandbox.stub();
+
+      const pipeStub1 = () => { return { pack: packStub1 } };
+      const pipeStub2 = () => { return { pack: packStub2 } };
+      const pipeStub3 = () => { return { pack: packStub3 } };
+
+      const pipeline = [pipeStub1, pipeStub2, pipeStub3];
+
+      pack('', pipeline);
+
+      sandbox.assert.callOrder(packStub1, packStub2, packStub3);
+    });
+
+    it('chains output from pipes', () => {
+      const expectedOutput = '123abc';
+      const pipeStub1 = sandbox.stub().callsFake(() => { return { pack: (str) => str + 'a' } });
+      const pipeStub2 = sandbox.stub().callsFake(() => { return { pack: (str) => str + 'b' } });
+      const pipeStub3 = sandbox.stub().callsFake(() => { return { pack: (str) => str + 'c' } });
+
+      const pipeline = [pipeStub1, pipeStub2, pipeStub3];
+
+      const output = pack('123', pipeline);
+
+      assert.strictEqual(output, expectedOutput);
+    });
+  });
+
+  describe('unpack', () => {
+    it('executes pipes in reverse order');
+    it('chains output from pipes');
+    it('does not mutate original pipeline order');
+  });
+
   describe('prefixPipe', () => {
     describe('pack', () => {
       it('adds prefix to start of string', () => {
