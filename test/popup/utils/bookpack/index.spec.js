@@ -118,8 +118,21 @@ describe('Bookpack', () => {
   });
 
   describe('newlines', () => {
-    describe('pack', () => {
+    describe('unpack', () => {
       it.only('removes newlines and places them at end', () => {
+        const input =
+          '(function() {    function doAlert() {      alert("Hey!");    }    doAlert()    doAlert();})();//@n13,38,59,65,66,80,95';
+        const expectedOutput =
+        '(function() {\n    function doAlert() {\n      alert("Hey!");\n    }\n\n    doAlert()\n    doAlert();\n})();';
+
+        const output = newlines().unpack(input);
+
+        assert.strictEqual(output, expectedOutput);
+      });
+    });
+
+    describe('pack', () => {
+      it('removes newlines and places them at end', () => {
         const input =
           '(function() {\n    function doAlert() {\n      alert("Hey!");\n    }\n\n    doAlert()\n    doAlert();\n})();';
         const expectedOutput =

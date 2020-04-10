@@ -49,6 +49,7 @@ export function format() {
 }
 
 export function newlines() {
+  const packedRegex = /\/\/\@n(\d*\,?)+$/g;
   function getNewlineIndices(str) {
     let indices = [];
 
@@ -60,6 +61,11 @@ export function newlines() {
 
     return indices;
   }
+
+  function insert(str, index, value) {
+    return str.substr(0, index) + value + str.substr(index);
+  }
+
   return {
     pack: (str) => {
       const indices = getNewlineIndices(str);
@@ -68,6 +74,23 @@ export function newlines() {
 
       return str.replace(/\n/g, '') + comment;
     },
-    unpack: (str) => {}
+    unpack: (str) => {
+      const match = str.match(packedRegex);
+
+      if (match && match.length === 1) {
+        const comment = match[0];
+        const indices = comment.replace('//@n', '').split(',').map((n) => parseInt(n));
+
+        let newStr = str;
+
+        indices.forEach((indexOfNewLine) => {
+          newStr = insert(newStr, indexOfNewLine, '\n');
+        });
+
+        return newStr.replace(comment, '');
+      }
+
+      return str;
+    }
   };
 }
