@@ -3,6 +3,7 @@ import sinon from 'sinon';
 
 import {
   pack,
+  unpack,
   prefixPipe,
   uriComponentPipe,
   formatPipe,
@@ -12,7 +13,7 @@ import {
 const sandbox = sinon.createSandbox();
 
 describe('Bookpack', () => {
-  describe.only('pack', () => {
+  describe('pack', () => {
     it('executes pipes in order', () => {
       const packStub = { pack: () => {} };
       const pipeStub1 = sandbox.stub().returns(packStub);
@@ -57,9 +58,68 @@ describe('Bookpack', () => {
   });
 
   describe('unpack', () => {
-    it('executes pipes in reverse order');
-    it('chains output from pipes');
-    it('does not mutate original pipeline order');
+    it('executes pipes in reverse order', () => {
+      const packStub = { unpack: () => {} };
+      const pipeStub1 = sandbox.stub().returns(packStub);
+      const pipeStub2 = sandbox.stub().returns(packStub);
+      const pipeStub3 = sandbox.stub().returns(packStub);
+
+      const pipeline = [pipeStub1, pipeStub2, pipeStub3];
+
+      unpack('', pipeline);
+
+      sandbox.assert.callOrder(pipeStub3, pipeStub2, pipeStub1);
+    });
+
+    it('executes pack method on each pipe in reverse order', () => {
+      const packStub1 = sandbox.stub();
+      const packStub2 = sandbox.stub();
+      const packStub3 = sandbox.stub();
+
+      const pipeStub1 = () => { return { unpack: packStub1 } };
+      const pipeStub2 = () => { return { unpack: packStub2 } };
+      const pipeStub3 = () => { return { unpack: packStub3 } };
+
+      const pipeline = [pipeStub1, pipeStub2, pipeStub3];
+
+      unpack('', pipeline);
+
+      sandbox.assert.callOrder(packStub3, packStub2, packStub1);
+    });
+
+    it('chains output from pipes', () => {
+      const expectedOutput = 'abc123';
+      const pipeStub1 = sandbox.stub().callsFake(() => { return { unpack: (str) => 'a' + str } });
+      const pipeStub2 = sandbox.stub().callsFake(() => { return { unpack: (str) => 'b' + str } });
+      const pipeStub3 = sandbox.stub().callsFake(() => { return { unpack: (str) => 'c' + str } });
+
+      const pipeline = [pipeStub1, pipeStub2, pipeStub3];
+
+      const output = unpack('123', pipeline);
+
+      assert.strictEqual(output, expectedOutput);
+    });
+
+    it('does not mutate original pipeline order', () => {
+      const packStub = { unpack: () => {} };
+      const pipeStub1 = sandbox.stub().returns(packStub);
+      const pipeStub2 = sandbox.stub().returns(packStub);
+      const pipeStub3 = sandbox.stub().returns(packStub);
+
+      const pipeline = [pipeStub1, pipeStub2, pipeStub3];
+
+      unpack('', pipeline);
+
+      sandbox.assert.callOrder(pipeStub3, pipeStub2, pipeStub1);
+
+      pipeStub1.resetHistory();
+      pipeStub2.resetHistory();
+      pipeStub3.resetHistory();
+
+      unpack('', pipeline);
+
+      sandbox.assert.callOrder(pipeStub3, pipeStub2, pipeStub1);
+    });
   });
 
   describe('prefixPipe', () => {

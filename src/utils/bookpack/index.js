@@ -7,6 +7,13 @@ export function pack(str = '', pipeline = []) {
   }, str);
 }
 
+export function unpack(str = '', pipeline = []) {
+  // `slice()` stops mutating the original array.
+  return pipeline.slice().reverse().reduce((mem, pipe) => {
+    return pipe().unpack(mem);
+  }, str);
+}
+
 export function prefixPipe() {
   const prefixRegix = /^javascript\:\s?/;
 
