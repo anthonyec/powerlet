@@ -1,19 +1,18 @@
 export default function basicMinify(code) {
-  code = code.split(/\r\n|\r|\n/g);
+  let minifiedCode = code.split(/\r\n|\r|\n/g);
+  let t;
 
-  var i = 0,
-    len = code.length,
-    noSemiColon = {},
-    t;
+  const len = minifiedCode.length;
+  const noSemiColon = {};
 
-  "} { ; ,".split(" ").forEach(function(i, x) {
+  '} { ; ,'.split(' ').forEach(function (i, x) {
     noSemiColon[x] = 1;
   });
 
-  for (; i < len; i++) {
-    t = code[i].trim();
+  for (let i = 0; i < len; i++) {
+    t = minifiedCode[i].trim();
 
-    code[i] = t;
+    minifiedCode[i] = t;
   }
-  return code.join("").replace(/;$/, "");
+  return minifiedCode.join('').replace(/;$/, '');
 }

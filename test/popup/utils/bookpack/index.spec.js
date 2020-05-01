@@ -32,9 +32,15 @@ describe('Bookpack', () => {
       const packStub2 = sandbox.stub();
       const packStub3 = sandbox.stub();
 
-      const pipeStub1 = () => { return { pack: packStub1 } };
-      const pipeStub2 = () => { return { pack: packStub2 } };
-      const pipeStub3 = () => { return { pack: packStub3 } };
+      const pipeStub1 = () => {
+        return { pack: packStub1 };
+      };
+      const pipeStub2 = () => {
+        return { pack: packStub2 };
+      };
+      const pipeStub3 = () => {
+        return { pack: packStub3 };
+      };
 
       const pipeline = [pipeStub1, pipeStub2, pipeStub3];
 
@@ -45,9 +51,15 @@ describe('Bookpack', () => {
 
     it('chains output from pipes', () => {
       const expectedOutput = '123abc';
-      const pipeStub1 = sandbox.stub().callsFake(() => { return { pack: (str) => str + 'a' } });
-      const pipeStub2 = sandbox.stub().callsFake(() => { return { pack: (str) => str + 'b' } });
-      const pipeStub3 = sandbox.stub().callsFake(() => { return { pack: (str) => str + 'c' } });
+      const pipeStub1 = sandbox.stub().callsFake(() => {
+        return { pack: (str) => str + 'a' };
+      });
+      const pipeStub2 = sandbox.stub().callsFake(() => {
+        return { pack: (str) => str + 'b' };
+      });
+      const pipeStub3 = sandbox.stub().callsFake(() => {
+        return { pack: (str) => str + 'c' };
+      });
 
       const pipeline = [pipeStub1, pipeStub2, pipeStub3];
 
@@ -76,9 +88,15 @@ describe('Bookpack', () => {
       const packStub2 = sandbox.stub();
       const packStub3 = sandbox.stub();
 
-      const pipeStub1 = () => { return { unpack: packStub1 } };
-      const pipeStub2 = () => { return { unpack: packStub2 } };
-      const pipeStub3 = () => { return { unpack: packStub3 } };
+      const pipeStub1 = () => {
+        return { unpack: packStub1 };
+      };
+      const pipeStub2 = () => {
+        return { unpack: packStub2 };
+      };
+      const pipeStub3 = () => {
+        return { unpack: packStub3 };
+      };
 
       const pipeline = [pipeStub1, pipeStub2, pipeStub3];
 
@@ -89,9 +107,15 @@ describe('Bookpack', () => {
 
     it('chains output from pipes', () => {
       const expectedOutput = 'abc123';
-      const pipeStub1 = sandbox.stub().callsFake(() => { return { unpack: (str) => 'a' + str } });
-      const pipeStub2 = sandbox.stub().callsFake(() => { return { unpack: (str) => 'b' + str } });
-      const pipeStub3 = sandbox.stub().callsFake(() => { return { unpack: (str) => 'c' + str } });
+      const pipeStub1 = sandbox.stub().callsFake(() => {
+        return { unpack: (str) => 'a' + str };
+      });
+      const pipeStub2 = sandbox.stub().callsFake(() => {
+        return { unpack: (str) => 'b' + str };
+      });
+      const pipeStub3 = sandbox.stub().callsFake(() => {
+        return { unpack: (str) => 'c' + str };
+      });
 
       const pipeline = [pipeStub1, pipeStub2, pipeStub3];
 
@@ -230,8 +254,10 @@ describe('Bookpack', () => {
       });
 
       it('performs basic minfication when there is a syntax error', () => {
-        const expectedOutput = '(function() {// One line commentfunction doAlert() {{/* Multiline comment */alert("Hey!");}    doAlert();})()';
-        const input = '(function() {\n    // One line comment\n    function doAlert() {{\n      /* Multiline comment */\n    alert("Hey!");\n}    doAlert();\n})();';
+        const expectedOutput =
+          '(function() {// One line commentfunction doAlert() {{/* Multiline comment */alert("Hey!");}    doAlert();})()';
+        const input =
+          '(function() {\n    // One line comment\n    function doAlert() {{\n      /* Multiline comment */\n    alert("Hey!");\n}    doAlert();\n})();';
         const output = formatPipe().pack(input);
 
         assert.strictEqual(output, expectedOutput);
@@ -245,7 +271,7 @@ describe('Bookpack', () => {
         const input =
           '(function() {    function doAlert() {      alert("Hey!");    }    doAlert()    doAlert();})();//@n13,38,59,65,66,80,95';
         const expectedOutput =
-        '(function() {\n    function doAlert() {\n      alert("Hey!");\n    }\n\n    doAlert()\n    doAlert();\n})();';
+          '(function() {\n    function doAlert() {\n      alert("Hey!");\n    }\n\n    doAlert()\n    doAlert();\n})();';
 
         const output = newlinesPipe().unpack(input);
 

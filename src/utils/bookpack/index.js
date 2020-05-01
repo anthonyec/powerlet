@@ -11,9 +11,12 @@ export function pack(str = '', pipeline = []) {
 
 export function unpack(str = '', pipeline = []) {
   // `slice()` stops mutating the original array.
-  return pipeline.slice().reverse().reduce((mem, pipe) => {
-    return pipe().unpack(mem);
-  }, str);
+  return pipeline
+    .slice()
+    .reverse()
+    .reduce((mem, pipe) => {
+      return pipe().unpack(mem);
+    }, str);
 }
 
 export function prefixPipe() {
@@ -61,7 +64,7 @@ export function formatPipe() {
         }
 
         return result.code;
-      } catch(err) {
+      } catch (err) {
         return basicMinify(str);
       }
     },
@@ -103,7 +106,10 @@ export function newlinesPipe() {
       // TODO: Test this
       if (match && match.length === 1) {
         const comment = match[0];
-        const indices = comment.replace('//@n', '').split(',').map((n) => parseInt(n));
+        const indices = comment
+          .replace('//@n', '')
+          .split(',')
+          .map((n) => parseInt(n));
 
         let newStr = str;
 
