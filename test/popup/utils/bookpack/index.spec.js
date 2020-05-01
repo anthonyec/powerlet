@@ -228,6 +228,14 @@ describe('Bookpack', () => {
 
         assert.strictEqual(output, expectedOutput);
       });
+
+      it('performs basic minfication when there is a syntax error', () => {
+        const expectedOutput = '(function() {// One line commentfunction doAlert() {{/* Multiline comment */alert("Hey!");}    doAlert();})()';
+        const input = '(function() {\n    // One line comment\n    function doAlert() {{\n      /* Multiline comment */\n    alert("Hey!");\n}    doAlert();\n})();';
+        const output = formatPipe().pack(input);
+
+        assert.strictEqual(output, expectedOutput);
+      });
     });
   });
 

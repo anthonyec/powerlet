@@ -1,5 +1,7 @@
 import { js as beutify } from 'js-beautify';
-import { minify, parse } from 'uglify-js';
+import { minify } from 'uglify-js';
+
+import basicMinify from './basic_minify';
 
 export function pack(str = '', pipeline = []) {
   return pipeline.reduce((mem, pipe) => {
@@ -47,13 +49,21 @@ export function uriComponentPipe() {
 export function formatPipe() {
   return {
     pack: (str) => {
-      const result = minify(str, {
-        keep_fnames: true,
-        mangle: false,
-        compress: false
-      });
+      try {
+        const result = minify(str, {
+          keep_fnames: true,
+          mangle: false,
+          compress: false
+        });
 
-      return result.code;
+        if (result.error) {
+          throw new Error();
+        }
+
+        return result.code;
+      } catch(err) {
+        return basicMinify(str);
+      }
     },
     unpack: (str) => {
       return beutify(str);
