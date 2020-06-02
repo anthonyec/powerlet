@@ -21,6 +21,8 @@ import Button from '../../components/button';
 import './home_screen.css';
 
 const HIDE_EDITOR = true;
+const HIDE_SHARE = false;
+
 const KEYS = {
   ENTER: 13,
   UP: 38,
@@ -141,6 +143,10 @@ export default function HomeScreen() {
     window.close();
   };
 
+  const handleOnShareClick = (id) => {
+    console.log('share', id);
+  };
+
   const handleOnNewClick = () => {
     dispatch(createNewBookmarklet());
     window.close();
@@ -165,6 +171,14 @@ export default function HomeScreen() {
             onItemClick={handleBookmarkletClick}
             onItemSelect={handleItemSelect}
             renderItemActions={(item, isSelected, isMouseOver) => {
+              if (!HIDE_SHARE && (isSelected || isMouseOver)) {
+                return (
+                  <ItemActions
+                    onShareClick={handleOnShareClick.bind(null, item.id)}
+                  />
+                );
+              }
+
               if (!HIDE_EDITOR && (isSelected || isMouseOver)) {
                 return (
                   <ItemActions
