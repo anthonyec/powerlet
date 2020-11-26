@@ -24,7 +24,7 @@ export default function ItemActions({
         <button
           className="item-actions__button"
           onClick={handleShareOnClick}
-          title="Share script"
+          title="Share script as a link"
         >
           <Icon name="share" />
         </button>

@@ -2,11 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useCallbackRef } from 'use-callback-ref';
 
+import lzString from 'lz-string';
+
+console.log(lzString);
+
 import {
   fetchAllBookmarklets,
   executeBookmarklet
 } from '../../store/actions/bookmarklets';
-import { openEditorWindow } from '../../store/actions/ui';
+import { openEditorWindow, navigateTo } from '../../store/actions/ui';
 import { createNewBookmarklet } from '../../store/actions/editor';
 
 import SearchField from '../../components/search_field';
@@ -143,8 +147,12 @@ export default function HomeScreen() {
     window.close();
   };
 
-  const handleOnShareClick = (id) => {
-    console.log('share', id);
+  const handleOnShareClick = async (item) => {
+    console.log('share', item);
+    // generate URL
+    // generateShareUrlFromBookmarklet(item)
+    const str = lzString.compressToBase64(item.url);
+    await dispatch(navigateTo(`https://scripts.anthony.ec/s/1/${str}`));
   };
 
   const handleOnNewClick = () => {
@@ -174,7 +182,7 @@ export default function HomeScreen() {
               if (!HIDE_SHARE && (isSelected || isMouseOver)) {
                 return (
                   <ItemActions
-                    onShareClick={handleOnShareClick.bind(null, item.id)}
+                    onShareClick={handleOnShareClick.bind(null, item)}
                   />
                 );
               }
