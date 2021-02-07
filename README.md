@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="logo.png" width="420" alt="Powerlets">
+  <img src="logo.png" width="420" alt="Powerlet">
   <br><br>
 
 **Chrome Extension to quickly find and run bookmarklets.**
