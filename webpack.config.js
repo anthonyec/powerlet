@@ -42,7 +42,7 @@ module.exports = {
       './assets'
     ]),
     new HtmlWebpackPlugin({
-      title: 'Powerlets',
+      title: 'Powerlet',
       filename: 'popup.html',
       template: './src/popup/index.ejs',
       excludeChunks: ['background']
