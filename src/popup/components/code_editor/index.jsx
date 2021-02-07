@@ -37,7 +37,7 @@ export default function CodeEditor({ defaultValue, onChange = () => {} }) {
 
     return () => {
       schemeMediaQuery.removeListener(handleOnColorSchemeChange);
-    }
+    };
   }, []);
 
   // When `defaultValue` prop changes, change the local state with that value.

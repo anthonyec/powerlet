@@ -179,7 +179,7 @@ export default function HomeScreen() {
 
       {bookmarklets.length === 0 && <OnboardMessage />}
 
-      {!HIDE_EDITOR && bookmarklets.length !== 0 &&
+      {!HIDE_EDITOR && bookmarklets.length !== 0 && (
         <Toolbar>
           <Button
             type="toolbar"
@@ -189,7 +189,7 @@ export default function HomeScreen() {
             Create new script
           </Button>
         </Toolbar>
-      }
+      )}
     </div>
   );
 }

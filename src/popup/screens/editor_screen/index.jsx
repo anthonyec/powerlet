@@ -99,9 +99,7 @@ export default function Editor({ route = { params: {}, base: '' } }) {
         />
       </div>
       <div className="editor-screen__section editor-screen__section--space-between">
-        <Button onClick={handleOnDeleteClick}>
-          Delete
-        </Button>
+        <Button onClick={handleOnDeleteClick}>Delete</Button>
         <Button onClick={handleOnDoneClick}>Done</Button>
       </div>
     </div>
