@@ -1,6 +1,8 @@
 import React, { Suspense } from 'react';
+import { useDispatch } from 'react-redux';
 
 import zipObject from '../utils/zipObject';
+import { fetchLocaleMessages } from './store/actions/locale';
 
 import HomeScreen from './screens/home_screen';
 const SettingsScreen = React.lazy(() => import('./screens/settings'));
@@ -10,6 +12,10 @@ import './reset.css';
 import './app.css';
 
 export default function App() {
+  const dispatch = useDispatch();
+
+  dispatch(fetchLocaleMessages());
+
   const path = window.location.hash.replace('#', '').split('/');
   const base = path[0];
   const params = path.slice(1);
