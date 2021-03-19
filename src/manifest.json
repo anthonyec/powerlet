@@ -4,6 +4,7 @@
   "version": "1.1.5",
   "description": "Quickly find and run your bookmarklets.",
   "permissions": ["activeTab", "bookmarks"],
+  "default_locale": "en",
   "background": {
     "scripts": ["background.bundle.js"],
     "persistent": false

@@ -1,0 +1,74 @@
+{
+  "search_scripts_placeholder": {
+    "message": "Search scripts",
+    "description": ""
+  },
+  "empty_state_message": {
+    "message": "You don't have any \nbookmark scripts.",
+    "description": ""
+  },
+  "empty_state_button": {
+    "message": "Add scripts",
+    "description": ""
+  },
+  "create_new_script_button": {
+    "message": "Create new script",
+    "description": ""
+  },
+  "edit_script_button": {
+    "message": "Edit script",
+    "description": ""
+  },
+  "share_script_button": {
+    "message": "Share script",
+    "description": ""
+  },
+  "delete_script_button": {
+    "message": "Delete script",
+    "description": ""
+  },
+  "done_button": {
+    "message": "Done",
+    "description": ""
+  },
+  "delete_button": {
+    "message": "Delete",
+    "description": ""
+  },
+  "cancel_button": {
+    "message": "Cancel",
+    "description": ""
+  },
+  "feedback_button": {
+    "message": "Give feedback",
+    "description": ""
+  },
+  "settings_button": {
+    "message": "Settings",
+    "description": ""
+  },
+  "name_label": {
+    "message": "Name",
+    "description": ""
+  },
+  "edit_script_title": {
+    "message": "Edit script",
+    "description": ""
+  },
+  "autorun_label": {
+    "message": "Autorun on page",
+    "description": ""
+  },
+  "share_page_save_label": {
+    "message": "Save using Powerlet",
+    "description": ""
+  },
+  "share_page_drag_label": {
+    "message": "Or drag this to your bookmarks bar",
+    "description": ""
+  },
+  "delete_script_confirmation_message": {
+    "message": "Are you sure you want to delete this script permanently?",
+    "description": ""
+  }
+}

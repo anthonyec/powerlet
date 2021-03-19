@@ -5,6 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
+  devtool: 'cheap-module-source-map',
   entry: {
     popup: './src/popup/index.js',
     background: './src/background/index.js'
@@ -39,6 +40,7 @@ module.exports = {
     new CopyPlugin([
       './src/manifest.json',
       './src/pages/examples.html',
+      { from: './src/_locales', to: '_locales' },
       './assets'
     ]),
     new HtmlWebpackPlugin({

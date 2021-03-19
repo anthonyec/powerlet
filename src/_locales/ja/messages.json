@@ -1,0 +1,74 @@
+{
+  "search_scripts_placeholder": {
+    "message": "スクリプトを探す",
+    "description": ""
+  },
+  "empty_state_message": {
+    "message": "ブックマークレットはありません。",
+    "description": ""
+  },
+  "empty_state_button": {
+    "message": "スクリプトを追加する",
+    "description": ""
+  },
+  "create_new_script_button": {
+    "message": "新しいスクリプトを追加する",
+    "description": ""
+  },
+  "name_label": {
+    "message": "名前",
+    "description": ""
+  },
+  "edit_script_button": {
+    "message": "編集",
+    "description": ""
+  },
+  "share_script_button": {
+    "message": "共有リンク",
+    "description": ""
+  },
+  "delete_script_button": {
+    "message": "削除",
+    "description": ""
+  },
+  "delete_button": {
+    "message": "削除",
+    "description": ""
+  },
+  "done_button": {
+    "message": "完了",
+    "description": ""
+  },
+  "cancel_button": {
+    "message": "キャンセル",
+    "description": ""
+  },
+  "feedback_button": {
+    "message": "フィードバックをください",
+    "description": ""
+  },
+  "settings_button": {
+    "message": "設定",
+    "description": ""
+  },
+  "edit_script_title": {
+    "message": "スクリプトの編集",
+    "description": ""
+  },
+  "autorun_label": {
+    "message": "ページの自動実行",
+    "description": ""
+  },
+  "share_page_save_label": {
+    "message": "Powerletを使用して保存",
+    "description": ""
+  },
+  "share_page_drag_label": {
+    "message": "または、これをブックマークバーにドラッグします",
+    "description": ""
+  },
+  "delete_script_confirmation_message": {
+    "message": "このスクリプトを完全に削除してもよろしいですか？",
+    "description": ""
+  }
+}
