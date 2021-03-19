@@ -7,4 +7,5 @@
   margin-top: -10px;
   margin-bottom: 18px; /* 24px */
   line-height: 20px;
+  white-space: pre-wrap;
 }

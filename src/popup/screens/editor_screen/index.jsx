@@ -19,11 +19,12 @@ import './editor_screen.css';
 
 export default function Editor({ route = { params: {}, base: '' } }) {
   const dispatch = useDispatch();
+  const translations = useSelector((state) => state.locale.messages);
   const currentFile = useSelector((state) => state.editor.currentFile);
   const folders = useSelector((state) => state.editor.folders);
 
   useLayoutEffect(() => {
-    window.document.title = 'Edit script';
+    window.document.title = translations['edit_script_title'];
   }, []);
 
   useEffect(() => {
@@ -55,7 +56,7 @@ export default function Editor({ route = { params: {}, base: '' } }) {
 
   const handleOnDeleteClick = () => {
     const deleteScript = confirm(
-      'Are you sure you want to delete this script permanently?'
+      translations['delete_script_confirmation_message']
     );
 
     if (deleteScript) {
@@ -80,7 +81,7 @@ export default function Editor({ route = { params: {}, base: '' } }) {
     <div className="editor-screen">
       <div className="editor-screen__section">
         <TextField
-          label="Name"
+          label={translations['name_label']}
           defaultValue={currentFile && currentFile.title}
           onChange={handleTitleOnChange}
         />
@@ -99,8 +100,12 @@ export default function Editor({ route = { params: {}, base: '' } }) {
         />
       </div>
       <div className="editor-screen__section editor-screen__section--space-between">
-        <Button onClick={handleOnDeleteClick}>Delete</Button>
-        <Button onClick={handleOnDoneClick}>Done</Button>
+        <Button onClick={handleOnDeleteClick}>
+          {translations['delete_button']}
+        </Button>
+        <Button onClick={handleOnDoneClick}>
+          {translations['done_button']}
+        </Button>
       </div>
     </div>
   );

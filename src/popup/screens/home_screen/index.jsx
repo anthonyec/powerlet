@@ -30,6 +30,7 @@ const KEYS = {
 };
 
 export default function HomeScreen() {
+  const translations = useSelector((state) => state.locale.messages);
   const bookmarklets = useSelector((state) => state.bookmarklets.all);
   const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState('');
@@ -152,7 +153,7 @@ export default function HomeScreen() {
         ref={searchInputRef}
         onKeyDown={handleInputChange}
         onChange={handleInputChange}
-        placeholder="Search scripts"
+        placeholder={translations['search_scripts_placeholder']}
       />
 
       {bookmarklets.length !== 0 && (
@@ -186,7 +187,7 @@ export default function HomeScreen() {
             icon={<Icon name="plus" />}
             onClick={handleOnNewClick}
           >
-            Create new script
+            {translations['create_new_script_button']}
           </Button>
         </Toolbar>
       )}
