@@ -22,6 +22,7 @@
     "redux": "^4.0.5",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0",
+    "simple-plausible-tracker": "git+https://github.com/anthonyec/simple_plausible_tracker.git#6f47191880eafc4d2a86a4344f8f14fb5b52714e",
     "use-callback-ref": "^1.2.1"
   },
   "devDependencies": {
