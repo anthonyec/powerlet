@@ -20,13 +20,13 @@ const messageNames = [
   'delete_script_confirmation_message',
   'delete_button',
   'name_label'
-]
+];
 
 export function setMessages(messages = {}) {
   return {
     type: SET_MESSAGES,
     payload: messages
-  }
+  };
 }
 
 export function fetchLocaleMessages() {

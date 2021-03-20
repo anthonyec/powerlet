@@ -10,7 +10,7 @@ export default function localeReducer(state = defaultState, action) {
       return {
         ...state,
         messages: action.payload
-      }
+      };
     default:
       return state;
   }
