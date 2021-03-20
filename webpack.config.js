@@ -40,6 +40,7 @@ module.exports = {
     new CopyPlugin([
       './src/manifest.json',
       './src/pages/examples.html',
+      './src/pages/examples.js',
       { from: './src/_locales', to: '_locales' },
       './assets'
     ]),

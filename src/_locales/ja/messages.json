@@ -70,5 +70,45 @@
   "delete_script_confirmation_message": {
     "message": "このスクリプトを完全に削除してもよろしいですか？",
     "description": ""
+  },
+  "example_page_title": {
+    "message": "入門",
+    "description": ""
+  },
+  "example_page_subtitle": {
+    "message": "スクリプトを追加するには、スクリプトをブックマークバーにドラッグします",
+    "description": ""
+  },
+  "example_script_scroll_to_top": {
+    "message": "トップにスクロールします",
+    "description": ""
+  },
+  "example_script_scroll_to_bottom": {
+    "message": "下にスクロール",
+    "description": ""
+  },
+  "example_script_toggle_element_size": {
+    "message": "要素サイズの切り替え",
+    "description": ""
+  },
+  "example_script_toggle_element_outlines": {
+    "message": "要素のアウトラインを切り替えます",
+    "description": ""
+  },
+  "example_script_get_font_name": {
+    "message": "フォント名を取得する",
+    "description": ""
+  },
+  "example_script_get_window_size": {
+    "message": "ウィンドウサイズを取得する",
+    "description": ""
+  },
+  "example_script_base64_encode": {
+    "message": "Base64をエンコードする",
+    "description": ""
+  },
+  "example_script_base64_decode": {
+    "message": "Base64をデコードする",
+    "description": ""
   }
 }

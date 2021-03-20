@@ -70,5 +70,45 @@
   "delete_script_confirmation_message": {
     "message": "Are you sure you want to delete this script permanently?",
     "description": ""
+  },
+  "example_page_title": {
+    "message": "Getting Started",
+    "description": ""
+  },
+  "example_page_subtitle": {
+    "message": "To add a script, drag it to your Bookmarks Bar.",
+    "description": ""
+  },
+  "example_script_scroll_to_top": {
+    "message": "Scroll to Top",
+    "description": ""
+  },
+  "example_script_scroll_to_bottom": {
+    "message": "Scroll to Bottom",
+    "description": ""
+  },
+  "example_script_toggle_element_size": {
+    "message": "Toggle Element Size",
+    "description": ""
+  },
+  "example_script_toggle_element_outlines": {
+    "message": "Toggle Element Outlines",
+    "description": ""
+  },
+  "example_script_get_font_name": {
+    "message": "Get Font Name",
+    "description": ""
+  },
+  "example_script_get_window_size": {
+    "message": "Get Window Size",
+    "description": ""
+  },
+  "example_script_base64_encode": {
+    "message": "Encode Base64",
+    "description": ""
+  },
+  "example_script_base64_decode": {
+    "message": "Decode Base64",
+    "description": ""
   }
 }
