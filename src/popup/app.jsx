@@ -1,7 +1,8 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
 import zipObject from '../utils/zipObject';
-
+import { firePageView } from './store/actions/stats';
 import HomeScreen from './screens/home_screen';
 const SettingsScreen = React.lazy(() => import('./screens/settings'));
 const EditorScreen = React.lazy(() => import('./screens/editor_screen'));
@@ -10,6 +11,7 @@ import './reset.css';
 import './app.css';
 
 export default function App() {
+  const dispatch = useDispatch();
   const path = window.location.hash.replace('#', '').split('/');
   const base = path[0];
   const params = path.slice(1);
@@ -34,6 +36,10 @@ export default function App() {
   };
 
   const Screen = screens[base] ? screens[base] : screens.home;
+
+  useEffect(() => {
+    dispatch(firePageView());
+  }, [path]);
 
   return (
     <div className="app">
