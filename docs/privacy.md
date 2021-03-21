@@ -11,9 +11,9 @@ Powerlet uses a service called [Plausible Analytics](https://plausible.io/) to c
 
 This data is used for knowing if people are using the extension and what specific features. Examples of the data:
 
-- 5 people in USA use the extension
-- 10 people opened the extension
-- 3 people clicked this button in the extension
+- 20 people in USA use the extension
+- 30 people opened the extension
+- 10 people clicked this button in the extension
 
 No personally identifiable information (PII) is collected.
 
