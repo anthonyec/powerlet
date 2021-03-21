@@ -7,7 +7,7 @@ import createStats from 'simple-plausible-tracker';
 import createStore from './store/index';
 import App from './app';
 
-const stats = createStats('powerlet.anthony.ec', {
+const stats = createStats(process.env.STATS_DOMAIN, {
   onFireError: (err) => {
     console.error(err);
   }

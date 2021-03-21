@@ -21,6 +21,14 @@ Available on **[Chrome Web Store](https://chrome.google.com/webstore/detail/powe
 
 ## Setup
 
+Create an `.env` file at the root of this repo directory.
+
+Currently the only enviroment variable is `STATS_DOMAIN` and is **not required** to run the project.
+
+```bash
+$ touch .env
+```
+
 Install the dependencies.
 
 ```bash
