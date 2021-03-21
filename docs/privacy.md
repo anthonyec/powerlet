@@ -18,4 +18,3 @@ This data is used for knowing if people are using the extension and what specifi
 No personally identifiable information (PII) is collected.
 
 The source code for how usage data is sent to Plausible can be found in my [Simple Plausible Tracker repository](https://github.com/anthonyec/simple_plausible_tracker).
-
