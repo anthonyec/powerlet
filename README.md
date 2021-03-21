@@ -10,6 +10,9 @@ Available on **[Chrome Web Store](https://chrome.google.com/webstore/detail/powe
 
 </div>
 
+## Docs
+- [Privacy Policy](./privacy.md)
+
 ## Requirments
 
 - NodeJS >=10.16
