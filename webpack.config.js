@@ -54,7 +54,7 @@ module.exports = {
       allChunks: true
     }),
     new webpack.DefinePlugin({
-      "process.env": JSON.stringify(env.parsed)
+      'process.env': JSON.stringify(env.parsed)
     })
   ]
 };
