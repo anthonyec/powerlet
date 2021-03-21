@@ -12,7 +12,7 @@ Available on **[Chrome Web Store](https://chrome.google.com/webstore/detail/powe
 
 ## Docs
 
-- [Privacy Policy](./privacy.md)
+- [Privacy Policy](./docs/privacy.md)
 
 ## Requirments
 
