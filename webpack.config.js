@@ -7,6 +7,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 const env = require('dotenv').config();
 
 module.exports = {
+  devtool: 'cheap-module-source-map',
   entry: {
     popup: './src/popup/index.js',
     background: './src/background/index.js'
@@ -54,7 +55,10 @@ module.exports = {
       allChunks: true
     }),
     new webpack.DefinePlugin({
-      'process.env': JSON.stringify(env.parsed)
+      'process.env': JSON.stringify({
+        ...env.parsed,
+        NODE_ENV: process.env.NODE_ENV
+      })
     })
   ]
 };
