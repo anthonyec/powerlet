@@ -7,7 +7,9 @@ import createStats from 'simple-plausible-tracker';
 import createStore from './store/index';
 import App from './app';
 
-const stats = createStats(process.env.STATS_DOMAIN, {
+const statsDomain =
+  process.env.NODE_ENV !== 'development' && process.env.STATS_DOMAIN;
+const stats = createStats(statsDomain, {
   onFireError: (err) => {
     console.error(err);
   }
