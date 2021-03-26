@@ -5,8 +5,9 @@
   "main": "src/index.js",
   "scripts": {
     "start": "NODE_ENV=development webpack -w --mode=development",
+    "build:dev": "NODE_ENV=development webpack --mode=development",
+    "build": "NODE_ENV=production webpack --mode=production",
     "format": "prettier --loglevel warn --write '**/*.{js,json,jsx,md}'",
-    "build": "webpack --mode=production",
     "version": "node ./scripts/version.js && npm run format && git add ./src/manifest.json"
   },
   "author": "Anthony Cossins",
