@@ -10,10 +10,6 @@ Available on **[Chrome Web Store](https://chrome.google.com/webstore/detail/powe
 
 </div>
 
-## Docs
-
-- [Privacy Policy](./docs/privacy.md)
-
 ## Requirments
 
 - NodeJS >=10.16
@@ -35,11 +31,14 @@ Install the dependencies.
 $ npm i
 ```
 
-After every change, run build.
+Run build to compile the extension to `./dist`.
 
 ```bash
 $ npm run build
 ```
+
+After the extension has been built, [load it in a browser.](#loading-extension-in-web-browser-locally)
+
 
 ## Loading extension in web browser locally
 
@@ -58,18 +57,7 @@ $ npm run build
 - Click "Load Temporary Add-on..."
 - Select any file in the `/dist` folder
 
-## Testing
+## Documentation
 
-Sorry, there aren't any. I wrote this in a couple of nights and during a long haul flight.
-
-## Releasing
-
-This is more notes for myself so I don't forget this manual process.
-
-- Squash and merge PR branch
-- Pull master locally
-- Run `npm version <major|minor|patch>`
-- Check version in `manifest.json` has been automatically updated
-- Commit amend
-- Push!
-- Draft release with new tag
+- [Privacy policy](./docs/privacy.md)
+- [Development setup](./docs/development.md)
