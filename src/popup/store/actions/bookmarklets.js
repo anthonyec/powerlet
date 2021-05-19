@@ -1,4 +1,5 @@
 export const SET_BOOKMARKLETS = 'SET_BOOKMARKLETS';
+export const ADD_RECENT_BOOKMARKLET = 'ADD_RECENT_BOOKMARKLET';
 
 function setBookmarklets(bookmarklets = []) {
   return {
@@ -7,7 +8,14 @@ function setBookmarklets(bookmarklets = []) {
   };
 }
 
-export function executeBookmarklet(url) {
+function addRecentBookmarklet(id) {
+  return {
+    type: ADD_RECENT_BOOKMARKLET,
+    payload: id
+  }
+}
+
+export function executeBookmarklet(id, url) {
   return (dispatch, getState, { browser }) => {
     let bookmarkletCode;
 
@@ -26,6 +34,7 @@ export function executeBookmarklet(url) {
       }
     `;
 
+    dispatch(addRecentBookmarklet(id));
     browser.tabs.executeScript({ code, runAt: 'document_start' });
   };
 }

@@ -68,8 +68,8 @@ export default function HomeScreen() {
     setSelectedIndex(0);
   }, [searchQuery]);
 
-  const execute = (url) => {
-    dispatch(executeBookmarklet(url));
+  const execute = (id, url) => {
+    dispatch(executeBookmarklet(id, url));
     window.close();
   };
 
@@ -87,7 +87,7 @@ export default function HomeScreen() {
     switch (evt.keyCode) {
       case KEYS.ENTER:
         if (currentItem.url) {
-          execute(currentItem.url);
+          execute(currentItem.id, currentItem.url);
         }
 
         break;
@@ -123,8 +123,8 @@ export default function HomeScreen() {
     setSearchQuery(searchInputRef.current.value);
   };
 
-  const handleBookmarkletClick = (url) => {
-    execute(url);
+  const handleBookmarkletClick = (item) => {
+    execute(item.id, item.url);
   };
 
   const handleItemSelect = (item, total) => {
@@ -137,7 +137,7 @@ export default function HomeScreen() {
   };
 
   const handleOnEditClick = async (id) => {
-    await dispatch(openEditorWindow(id));
+    dispatch(openEditorWindow(id));
     window.close();
   };
 

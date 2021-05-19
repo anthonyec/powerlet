@@ -70,7 +70,7 @@ export default function SearchList({
         key={item.id}
         ref={setItemRef}
         className={className}
-        onClick={onItemClick.bind(null, item.url)}
+        onClick={onItemClick.bind(null, item)}
         onMouseOver={handleItemMouseOver.bind(null, index)}
         onMouseLeave={handleMouseLeave}
         onMouseMove={onItemMouseMove.bind(null, index)}
