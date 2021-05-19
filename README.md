@@ -14,7 +14,7 @@ Available on **[Chrome Web Store](https://chrome.google.com/webstore/detail/powe
 
 - [Privacy Policy](./docs/privacy.md)
 
-## Requirments
+## Requirements
 
 - NodeJS >=10.16
 - Google Chrome or Firefox
@@ -23,7 +23,7 @@ Available on **[Chrome Web Store](https://chrome.google.com/webstore/detail/powe
 
 Create an `.env` file at the root of this repo directory.
 
-Currently the only enviroment variable is `STATS_DOMAIN` and is **not required** to run the project.
+Currently the only environment variable is `STATS_DOMAIN` and is **not required** to run the project.
 
 ```bash
 $ touch .env
