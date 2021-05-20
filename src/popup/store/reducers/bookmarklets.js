@@ -1,4 +1,7 @@
-import { SET_BOOKMARKLETS, ADD_RECENT_BOOKMARKLET } from '../actions/bookmarklets';
+import {
+  SET_BOOKMARKLETS,
+  ADD_RECENT_BOOKMARKLET
+} from '../actions/bookmarklets';
 
 const defaultState = {
   all: [],
@@ -28,14 +31,18 @@ export default function bookmarksReducer(state = defaultState, action) {
       ];
 
       // Trim recent list if too big
-      const suggestedSliceIndex = recentsWithPayloadIdAtEnd.length - MAX_RECENTS_LENGTH;
+      const suggestedSliceIndex =
+        recentsWithPayloadIdAtEnd.length - MAX_RECENTS_LENGTH;
       const startSliceIndex = suggestedSliceIndex > 0 ? suggestedSliceIndex : 0;
-      const trimmedRecents = recentsWithPayloadIdAtEnd.slice(startSliceIndex, recentsWithPayloadIdAtEnd.length);
+      const trimmedRecents = recentsWithPayloadIdAtEnd.slice(
+        startSliceIndex,
+        recentsWithPayloadIdAtEnd.length
+      );
 
       return {
         ...state,
         recent: trimmedRecents
-      }
+      };
     default:
       return state;
   }

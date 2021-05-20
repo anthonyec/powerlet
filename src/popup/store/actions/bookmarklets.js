@@ -12,7 +12,7 @@ function addRecentBookmarklet(id) {
   return {
     type: ADD_RECENT_BOOKMARKLET,
     payload: id
-  }
+  };
 }
 
 export function executeBookmarklet(id, url) {
