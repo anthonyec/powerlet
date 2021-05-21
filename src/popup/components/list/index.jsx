@@ -18,7 +18,11 @@ function getArrayAsStringOfIds(array) {
   return array.map((item) => item.id).join('');
 }
 
-export default function List({ items, onItemClick = () => {} }) {
+export default function List({
+  items,
+  placeholder = '',
+  onItemClick = () => {}
+}) {
   const [selectedItemIndex, setSelectedItemIndex] = useState(0);
 
   const handleItemClick = (item) => {
@@ -89,7 +93,7 @@ export default function List({ items, onItemClick = () => {} }) {
         className={className}
         onClick={handleItemClick.bind(null, item)}
       >
-        <div className="list__text">{item.title || 'Untitled script'}</div>
+        <div className="list__text">{item.title || placeholder}</div>
       </li>
     );
   });
