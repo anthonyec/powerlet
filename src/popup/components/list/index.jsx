@@ -23,6 +23,7 @@ const List = React.forwardRef(
     {
       items,
       placeholder = '',
+      disableKeyboardNavigation,
       onItemClick = () => {}
     },
     ref
@@ -70,6 +71,10 @@ const List = React.forwardRef(
     };
 
     useEffect(() => {
+      if (disableKeyboardNavigation) {
+        return;
+      }
+
       window.document.addEventListener('keydown', handleKeyDown);
 
       return () => {
@@ -77,7 +82,11 @@ const List = React.forwardRef(
       };
 
       // TODO: Is adding and removing event listeners this frequently a bad thing?
-    }, [selectedItemIndex, getArrayAsStringOfIds(items)]);
+    }, [
+      disableKeyboardNavigation,
+      selectedItemIndex,
+      getArrayAsStringOfIds(items)
+    ]);
 
     // Reset selected to first item when `items` change to avoid selected being
     // out of bounds when the array length changes.

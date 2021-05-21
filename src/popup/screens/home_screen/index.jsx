@@ -23,12 +23,21 @@ export default function HomeScreen() {
   const dispatch = useDispatch();
   const searchFieldRef = useRef(null);
   const [listSelectedItemRef, setListSelectedItemRef] = useState(null);
+  const [inputFocused, setInputFocused] = useState(false);
   const bookmarklets = useSelector((state) => state.bookmarklets.all);
   const [fuzzyFilterResults, fuzzyFilter] = useFuzzyFilter(bookmarklets);
 
   const handleInputChange = (evt) => {
     const value = evt.currentTarget.value;
     fuzzyFilter(value);
+  };
+
+  const handleInputFocus = () => {
+    setInputFocused(true);
+  };
+
+  const handleInputBlur = () => {
+    setInputFocused(false);
   };
 
   const handleItemClick = (item) => {
@@ -51,6 +60,8 @@ export default function HomeScreen() {
       <SearchField
         ref={searchFieldRef}
         onChange={handleInputChange}
+        onFocus={handleInputFocus}
+        onBlur={handleInputBlur}
         placeholder="Search scripts"
       />
 
@@ -61,6 +72,7 @@ export default function HomeScreen() {
             items={fuzzyFilterResults}
             onItemClick={handleItemClick}
             placeholder="Untitled script"
+            disableKeyboardNavigation={!inputFocused}
           />
         </ScrollView>
       )}
