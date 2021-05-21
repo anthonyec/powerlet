@@ -1,6 +1,4 @@
-.list {
-  border: 1px solid red;
-}
+.list {}
 
 .list__item {
   padding-left: var(--item-padding-left-right);
