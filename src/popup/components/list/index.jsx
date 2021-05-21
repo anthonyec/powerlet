@@ -18,85 +18,93 @@ function getArrayAsStringOfIds(array) {
   return array.map((item) => item.id).join('');
 }
 
-export default function List({
-  items,
-  placeholder = '',
-  onItemClick = () => {}
-}) {
-  const [selectedItemIndex, setSelectedItemIndex] = useState(0);
+const List = React.forwardRef(
+  (
+    {
+      items,
+      placeholder = '',
+      onItemClick = () => {}
+    },
+    ref
+  ) => {
+    const [selectedItemIndex, setSelectedItemIndex] = useState(0);
 
-  const handleItemClick = (item) => {
-    onItemClick(item);
-  };
-
-  const handleItemEnter = () => {
-    const item = items[selectedItemIndex];
-    onItemClick(item);
-  };
-
-  const getPrevIndex = () => {
-    const calculatedIndex = selectedItemIndex - 1;
-    return calculatedIndex < 0 ? items.length - 1 : calculatedIndex;
-  };
-
-  const getNextIndex = () => {
-    const calculatedIndex = selectedItemIndex + 1;
-    return calculatedIndex > items.length - 1 ? 0 : calculatedIndex;
-  };
-
-  const handleKeyDown = (evt) => {
-    switch (evt.keyCode) {
-      case KEYS.ENTER:
-        evt.preventDefault();
-        handleItemEnter();
-        break;
-
-      case KEYS.UP:
-        evt.preventDefault();
-        setSelectedItemIndex(getPrevIndex());
-        break;
-
-      case KEYS.DOWN:
-        evt.preventDefault();
-        setSelectedItemIndex(getNextIndex());
-        break;
-
-      default:
-    }
-  };
-
-  useEffect(() => {
-    window.document.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      window.document.removeEventListener('keydown', handleKeyDown);
+    const handleItemClick = (item) => {
+      onItemClick(item);
     };
 
-    // TODO: Is adding and removing event listeners this frequently a bad thing?
-  }, [selectedItemIndex, getArrayAsStringOfIds(items)]);
+    const handleItemEnter = () => {
+      const item = items[selectedItemIndex];
+      onItemClick(item);
+    };
 
-  // Reset selected to first item when `items` change to avoid selected being
-  // out of bounds when the array length changes.
-  useEffect(() => {
-    setSelectedItemIndex(0);
-  }, [getArrayAsStringOfIds(items)]);
+    const getPrevIndex = () => {
+      const calculatedIndex = selectedItemIndex - 1;
+      return calculatedIndex < 0 ? items.length - 1 : calculatedIndex;
+    };
 
-  const renderedItems = items.map((item, index) => {
-    const isSelected = index === selectedItemIndex;
-    const className = isSelected
-      ? 'list__item list__item--selected'
-      : 'list__item';
+    const getNextIndex = () => {
+      const calculatedIndex = selectedItemIndex + 1;
+      return calculatedIndex > items.length - 1 ? 0 : calculatedIndex;
+    };
 
-    return (
-      <li
-        key={item.id}
-        className={className}
-        onClick={handleItemClick.bind(null, item)}
-      >
-        <div className="list__text">{item.title || placeholder}</div>
-      </li>
-    );
-  });
+    const handleKeyDown = (evt) => {
+      switch (evt.keyCode) {
+        case KEYS.ENTER:
+          evt.preventDefault();
+          handleItemEnter();
+          break;
 
-  return <div className="list">{renderedItems}</div>;
-}
+        case KEYS.UP:
+          evt.preventDefault();
+          setSelectedItemIndex(getPrevIndex());
+          break;
+
+        case KEYS.DOWN:
+          evt.preventDefault();
+          setSelectedItemIndex(getNextIndex());
+          break;
+
+        default:
+      }
+    };
+
+    useEffect(() => {
+      window.document.addEventListener('keydown', handleKeyDown);
+
+      return () => {
+        window.document.removeEventListener('keydown', handleKeyDown);
+      };
+
+      // TODO: Is adding and removing event listeners this frequently a bad thing?
+    }, [selectedItemIndex, getArrayAsStringOfIds(items)]);
+
+    // Reset selected to first item when `items` change to avoid selected being
+    // out of bounds when the array length changes.
+    useEffect(() => {
+      setSelectedItemIndex(0);
+    }, [getArrayAsStringOfIds(items)]);
+
+    const renderedItems = items.map((item, index) => {
+      const isSelected = index === selectedItemIndex;
+      const className = isSelected
+        ? 'list__item list__item--selected'
+        : 'list__item';
+
+      return (
+        <li
+          key={item.id}
+          ref={isSelected ? ref.selectedItem : null}
+          className={className}
+          onClick={handleItemClick.bind(null, item)}
+        >
+          <div className="list__text">{item.title || placeholder}</div>
+        </li>
+      );
+    });
+
+    return <div className="list">{renderedItems}</div>;
+  }
+);
+
+export default List;
