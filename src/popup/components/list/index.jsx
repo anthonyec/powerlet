@@ -128,7 +128,7 @@ const List = React.forwardRef(
             <div className="list__heading">{groupHeading}</div>
           )}
           <li
-            ref={isSelected ? ref.selectedItem : null}
+            ref={isSelected ? ref && ref.selectedItem : null}
             className={className}
             onClick={handleItemClick.bind(null, item)}
           >

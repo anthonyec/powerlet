@@ -54,6 +54,8 @@ export default function HomeScreen() {
 
   const onListItemRefChange = useCallback((element) => {
     // TODO: Why is it null on first render? Because it's mounting?
+    // TODO: This is causing double rendering of <List> which is also causing
+    // performance issues on giant lists of bookmarklets.
     setListSelectedItemRef(element);
   }, []);
 

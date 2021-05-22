@@ -7,8 +7,6 @@ export const selectBookmarkletsWithGroup = createSelector(
   selectBookmarklets,
   selectRecent,
   (bookmarklets, recent) => {
-    console.log('selectBookmarkletsWithGroup');
-
     return bookmarklets.map((bookmarklet) => {
       const groupIndex = recent.indexOf(bookmarklet.id);
       const group = groupIndex !== -1 ? 'recent' : null;
