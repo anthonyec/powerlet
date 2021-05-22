@@ -128,7 +128,11 @@ const List = React.forwardRef(
       return (
         <React.Fragment key={item.id}>
           {showGroupHeading && (
-            <div className="list__heading">{groupHeading}</div>
+            <div className="list__heading">
+              <div className="list__heading-label">
+                {groupHeading}
+              </div>
+            </div>
           )}
           <li
             ref={isSelected ? ref.selectedItem : null}
