@@ -5,6 +5,7 @@ import {
   fetchAllBookmarklets,
   executeBookmarklet
 } from '../../store/actions/bookmarklets';
+import { selectBookmarkletsWithGroup } from '../../store/selectors/bookmarklets';
 import useFuzzyFilter from './use_fuzzy_filter';
 import useSortByRecent from './use_sort_by_recent';
 import SearchField from '../../components/search_field';
@@ -26,18 +27,7 @@ export default function HomeScreen() {
   const [inputFocused, setInputFocused] = useState(false);
 
   // TODO: Put this into separate selector function.
-  const bookmarklets = useSelector((state) => {
-    return state.bookmarklets.all.map((bookmarklet) => {
-      const groupIndex = state.bookmarklets.recent.indexOf(bookmarklet.id);
-      const group = groupIndex !== -1 ? 'recent' : null;
-
-      return {
-        ...bookmarklet,
-        group,
-        groupIndex
-      };
-    });
-  });
+  const bookmarklets = useSelector(selectBookmarkletsWithGroup);
   const [fuzzyFilterResults, fuzzyFilter] = useFuzzyFilter(bookmarklets);
 
   // TODO: Is this ok to be a hook or should it be a normal function? Is order
