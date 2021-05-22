@@ -79,6 +79,10 @@ export default function HomeScreen() {
           <List
             ref={{ selectedItem: onListItemRefChange }}
             items={sortedResults}
+            groups={[
+              { id: 'recent', title: 'Recently used' },
+              { id: null, title: 'Other scripts' }
+            ]}
             onItemClick={handleItemClick}
             placeholder="Untitled script"
             disableKeyboardNavigation={!inputFocused}
