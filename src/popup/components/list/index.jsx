@@ -60,17 +60,21 @@ const List = React.forwardRef(
       onItemClick(item);
     };
 
-    const getPrevIndex = () => {
-      const calculatedIndex = selectedItemIndex - 1;
+    const getPrevIndex = (index) => {
+      const calculatedIndex = index - 1;
       return calculatedIndex < 0 ? items.length - 1 : calculatedIndex;
     };
 
-    const getNextIndex = () => {
-      const calculatedIndex = selectedItemIndex + 1;
+    const getNextIndex = (index) => {
+      const calculatedIndex = index + 1;
       return calculatedIndex > items.length - 1 ? 0 : calculatedIndex;
     };
 
     const handleKeyDown = (evt) => {
+      if (disableKeyboardNavigation) {
+        return;
+      }
+
       switch (evt.keyCode) {
         case KEYS.ENTER:
           evt.preventDefault();
@@ -79,12 +83,15 @@ const List = React.forwardRef(
 
         case KEYS.UP:
           evt.preventDefault();
-          setSelectedItemIndex(getPrevIndex());
+          // Use state function for performance reasons. This allows us to
+          // access previous state without rebinding the key listeners.
+          // https://stackoverflow.com/a/62005831/4703489
+          setSelectedItemIndex((prevIndex) => getPrevIndex(prevIndex));
           break;
 
         case KEYS.DOWN:
           evt.preventDefault();
-          setSelectedItemIndex(getNextIndex());
+          setSelectedItemIndex((nextIndex) => getNextIndex(nextIndex));
           break;
 
         default:
@@ -92,22 +99,12 @@ const List = React.forwardRef(
     };
 
     useEffect(() => {
-      if (disableKeyboardNavigation) {
-        return;
-      }
-
       window.document.addEventListener('keydown', handleKeyDown);
 
       return () => {
         window.document.removeEventListener('keydown', handleKeyDown);
       };
-
-      // TODO: Is adding and removing event listeners this frequently a bad thing?
-    }, [
-      disableKeyboardNavigation,
-      selectedItemIndex,
-      getArrayAsStringOfIds(items)
-    ]);
+    }, [disableKeyboardNavigation, getArrayAsStringOfIds(items)]);
 
     // Reset selected to first item when `items` change to avoid selected being
     // out of bounds when the array length changes.
