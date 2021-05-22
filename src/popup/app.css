@@ -34,6 +34,10 @@
   --icon-normal-fill: #5F6369;
 
   --toolbar-border-color: #E1E3E6;
+
+  --list-heading-background: white;
+  --list-heading-color: #5F6368;
+  --list-heading-border-color: #DADCE0;
 }
 
 @media(prefers-color-scheme: dark) {
@@ -65,6 +69,12 @@
     --icon-normal-fill: #9AA0A7;
 
     --toolbar-border-color: #393D40;
+
+    --list-heading-background: #292A2D;
+    /* --list-heading-background: #202124; */
+
+    --list-heading-color: #9AA0A6;
+    --list-heading-border-color: #3C4043;
   }
 }
 

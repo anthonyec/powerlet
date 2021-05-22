@@ -18,10 +18,31 @@ function getArrayAsStringOfIds(array) {
   return array.map((item) => item.id).join('');
 }
 
+function shouldShowGroupHeading(previousItem, currentItem) {
+  if (!previousItem && currentItem) {
+    return true;
+  }
+
+  if (previousItem.group !== currentItem.group) {
+    return true;
+  }
+
+  return false;
+}
+
+function getGroupHeadingFromItem(groups, item) {
+  const foundGroup = groups.find((group) => {
+    return group.id === item.group;
+  });
+
+  return foundGroup && foundGroup.title;
+}
+
 const List = React.forwardRef(
   (
     {
-      items,
+      items = [],
+      groups = [],
       placeholder = '',
       disableKeyboardNavigation,
       onItemClick = () => {}
@@ -95,20 +116,28 @@ const List = React.forwardRef(
     }, [getArrayAsStringOfIds(items)]);
 
     const renderedItems = items.map((item, index) => {
+      const previousItem = index === 0 ? null : items[index - 1];
+      const groupHeading = getGroupHeadingFromItem(groups, item);
+      const showGroupHeading =
+        groupHeading && shouldShowGroupHeading(previousItem, item);
       const isSelected = index === selectedItemIndex;
       const className = isSelected
         ? 'list__item list__item--selected'
         : 'list__item';
 
       return (
-        <li
-          key={item.id}
-          ref={isSelected ? ref.selectedItem : null}
-          className={className}
-          onClick={handleItemClick.bind(null, item)}
-        >
-          <div className="list__text">{item.title || placeholder}</div>
-        </li>
+        <React.Fragment key={item.id}>
+          {showGroupHeading && (
+            <div className="list__heading">{groupHeading}</div>
+          )}
+          <li
+            ref={isSelected ? ref.selectedItem : null}
+            className={className}
+            onClick={handleItemClick.bind(null, item)}
+          >
+            <div className="list__text">{item.title || placeholder}</div>
+          </li>
+        </React.Fragment>
       );
     });
 

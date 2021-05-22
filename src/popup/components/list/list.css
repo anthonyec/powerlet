@@ -1,5 +1,14 @@
 .list {}
 
+.list__heading {
+  background: var(--list-heading-background);
+  color: var(--list-heading-color);
+  padding: 20px var(--item-padding-left-right) 10px;
+  margin-top: 8px;
+  border-top: 1px solid var(--list-heading-border-color);
+  font-size: 12px;
+}
+
 .list__item {
   padding-left: var(--item-padding-left-right);
   padding-right: var(--item-padding-left-right);
