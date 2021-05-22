@@ -35,7 +35,7 @@
 
   --toolbar-border-color: #E1E3E6;
 
-  --list-heading-background: #DEE1E6;
+  --list-heading-background: var(--global-background);
   --list-heading-color: #5F6368;
   --list-heading-border-color: #DADCE0;
 }
@@ -70,8 +70,7 @@
 
     --toolbar-border-color: #393D40;
 
-    --list-heading-background: #292A2D;
-    --list-heading-background: #202124;
+    --list-heading-background: var(--global-background);
     --list-heading-color: #9AA0A6;
     --list-heading-border-color: #3C4043;
   }
