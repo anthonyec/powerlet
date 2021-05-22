@@ -25,8 +25,6 @@ export default function HomeScreen() {
   const searchFieldRef = useRef(null);
   const [listSelectedItemRef, setListSelectedItemRef] = useState(null);
   const [inputFocused, setInputFocused] = useState(false);
-
-  // TODO: Put this into separate selector function.
   const bookmarklets = useSelector(selectBookmarkletsWithGroup);
   const [fuzzyFilterResults, fuzzyFilter] = useFuzzyFilter(bookmarklets);
 
