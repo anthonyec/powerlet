@@ -8,7 +8,7 @@ const defaultState = {
   recent: []
 };
 
-const MAX_RECENTS_LENGTH = 10;
+const MAX_RECENTS_LENGTH = 6;
 
 export default function bookmarksReducer(state = defaultState, action) {
   switch (action.type) {
