@@ -41,7 +41,7 @@ export default function HomeScreen() {
 
   const handleItemClick = (item) => {
     dispatch(executeBookmarklet(item.id, item.url));
-    // window.close();
+    window.close();
   };
 
   const onListItemRefChange = useCallback((scrollToElement, element) => {
