@@ -1,5 +1,6 @@
 .search-field {
   padding: 8px;
+  /* TODO: Add border bottom here to separate search from list when scrolling */
 }
 
 .search-field__input {

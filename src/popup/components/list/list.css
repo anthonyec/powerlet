@@ -15,9 +15,9 @@
 }
 
 .list__item {
-  padding-left: var(--item-padding-left-right);
+  padding-left: calc(var(--item-padding-left-right) + 6px);
   padding-right: var(--item-padding-left-right);
-  height: 32px;
+  height: 34px;
   font-size: 12px;
   line-height: 20px;
   user-select: none;
