@@ -1,18 +1,16 @@
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 
 import './scroll_view.css';
 
-export default function ScrollView({ targetRef = null, children }) {
+export default function ScrollView({ children }) {
   const scrollViewRef = useRef();
 
-  // When using useEffect, sometimes the selected item is out of view for
-  // 1 frame before it scrolls down, causing a small flash of unselected.
-  // Using `useLayoutEffect` fixed this.
-  // TODO: Learn why it fixes it!
-  useLayoutEffect(() => {
-    if (scrollViewRef.current && targetRef) {
+  const scrollToElement = (targetElement) => {
+    const scrollViewElement = scrollViewRef.current;
+
+    if (scrollViewElement && targetElement) {
       const parent = scrollViewRef.current.getBoundingClientRect();
-      const child = targetRef.getBoundingClientRect();
+      const child = targetElement.getBoundingClientRect();
       const shouldScrollUp = child.y < parent.y;
       const shouldScrollDown =
         child.y + child.height > parent.y + parent.height;
@@ -32,11 +30,11 @@ export default function ScrollView({ targetRef = null, children }) {
         scrollViewRef.current.scrollTo(0, scrollY);
       }
     }
-  }, [targetRef]);
+  };
 
   return (
     <div className="scroll-view" ref={scrollViewRef}>
-      {children}
+      {children && typeof children === 'function' && children(scrollToElement)}
     </div>
   );
 }

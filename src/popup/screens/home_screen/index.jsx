@@ -12,18 +12,12 @@ import SearchField from '../../components/search_field';
 import ScrollView from '../../components/scroll_view';
 import List from '../../components/list';
 import OnboardMessage from '../../components/onboard_message';
-import Toolbar from '../../components/toolbar';
-import Icon from '../../components/icon';
-import Button from '../../components/button';
 
 import './home_screen.css';
-
-const HIDE_EDITOR = true;
 
 export default function HomeScreen() {
   const dispatch = useDispatch();
   const searchFieldRef = useRef(null);
-  const [listSelectedItemRef, setListSelectedItemRef] = useState(null);
   const [inputFocused, setInputFocused] = useState(false);
   const bookmarklets = useSelector(selectBookmarkletsWithGroup);
   const [fuzzyFilterResults, fuzzyFilter] = useFuzzyFilter(bookmarklets);
@@ -47,14 +41,14 @@ export default function HomeScreen() {
 
   const handleItemClick = (item) => {
     dispatch(executeBookmarklet(item.id, item.url));
-    window.close();
+    // window.close();
   };
 
-  const onListItemRefChange = useCallback((element) => {
+  const onListItemRefChange = useCallback((scrollToElement, element) => {
     // TODO: Why is it null on first render? Because it's mounting?
-    // TODO: This is causing double rendering of <List> which is also causing
-    // performance issues on giant lists of bookmarklets.
-    setListSelectedItemRef(element);
+    if (element !== null) {
+      scrollToElement(element);
+    }
   }, []);
 
   useEffect(() => {
@@ -73,18 +67,24 @@ export default function HomeScreen() {
       />
 
       {bookmarklets.length !== 0 && (
-        <ScrollView targetRef={listSelectedItemRef}>
-          <List
-            ref={{ selectedItem: onListItemRefChange }}
-            items={sortedResults}
-            groups={[
-              { id: 'recent', title: 'Recently used' },
-              { id: null, title: 'Other scripts' }
-            ]}
-            onItemClick={handleItemClick}
-            placeholder="Untitled script"
-            disableKeyboardNavigation={!inputFocused}
-          />
+        <ScrollView>
+          {(scrollToElement) => {
+            return (
+              <List
+                ref={{
+                  selectedItem: onListItemRefChange.bind(null, scrollToElement)
+                }}
+                items={sortedResults}
+                groups={[
+                  { id: 'recent', title: 'Recently used' },
+                  { id: null, title: 'Other scripts' }
+                ]}
+                onItemClick={handleItemClick}
+                placeholder="Untitled script"
+                disableKeyboardNavigation={!inputFocused}
+              />
+            );
+          }}
         </ScrollView>
       )}
 
