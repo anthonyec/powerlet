@@ -89,18 +89,6 @@ export default function HomeScreen() {
       )}
 
       {bookmarklets.length === 0 && <OnboardMessage />}
-
-      {!HIDE_EDITOR && bookmarklets.length !== 0 && (
-        <Toolbar>
-          <Button
-            type="toolbar"
-            icon={<Icon name="plus" />}
-            onClick={handleOnNewClick}
-          >
-            Create new script
-          </Button>
-        </Toolbar>
-      )}
     </div>
   );
 }
