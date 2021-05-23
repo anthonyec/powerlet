@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 import './list.css';
 
@@ -50,13 +50,17 @@ const List = React.forwardRef(
     ref
   ) => {
     const [selectedItemIndex, setSelectedItemIndex] = useState(0);
+    const selectItemIndexRef = useRef(selectedItemIndex);
+
+    // TODO: Hack fix for enter key to work correctly with up-to-date index
+    selectItemIndexRef.current = selectedItemIndex;
 
     const handleItemClick = (item) => {
       onItemClick(item);
     };
 
     const handleItemEnter = () => {
-      const item = items[selectedItemIndex];
+      const item = items[selectItemIndexRef.current];
       onItemClick(item);
     };
 
