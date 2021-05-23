@@ -1,6 +1,8 @@
 .search-field {
+  box-shadow: 0 1px 0 0 var(--list-heading-border-color);
   padding: 8px;
-  /* TODO: Add border bottom here to separate search from list when scrolling */
+  position: relative;
+  z-index: 2;
 }
 
 .search-field__input {
