@@ -15,8 +15,6 @@ import OnboardMessage from '../../components/onboard_message';
 
 import './home_screen.css';
 
-const ENABLE_GROUPS = false;
-
 export default function HomeScreen() {
   const dispatch = useDispatch();
   const searchFieldRef = useRef(null);
@@ -27,13 +25,6 @@ export default function HomeScreen() {
   // TODO: Is this ok to be a hook or should it be a normal function? Is order
   // dependent hooks a naughty pattern?
   const sortedResults = useSortByRecent(fuzzyFilterResults);
-  const results = ENABLE_GROUPS ? sortedResults : fuzzyFilterResults;
-  const listGroups = ENABLE_GROUPS
-    ? [
-        { id: 'recent', title: 'Recently used' },
-        { id: null, title: 'Other scripts' }
-      ]
-    : [];
 
   const handleInputChange = (evt) => {
     const value = evt.currentTarget.value;
@@ -83,8 +74,11 @@ export default function HomeScreen() {
                 ref={{
                   selectedItem: onListItemRefChange.bind(null, scrollToElement)
                 }}
-                items={results}
-                groups={listGroups}
+                items={sortedResults}
+                groups={[
+                  { id: 'recent', title: 'Recently used' },
+                  { id: null, title: 'Other scripts' }
+                ]}
                 onItemAction={handleItemAction}
                 placeholder="Untitled script"
                 disableKeyboardNavigation={!inputFocused}
