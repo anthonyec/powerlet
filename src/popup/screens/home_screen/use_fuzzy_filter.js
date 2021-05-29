@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { fuzzyMatchArray } from './fuzzyMatch';
+import { fuzzyMatchArray } from './fuzzy_match';
 
 export default function useFuzzyFilter(items) {
   const [searchTerm, setSearchTerm] = useState('');
