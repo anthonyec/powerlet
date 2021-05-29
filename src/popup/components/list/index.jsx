@@ -45,7 +45,9 @@ const List = React.forwardRef(
       groups = [],
       placeholder = '',
       disableKeyboardNavigation,
-      onItemClick = () => {}
+
+      /** Callback when item is clicked or enter key is pressed. */
+      onItemAction = () => {}
     },
     ref
   ) => {
@@ -56,12 +58,12 @@ const List = React.forwardRef(
     selectItemIndexRef.current = selectedItemIndex;
 
     const handleItemClick = (item) => {
-      onItemClick(item);
+      onItemAction(item);
     };
 
     const handleItemEnter = () => {
       const item = items[selectItemIndexRef.current];
-      onItemClick(item);
+      onItemAction(item);
     };
 
     const getPrevIndex = (index) => {

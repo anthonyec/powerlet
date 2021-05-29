@@ -39,7 +39,7 @@ export default function HomeScreen() {
     setInputFocused(false);
   };
 
-  const handleItemClick = (item) => {
+  const handleItemAction = (item) => {
     dispatch(executeBookmarklet(item.id, item.url));
     window.close();
   };
@@ -79,7 +79,7 @@ export default function HomeScreen() {
                   { id: 'recent', title: 'Recently used' },
                   { id: null, title: 'Other scripts' }
                 ]}
-                onItemClick={handleItemClick}
+                onItemAction={handleItemAction}
                 placeholder="Untitled script"
                 disableKeyboardNavigation={!inputFocused}
               />
