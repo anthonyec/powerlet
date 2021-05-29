@@ -124,9 +124,11 @@ const List = React.forwardRef(
       const showGroupHeading =
         groupHeading && shouldShowGroupHeading(previousItem, item);
       const isSelected = index === selectedItemIndex;
+      const listClassNameWithGroup =
+        groups.length !== 0 ? 'list__item--group' : '';
       const className = isSelected
-        ? 'list__item list__item--selected'
-        : 'list__item';
+        ? `list__item list__item--selected ${listClassNameWithGroup}`
+        : `list__item ${listClassNameWithGroup}`;
 
       return (
         <React.Fragment key={item.id}>

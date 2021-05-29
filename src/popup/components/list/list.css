@@ -15,7 +15,7 @@
 }
 
 .list__item {
-  padding-left: calc(var(--item-padding-left-right) + 8px);
+  padding-left: var(--item-padding-left-right);
   padding-right: var(--item-padding-left-right);
   height: 34px;
   font-size: 12px;
@@ -37,6 +37,10 @@
 .list__item--selected {
   background: var(--item-selected-background);
   border-color: var(--item-selected-background);
+}
+
+.list__item--group {
+  padding-left: calc(var(--item-padding-left-right) + 8px);
 }
 
 .list__text {
