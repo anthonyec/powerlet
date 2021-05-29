@@ -1,6 +1,7 @@
 # Development setup
 
 ## Setup
+
 When actively developing the extension you can use `start` to have Webpack watch for changes and automatically recompile the extension.
 
 ```bash

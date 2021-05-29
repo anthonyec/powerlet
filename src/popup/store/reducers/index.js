@@ -9,7 +9,7 @@ import editor from './editor';
 const bookmarkletsPersistConfig = {
   key: 'bookmarklets',
   storage,
-  whitelist: ['all']
+  whitelist: ['all', 'recent']
 };
 
 export default combineReducers({

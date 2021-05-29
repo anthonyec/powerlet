@@ -4,8 +4,9 @@ import './search_field.css';
 
 function SearchField(
   {
-    onKeyDown = () => {},
     onChange = () => {},
+    onFocus = () => {},
+    onBlur = () => {},
     placeholder = '',
     defaultValue = ''
   },
@@ -17,8 +18,9 @@ function SearchField(
         className="search-field__input"
         type="text"
         ref={ref}
-        onKeyDown={onKeyDown}
         onChange={onChange}
+        onFocus={onFocus}
+        onBlur={onBlur}
         placeholder={placeholder}
         defaultValue={defaultValue}
         autoComplete="off"

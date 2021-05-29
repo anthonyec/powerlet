@@ -39,7 +39,6 @@ $ npm run build
 
 After the extension has been built, [load it in a browser.](#loading-extension-in-web-browser-locally)
 
-
 ## Loading extension in web browser locally
 
 ❗️Run the build script at least once before loading extensions into the browser.
