@@ -8,12 +8,17 @@ function SearchField(
     onFocus = () => {},
     onBlur = () => {},
     placeholder = '',
-    defaultValue = ''
+    defaultValue = '',
+    showBorder
   },
   ref
 ) {
+  const className = showBorder
+    ? 'search-field search-field--with-border'
+    : 'search-field';
+
   return (
-    <div className="search-field">
+    <div className={className}>
       <input
         className="search-field__input"
         type="text"

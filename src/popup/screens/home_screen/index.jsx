@@ -72,6 +72,7 @@ export default function HomeScreen() {
         onFocus={handleSearchFieldFocus}
         onBlur={handleSearchFieldBlur}
         placeholder="Search scripts"
+        showBorder={groups}
       />
 
       {hasBookmarklets && hasSearchResults && (
