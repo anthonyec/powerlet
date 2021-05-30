@@ -5,9 +5,10 @@ import {
   fetchAllBookmarklets,
   executeBookmarklet
 } from '../../store/actions/bookmarklets';
-import { selectBookmarkletsWithGroup } from '../../store/selectors/bookmarklets';
-import useFuzzyFilter from './use_fuzzy_filter';
-import useSortByRecent from './use_sort_by_recent';
+import {
+  selectBookmarkletsWithGroup,
+  selectResultsFromBookmarkletsSearch
+} from '../../store/selectors/bookmarklets';
 import SearchField from '../../components/search_field';
 import ScrollView from '../../components/scroll_view';
 import List from '../../components/list';
@@ -19,17 +20,16 @@ import EmptyMessage from '../../components/empty_message';
 export default function HomeScreen() {
   const dispatch = useDispatch();
   const searchFieldRef = useRef(null);
-  const [inputFocused, setInputFocused] = useState(false);
-  const bookmarklets = useSelector(selectBookmarkletsWithGroup);
-  const [fuzzyFilterResults, fuzzyFilter] = useFuzzyFilter(bookmarklets);
 
-  // TODO: Is this ok to be a hook or should it be a normal function? Is order
-  // dependent hooks a naughty pattern?
-  const sortedResults = useSortByRecent(fuzzyFilterResults);
+  const [inputFocused, setInputFocused] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const bookmarklets = useSelector(selectBookmarkletsWithGroup);
+  const results = useSelector(selectResultsFromBookmarkletsSearch(searchQuery));
 
   const handleInputChange = (evt) => {
     const value = evt.currentTarget.value;
-    fuzzyFilter(value);
+    setSearchQuery(value);
   };
 
   const handleInputFocus = () => {
@@ -67,7 +67,7 @@ export default function HomeScreen() {
         placeholder="Search scripts"
       />
 
-      {bookmarklets.length !== 0 && sortedResults.length !== 0 && (
+      {bookmarklets.length !== 0 && results.length !== 0 && (
         <ScrollView>
           {(scrollToElement) => {
             return (
@@ -75,7 +75,7 @@ export default function HomeScreen() {
                 ref={{
                   selectedItem: onListItemRefChange.bind(null, scrollToElement)
                 }}
-                items={sortedResults}
+                items={results}
                 groups={[
                   { id: 'recent', title: 'Recently used' },
                   { id: null, title: 'Other scripts' }
@@ -89,7 +89,7 @@ export default function HomeScreen() {
         </ScrollView>
       )}
 
-      {bookmarklets.length !== 0 && sortedResults.length === 0 && (
+      {bookmarklets.length !== 0 && results.length === 0 && (
         <EmptyMessage message="No scripts found" />
       )}
       {bookmarklets.length === 0 && <OnboardMessage />}
