@@ -13,14 +13,14 @@ import SearchField from '../../components/search_field';
 import ScrollView from '../../components/scroll_view';
 import List from '../../components/list';
 import OnboardMessage from '../../components/onboard_message';
+import EmptyMessage from '../../components/empty_message';
 
 import './home_screen.css';
-import EmptyMessage from '../../components/empty_message';
 
 export default function HomeScreen() {
   const dispatch = useDispatch();
-  const searchFieldRef = useRef(null);
 
+  const searchFieldRef = useRef(null);
   const [inputFocused, setInputFocused] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -29,23 +29,28 @@ export default function HomeScreen() {
 
   const hasBookmarklets = bookmarklets.length !== 0;
   const hasSearchResults = results.length !== 0;
-  const doesNotHaveBookmarklets = results.length === 0;
+  const doesNotHaveBookmarklets = bookmarklets.length === 0;
   const doesNotHaveSearchResults = results.length === 0;
 
-  const handleInputChange = (evt) => {
+  useEffect(() => {
+    dispatch(fetchAllBookmarklets());
+    searchFieldRef.current && searchFieldRef.current.focus();
+  }, []);
+
+  const handleSearchFieldChange = (evt) => {
     const value = evt.currentTarget.value;
     setSearchQuery(value);
   };
 
-  const handleInputFocus = () => {
+  const handleSearchFieldFocus = () => {
     setInputFocused(true);
   };
 
-  const handleInputBlur = () => {
+  const handleSearchFieldBlur = () => {
     setInputFocused(false);
   };
 
-  const handleItemAction = (item) => {
+  const handleListItemAction = (item) => {
     dispatch(executeBookmarklet(item.id, item.url));
     window.close();
   };
@@ -57,18 +62,13 @@ export default function HomeScreen() {
     }
   }, []);
 
-  useEffect(() => {
-    dispatch(fetchAllBookmarklets());
-    searchFieldRef.current && searchFieldRef.current.focus();
-  }, []);
-
   return (
     <div className="home-screen">
       <SearchField
         ref={searchFieldRef}
-        onChange={handleInputChange}
-        onFocus={handleInputFocus}
-        onBlur={handleInputBlur}
+        onChange={handleSearchFieldChange}
+        onFocus={handleSearchFieldFocus}
+        onBlur={handleSearchFieldBlur}
         placeholder="Search scripts"
       />
 
@@ -85,7 +85,7 @@ export default function HomeScreen() {
                   { id: 'recent', title: 'Recently used' },
                   { id: null, title: 'Other scripts' }
                 ]}
-                onItemAction={handleItemAction}
+                onItemAction={handleListItemAction}
                 placeholder="Untitled script"
                 disableKeyboardNavigation={!inputFocused}
               />
