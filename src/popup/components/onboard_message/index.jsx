@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 
 import { navigateTo } from '../../store/actions/ui';
+import EmptyMessage from '../empty_message';
 import Button from '../button';
 
 import './onboard_message.css';
@@ -14,14 +15,13 @@ export default function OnboardMessage() {
   };
 
   return (
-    <div className="onboard-message">
-      <div className="onboard-message__message">
-        You don't have any
-        <br />
-        bookmark&nbsp;scripts.
-      </div>
-
-      <Button onClick={handleExampleOnClick}>Add scripts</Button>
-    </div>
+    <EmptyMessage message="You don't have any bookmark scripts.">
+      <Button
+        className="onboard-message__button"
+        onClick={handleExampleOnClick}
+      >
+        Add scripts
+      </Button>
+    </EmptyMessage>
   );
 }

@@ -14,6 +14,7 @@ import List from '../../components/list';
 import OnboardMessage from '../../components/onboard_message';
 
 import './home_screen.css';
+import EmptyMessage from '../../components/empty_message';
 
 export default function HomeScreen() {
   const dispatch = useDispatch();
@@ -66,7 +67,7 @@ export default function HomeScreen() {
         placeholder="Search scripts"
       />
 
-      {bookmarklets.length !== 0 && (
+      {bookmarklets.length !== 0 && sortedResults.length !== 0 && (
         <ScrollView>
           {(scrollToElement) => {
             return (
@@ -88,6 +89,9 @@ export default function HomeScreen() {
         </ScrollView>
       )}
 
+      {bookmarklets.length !== 0 && sortedResults.length === 0 && (
+        <EmptyMessage message="No scripts found" />
+      )}
       {bookmarklets.length === 0 && <OnboardMessage />}
     </div>
   );
