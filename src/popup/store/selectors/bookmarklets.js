@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 
+import { MAX_RECENTS_LENGTH } from '../reducers/bookmarklets';
 import { fuzzyMatchArray } from '../../lib/fuzzy_match';
 
 const selectBookmarklets = (state) => state.bookmarklets.all;
@@ -54,7 +55,7 @@ export const selectBookmarkletGroups = createSelector(
   (bookmarklets, recents) => {
     // Only show group headings if you have a decent amount of bookmarklets,
     // otherwise it looks a bit silly when 2 bookmarklets are split into groups.
-    if (bookmarklets.length > 6 && recents.length !== 0) {
+    if (bookmarklets.length > MAX_RECENTS_LENGTH && recents.length !== 0) {
       return [
         { id: 'recent', title: 'Recently used' },
         { id: null, title: 'Other scripts' }

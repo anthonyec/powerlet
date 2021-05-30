@@ -130,13 +130,25 @@ const List = React.forwardRef(
         ? `list__item list__item--selected ${listClassNameWithGroup}`
         : `list__item ${listClassNameWithGroup}`;
 
+      // If the selected item is under a heading, use the heading as the
+      // element ref for the scroll view to scroll to. This keeps headings
+      // always in view when moving down and then up the list.
+      const useHeadingAsRef = isSelected && showGroupHeading;
+      const useItemAsRef = isSelected && !showGroupHeading;
+      const selectedItemRef = ref && ref.selectedItem;
+
       return (
         <React.Fragment key={item.id}>
           {showGroupHeading && (
-            <div className="list__heading">{groupHeading}</div>
+            <div
+              ref={useHeadingAsRef && showGroupHeading ? selectedItemRef : null}
+              className="list__heading"
+            >
+              {groupHeading}
+            </div>
           )}
           <li
-            ref={isSelected ? ref && ref.selectedItem : null}
+            ref={useItemAsRef ? selectedItemRef : null}
             className={className}
             onClick={handleItemClick.bind(null, item)}
           >
