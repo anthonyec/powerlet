@@ -6,6 +6,7 @@ import {
   executeBookmarklet
 } from '../../store/actions/bookmarklets';
 import {
+  selectBookmarkletGroups,
   selectBookmarkletsWithGroup,
   selectResultsFromBookmarkletsSearch
 } from '../../store/selectors/bookmarklets';
@@ -26,6 +27,7 @@ export default function HomeScreen() {
 
   const bookmarklets = useSelector(selectBookmarkletsWithGroup);
   const results = useSelector(selectResultsFromBookmarkletsSearch(searchQuery));
+  const groups = useSelector(selectBookmarkletGroups);
 
   const hasBookmarklets = bookmarklets.length !== 0;
   const hasSearchResults = results.length !== 0;
@@ -81,10 +83,7 @@ export default function HomeScreen() {
                   selectedItem: onListItemRefChange.bind(null, scrollToElement)
                 }}
                 items={results}
-                groups={[
-                  { id: 'recent', title: 'Recently used' },
-                  { id: null, title: 'Other scripts' }
-                ]}
+                groups={groups}
                 onItemAction={handleListItemAction}
                 placeholder="Untitled script"
                 disableKeyboardNavigation={!inputFocused}

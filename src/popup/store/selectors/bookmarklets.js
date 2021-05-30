@@ -47,3 +47,18 @@ export const selectResultsFromBookmarkletsSearch = (query = '') => {
     return sortResultsByGroup(results);
   });
 };
+
+export const selectBookmarkletGroups = createSelector(
+  selectBookmarklets,
+  selectRecents,
+  (bookmarklets, recents) => {
+    // Only show group headings if you have a decent amount of bookmarklets,
+    // otherwise it looks a bit silly when 2 bookmarklets are split into groups.
+    if (bookmarklets.length > 6 && recents.length !== 0) {
+      return [
+        { id: 'recent', title: 'Recently used' },
+        { id: null, title: 'Other scripts' }
+      ];
+    }
+  }
+);
