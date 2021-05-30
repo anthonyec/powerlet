@@ -30,7 +30,7 @@ export default function bookmarksReducer(state = defaultState, action) {
         action.payload
       ];
 
-      // Trim recent list if too big
+      // Trim recent list if too big.
       const suggestedSliceIndex =
         recentsWithPayloadIdAtEnd.length - MAX_RECENTS_LENGTH;
       const startSliceIndex = suggestedSliceIndex > 0 ? suggestedSliceIndex : 0;
