@@ -27,6 +27,11 @@ export default function HomeScreen() {
   const bookmarklets = useSelector(selectBookmarkletsWithGroup);
   const results = useSelector(selectResultsFromBookmarkletsSearch(searchQuery));
 
+  const hasBookmarklets = bookmarklets.length !== 0;
+  const hasSearchResults = results.length !== 0;
+  const doesNotHaveBookmarklets = results.length === 0;
+  const doesNotHaveSearchResults = results.length === 0;
+
   const handleInputChange = (evt) => {
     const value = evt.currentTarget.value;
     setSearchQuery(value);
@@ -67,7 +72,7 @@ export default function HomeScreen() {
         placeholder="Search scripts"
       />
 
-      {bookmarklets.length !== 0 && results.length !== 0 && (
+      {hasBookmarklets && hasSearchResults && (
         <ScrollView>
           {(scrollToElement) => {
             return (
@@ -89,10 +94,11 @@ export default function HomeScreen() {
         </ScrollView>
       )}
 
-      {bookmarklets.length !== 0 && results.length === 0 && (
+      {hasBookmarklets && doesNotHaveSearchResults && (
         <EmptyMessage message="No scripts found" />
       )}
-      {bookmarklets.length === 0 && <OnboardMessage />}
+
+      {doesNotHaveBookmarklets && <OnboardMessage />}
     </div>
   );
 }
