@@ -1,0 +1,26 @@
+{
+  "search_scripts_placeholder": {
+    "message": "Search scripts",
+    "description": "Placeholder displayed in the search field for filtering scripts"
+  },
+  "recently_used_heading": {
+    "message": "Recently used",
+    "description": "Heading title for recently used scripts"
+  },
+  "other_scripts_heading": {
+    "message": "Other scripts",
+    "description": "Heading title for other un-grouped scripts"
+  },
+  "no_search_results_message": {
+    "message": "No scripts found.",
+    "description": ""
+  },
+  "empty_state_message": {
+    "message": "You don't have any bookmark scripts.",
+    "description": ""
+  },
+  "add_scripts_button": {
+    "message": "Add scripts",
+    "description": ""
+  }
+}
