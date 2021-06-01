@@ -16,7 +16,7 @@ function addRecentBookmarklet(id) {
 }
 
 export function executeBookmarklet(id, url) {
-  return (dispatch, getState, { browser }) => {
+  return async (dispatch, getState, { browser }) => {
     let bookmarkletCode;
 
     try {
@@ -35,7 +35,7 @@ export function executeBookmarklet(id, url) {
     `;
 
     dispatch(addRecentBookmarklet(id));
-    browser.tabs.executeScript({ code, runAt: 'document_start' });
+    await browser.tabs.executeScript({ code, runAt: 'document_start' });
   };
 }
 

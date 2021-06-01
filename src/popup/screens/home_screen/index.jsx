@@ -10,6 +10,7 @@ import {
   selectBookmarkletsWithGroup,
   selectResultsFromBookmarkletsSearch
 } from '../../store/selectors/bookmarklets';
+import useCloseWindowAfterExecution from './use_close_window_after_execution';
 import SearchField from '../../components/search_field';
 import ScrollView from '../../components/scroll_view';
 import List from '../../components/list';
@@ -20,6 +21,7 @@ import './home_screen.css';
 
 export default function HomeScreen() {
   const dispatch = useDispatch();
+  const setExecutedScript = useCloseWindowAfterExecution();
 
   const searchFieldRef = useRef(null);
   const [inputFocused, setInputFocused] = useState(false);
@@ -53,8 +55,8 @@ export default function HomeScreen() {
   };
 
   const handleListItemAction = (item) => {
+    setExecutedScript(item.id);
     dispatch(executeBookmarklet(item.id, item.url));
-    window.close();
   };
 
   const onListItemRefChange = useCallback((scrollToElement, element) => {
