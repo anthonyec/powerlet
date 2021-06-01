@@ -65,10 +65,7 @@ export const selectBookmarkletGroups = createSelector(
 );
 
 export const selectShouldCloseWindowAfterExecutingScript = (id = null) => {
-  return createSelector(
-    selectRecents,
-    (recents) => {
-      return recents[recents.length - 1] === id;
-    }
-  );
-}
+  return createSelector(selectRecents, (recents) => {
+    return recents[recents.length - 1] === id;
+  });
+};
