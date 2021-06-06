@@ -4,7 +4,7 @@ const defaultState = {
   messages: {}
 };
 
-export default function  localeReducer(state = defaultState, action) {
+export default function localeReducer(state = defaultState, action) {
   switch (action.type) {
     case SET_MESSAGES:
       return {
