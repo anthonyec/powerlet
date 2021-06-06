@@ -22,5 +22,9 @@
   "add_scripts_button": {
     "message": "Add scripts",
     "description": "Button label to take you to script example page"
+  },
+  "send_feedback_button": {
+    "message": "Send feedback",
+    "description": "Button label to send feedback to developer"
   }
 }

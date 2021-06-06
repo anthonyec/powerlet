@@ -22,5 +22,9 @@
   "add_scripts_button": {
     "message": "ブックマークレットトを追加",
     "description": ""
+  },
+  "send_feedback_button": {
+    "message": "フィードバックを送信",
+    "description": ""
   }
 }

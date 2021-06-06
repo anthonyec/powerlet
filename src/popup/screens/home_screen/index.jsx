@@ -16,7 +16,7 @@ import OnboardMessage from '../../components/onboard_message';
 
 import './home_screen.css';
 
-const ENABLE_GROUPS = true;
+const ENABLE_GROUPS = false;
 
 export default function HomeScreen() {
   const dispatch = useDispatch();
