@@ -15,6 +15,7 @@ export function fetchLocaleMessages() {
     // actual translations.
     // TODO: Is this fine? Duplicate data technically. Ideally I'd like to
     // reference `_locales/` that already exists in dist.
+    // https://webpack.js.org/guides/asset-modules/
     const localeMessages = await import('../../../_locales/en/messages.json');
 
     const messages = Object.keys(localeMessages).reduce(
