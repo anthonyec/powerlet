@@ -13,14 +13,14 @@
   },
   "no_search_results_message": {
     "message": "No scripts found.",
-    "description": ""
+    "description": "Shown when a search returns no results"
   },
   "empty_state_message": {
     "message": "You don't have any bookmark scripts.",
-    "description": ""
+    "description": "Shown when a user does not have any bookmarklets"
   },
   "add_scripts_button": {
     "message": "Add scripts",
-    "description": ""
+    "description": "Button label to take you to script example page"
   }
 }
