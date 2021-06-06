@@ -16,7 +16,7 @@
     "description": "Shown when a search returns no results"
   },
   "empty_state_message": {
-    "message": "You don't have any bookmark scripts.",
+    "message": "You don't have any bookmarklets.",
     "description": "Shown when a user does not have any bookmarklets"
   },
   "add_scripts_button": {
@@ -26,5 +26,13 @@
   "send_feedback_button": {
     "message": "Send feedback",
     "description": "Button label to send feedback to developer"
+  },
+  "getting_started_title": {
+    "message": "Getting Started",
+    "description": "Title used on the example scripts page"
+  },
+  "getting_started_subtitle": {
+    "message": "To add a script, drag it to your Bookmarks Bar.",
+    "description": "Subtitle used to explain how to add bookmarklets to the bookmarkbar"
   }
 }
