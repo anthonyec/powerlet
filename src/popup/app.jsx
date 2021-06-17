@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import zipObject from '../utils/zipObject';
 import { firePageView } from './store/actions/stats';
+import { fetchLocaleMessages } from './store/actions/locale';
 import HomeScreen from './screens/home_screen';
 const SettingsScreen = React.lazy(() => import('./screens/settings'));
 const EditorScreen = React.lazy(() => import('./screens/editor_screen'));
@@ -40,6 +41,10 @@ export default function App() {
   useEffect(() => {
     dispatch(firePageView());
   }, [path]);
+
+  useEffect(() => {
+    dispatch(fetchLocaleMessages());
+  }, []);
 
   return (
     <div className="app">

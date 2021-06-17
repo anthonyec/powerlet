@@ -42,7 +42,9 @@ module.exports = {
     new CopyPlugin([
       './src/manifest.json',
       './src/pages/examples.html',
-      './assets'
+      './src/pages/examples.js',
+      './assets',
+      { from: './src/_locales', to: '_locales' }
     ]),
     new HtmlWebpackPlugin({
       title: 'Powerlet',

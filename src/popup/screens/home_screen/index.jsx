@@ -6,6 +6,7 @@ import {
   executeBookmarklet
 } from '../../store/actions/bookmarklets';
 import { selectBookmarkletsWithGroup } from '../../store/selectors/bookmarklets';
+import { selectTranslations } from '../../store/selectors/locale';
 import useFuzzyFilter from './use_fuzzy_filter';
 import useSortByRecent from './use_sort_by_recent';
 import SearchField from '../../components/search_field';
@@ -21,6 +22,7 @@ export default function HomeScreen() {
   const dispatch = useDispatch();
   const searchFieldRef = useRef(null);
   const [inputFocused, setInputFocused] = useState(false);
+  const translations = useSelector(selectTranslations);
   const bookmarklets = useSelector(selectBookmarkletsWithGroup);
   const [fuzzyFilterResults, fuzzyFilter] = useFuzzyFilter(bookmarklets);
 
@@ -30,8 +32,8 @@ export default function HomeScreen() {
   const results = ENABLE_GROUPS ? sortedResults : fuzzyFilterResults;
   const listGroups = ENABLE_GROUPS
     ? [
-        { id: 'recent', title: 'Recently used' },
-        { id: null, title: 'Other scripts' }
+        { id: 'recent', title: translations['recently_used_heading'] },
+        { id: null, title: translations['other_scripts_heading'] }
       ]
     : [];
 
@@ -72,7 +74,7 @@ export default function HomeScreen() {
         onChange={handleInputChange}
         onFocus={handleInputFocus}
         onBlur={handleInputBlur}
-        placeholder="Search scripts"
+        placeholder={translations['search_scripts_placeholder']}
       />
 
       {bookmarklets.length !== 0 && (

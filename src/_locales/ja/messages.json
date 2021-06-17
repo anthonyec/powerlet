@@ -1,0 +1,38 @@
+{
+  "search_scripts_placeholder": {
+    "message": "スクリプトを検索する",
+    "description": ""
+  },
+  "recently_used_heading": {
+    "message": "最近使った",
+    "description": ""
+  },
+  "other_scripts_heading": {
+    "message": "その他",
+    "description": ""
+  },
+  "no_search_results_message": {
+    "message": "一致する情報はありません",
+    "description": ""
+  },
+  "empty_state_message": {
+    "message": "ありません",
+    "description": ""
+  },
+  "add_scripts_button": {
+    "message": "ブックマークレットトを追加",
+    "description": ""
+  },
+  "send_feedback_button": {
+    "message": "フィードバックを送信",
+    "description": ""
+  },
+  "getting_started_title": {
+    "message": "さあ始めましょう",
+    "description": ""
+  },
+  "getting_started_subtitle": {
+    "message": "「ブックマークバー」にブックマークレットを左クリックで選択して「ドラッグ&ドロップ」するだけです。",
+    "description": ""
+  }
+}
