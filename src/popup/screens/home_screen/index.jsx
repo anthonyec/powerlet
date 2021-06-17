@@ -10,6 +10,7 @@ import {
   selectBookmarkletsWithGroup,
   selectResultsFromBookmarkletsSearch
 } from '../../store/selectors/bookmarklets';
+import { selectTranslations } from '../../store/selectors/locale';
 import useCloseWindowAfterExecution from './use_close_window_after_execution';
 import SearchField from '../../components/search_field';
 import ScrollView from '../../components/scroll_view';
@@ -27,6 +28,7 @@ export default function HomeScreen() {
   const [inputFocused, setInputFocused] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
+  const translations = useSelector(selectTranslations);
   const bookmarklets = useSelector(selectBookmarkletsWithGroup);
   const results = useSelector(selectResultsFromBookmarkletsSearch(searchQuery));
   const groups = useSelector(selectBookmarkletGroups);
@@ -73,7 +75,7 @@ export default function HomeScreen() {
         onChange={handleSearchFieldChange}
         onFocus={handleSearchFieldFocus}
         onBlur={handleSearchFieldBlur}
-        placeholder="Search scripts"
+        placeholder={translations['search_scripts_placeholder']}
         showBorder={groups}
       />
 

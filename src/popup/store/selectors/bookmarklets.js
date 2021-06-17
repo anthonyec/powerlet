@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 
+import { selectTranslations } from './locale';
 import { MAX_RECENTS_LENGTH } from '../reducers/bookmarklets';
 import { fuzzyMatchArray } from '../../lib/fuzzy_match';
 
@@ -50,15 +51,16 @@ export const selectResultsFromBookmarkletsSearch = (query = '') => {
 };
 
 export const selectBookmarkletGroups = createSelector(
+  selectTranslations,
   selectBookmarklets,
   selectRecents,
-  (bookmarklets, recents) => {
+  (translations, bookmarklets, recents) => {
     // Only show group headings if you have a decent amount of bookmarklets,
     // otherwise it looks a bit silly when 2 bookmarklets are split into groups.
     if (bookmarklets.length > MAX_RECENTS_LENGTH && recents.length !== 0) {
       return [
-        { id: 'recent', title: 'Recently used' },
-        { id: null, title: 'Other scripts' }
+        { id: 'recent', title: translations['recently_used_heading'] },
+        { id: null, title: translations['other_scripts_heading'] }
       ];
     }
   }
