@@ -99,7 +99,7 @@ export default function HomeScreen() {
       )}
 
       {hasBookmarklets && doesNotHaveSearchResults && (
-        <EmptyMessage message="No scripts found" />
+        <EmptyMessage message={translations['no_search_results_message']} />
       )}
 
       {doesNotHaveBookmarklets && <OnboardMessage />}
