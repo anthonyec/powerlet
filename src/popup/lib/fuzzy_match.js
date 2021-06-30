@@ -13,6 +13,9 @@
 // CONTRIBUTORS
 //   J�rgen Tjern� - async helper
 //   Anurag Awasthi - updated to 0.2.0
+//
+// From:
+// https://github.com/forrestthewoods/lib_fts/blob/master/code/fts_fuzzy_match.js
 
 const SEQUENTIAL_BONUS = 15; // bonus for adjacent matches
 const SEPARATOR_BONUS = 30; // bonus if match occurs after a separator

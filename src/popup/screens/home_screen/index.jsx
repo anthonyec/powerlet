@@ -11,7 +11,9 @@ import {
   selectResultsFromBookmarkletsSearch
 } from '../../store/selectors/bookmarklets';
 import { selectTranslations } from '../../store/selectors/locale';
+
 import useCloseWindowAfterExecution from './use_close_window_after_execution';
+
 import SearchField from '../../components/search_field';
 import ScrollView from '../../components/scroll_view';
 import List from '../../components/list';
