@@ -5,54 +5,62 @@ import {
   fetchAllBookmarklets,
   executeBookmarklet
 } from '../../store/actions/bookmarklets';
-import { selectBookmarkletsWithGroup } from '../../store/selectors/bookmarklets';
+import {
+  selectBookmarkletGroups,
+  selectBookmarkletsWithGroup,
+  selectResultsFromBookmarkletsSearch
+} from '../../store/selectors/bookmarklets';
 import { selectTranslations } from '../../store/selectors/locale';
-import useFuzzyFilter from './use_fuzzy_filter';
-import useSortByRecent from './use_sort_by_recent';
+
+import useCloseWindowAfterExecution from './use_close_window_after_execution';
+
 import SearchField from '../../components/search_field';
 import ScrollView from '../../components/scroll_view';
 import List from '../../components/list';
 import OnboardMessage from '../../components/onboard_message';
+import EmptyMessage from '../../components/empty_message';
 
 import './home_screen.css';
 
-const ENABLE_GROUPS = false;
-
 export default function HomeScreen() {
   const dispatch = useDispatch();
+  const setExecutedScript = useCloseWindowAfterExecution();
+
   const searchFieldRef = useRef(null);
   const [inputFocused, setInputFocused] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+
   const translations = useSelector(selectTranslations);
   const bookmarklets = useSelector(selectBookmarkletsWithGroup);
-  const [fuzzyFilterResults, fuzzyFilter] = useFuzzyFilter(bookmarklets);
+  const results = useSelector(selectResultsFromBookmarkletsSearch(searchQuery));
+  const groups = useSelector(selectBookmarkletGroups);
 
-  // TODO: Is this ok to be a hook or should it be a normal function? Is order
-  // dependent hooks a naughty pattern?
-  const sortedResults = useSortByRecent(fuzzyFilterResults);
-  const results = ENABLE_GROUPS ? sortedResults : fuzzyFilterResults;
-  const listGroups = ENABLE_GROUPS
-    ? [
-        { id: 'recent', title: translations['recently_used_heading'] },
-        { id: null, title: translations['other_scripts_heading'] }
-      ]
-    : [];
+  const hasBookmarklets = bookmarklets.length !== 0;
+  const hasSearchResults = results.length !== 0;
+  const doesNotHaveBookmarklets = bookmarklets.length === 0;
+  const doesNotHaveSearchResults = results.length === 0;
 
-  const handleInputChange = (evt) => {
+  useEffect(() => {
+    dispatch(fetchAllBookmarklets());
+    searchFieldRef.current && searchFieldRef.current.focus();
+  }, []);
+
+  const handleSearchFieldChange = (evt) => {
     const value = evt.currentTarget.value;
-    fuzzyFilter(value);
+    setSearchQuery(value);
   };
 
-  const handleInputFocus = () => {
+  const handleSearchFieldFocus = () => {
     setInputFocused(true);
   };
 
-  const handleInputBlur = () => {
+  const handleSearchFieldBlur = () => {
     setInputFocused(false);
   };
 
-  const handleItemAction = (item) => {
+  const handleListItemAction = (item) => {
+    setExecutedScript(item.id);
     dispatch(executeBookmarklet(item.id, item.url));
-    window.close();
   };
 
   const onListItemRefChange = useCallback((scrollToElement, element) => {
@@ -62,22 +70,18 @@ export default function HomeScreen() {
     }
   }, []);
 
-  useEffect(() => {
-    dispatch(fetchAllBookmarklets());
-    searchFieldRef.current && searchFieldRef.current.focus();
-  }, []);
-
   return (
     <div className="home-screen">
       <SearchField
         ref={searchFieldRef}
-        onChange={handleInputChange}
-        onFocus={handleInputFocus}
-        onBlur={handleInputBlur}
+        onChange={handleSearchFieldChange}
+        onFocus={handleSearchFieldFocus}
+        onBlur={handleSearchFieldBlur}
         placeholder={translations['search_scripts_placeholder']}
+        showBorder={groups}
       />
 
-      {bookmarklets.length !== 0 && (
+      {hasBookmarklets && hasSearchResults && (
         <ScrollView>
           {(scrollToElement) => {
             return (
@@ -86,8 +90,8 @@ export default function HomeScreen() {
                   selectedItem: onListItemRefChange.bind(null, scrollToElement)
                 }}
                 items={results}
-                groups={listGroups}
-                onItemAction={handleItemAction}
+                groups={groups}
+                onItemAction={handleListItemAction}
                 placeholder="Untitled script"
                 disableKeyboardNavigation={!inputFocused}
               />
@@ -96,7 +100,11 @@ export default function HomeScreen() {
         </ScrollView>
       )}
 
-      {bookmarklets.length === 0 && <OnboardMessage />}
+      {hasBookmarklets && doesNotHaveSearchResults && (
+        <EmptyMessage message={translations['no_search_results_message']} />
+      )}
+
+      {doesNotHaveBookmarklets && <OnboardMessage />}
     </div>
   );
 }

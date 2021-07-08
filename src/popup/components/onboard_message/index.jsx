@@ -1,8 +1,10 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { navigateTo } from '../../store/actions/ui';
 import { selectTranslations } from '../../store/selectors/locale';
+import { navigateTo } from '../../store/actions/ui';
+
+import EmptyMessage from '../empty_message';
 import Button from '../button';
 
 import './onboard_message.css';
@@ -16,14 +18,13 @@ export default function OnboardMessage() {
   };
 
   return (
-    <div className="onboard-message">
-      <div className="onboard-message__message">
-        {translations['empty_state_message']}
-      </div>
-
-      <Button onClick={handleExampleOnClick}>
+    <EmptyMessage message={translations['empty_state_message']}>
+      <Button
+        className="onboard-message__button"
+        onClick={handleExampleOnClick}
+      >
         {translations['add_scripts_button']}
       </Button>
-    </div>
+    </EmptyMessage>
   );
 }

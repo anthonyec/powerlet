@@ -1,0 +1,8 @@
+.empty-message {
+  text-align: center;
+  padding: 24px 16px;
+}
+
+.empty-message__message {
+  line-height: 20px;
+}
