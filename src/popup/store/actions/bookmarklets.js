@@ -26,6 +26,26 @@ export function executeBookmarklet(id, url) {
     }
 
     const code = `
+      window.powerlet = {
+        setListItems: (items = []) => {
+          console.log('set list items', items);
+
+          chrome.runtime.sendMessage({
+            method: 'setListItems',
+            args: [items]
+          });
+        },
+        onItemAction: (item) => {
+          console.log('onItemAction', item);
+        }
+      };
+
+      chrome.runtime.onMessage.addListener((message, sender) => {
+        if (message.method === 'action') {
+          window.powerlet.onItemAction(message.args[0]);
+        }
+      });
+
       try {
         ${bookmarkletCode}
       } catch(err) {

@@ -21,10 +21,13 @@ import OnboardMessage from '../../components/onboard_message';
 import EmptyMessage from '../../components/empty_message';
 
 import './home_screen.css';
+import useRuntimeMessages from './use_runtime_messages';
 
 export default function HomeScreen() {
   const dispatch = useDispatch();
   const setExecutedScript = useCloseWindowAfterExecution();
+
+  const runtimeItems = useRuntimeMessages();
 
   const searchFieldRef = useRef(null);
   const [inputFocused, setInputFocused] = useState(false);
@@ -61,6 +64,11 @@ export default function HomeScreen() {
   const handleListItemAction = (item) => {
     setExecutedScript(item.id);
     dispatch(executeBookmarklet(item.id, item.url));
+
+    chrome.runtime.sendMessage({
+      method: 'onItemAction',
+      args: [item.id]
+    });
   };
 
   const onListItemRefChange = useCallback((scrollToElement, element) => {
@@ -69,6 +77,8 @@ export default function HomeScreen() {
       scrollToElement(element);
     }
   }, []);
+
+  const items = runtimeItems.length ? runtimeItems : results;
 
   return (
     <div className="home-screen">
@@ -89,7 +99,7 @@ export default function HomeScreen() {
                 ref={{
                   selectedItem: onListItemRefChange.bind(null, scrollToElement)
                 }}
-                items={results}
+                items={items}
                 groups={groups}
                 onItemAction={handleListItemAction}
                 placeholder="Untitled script"
