@@ -21,9 +21,7 @@ export default function App() {
     settings: SettingsScreen
   };
 
-  const screenParams = {
-    editor: ['id']
-  };
+  const screenParams = {};
 
   const zippedParams = screenParams[base]
     ? zipObject(params, screenParams[base])
