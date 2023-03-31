@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useDeferredValue,
+  useEffect,
+  useRef,
+  useState
+} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import {
@@ -29,11 +35,14 @@ export default function HomeScreen() {
   const searchFieldRef = useRef(null);
   const [inputFocused, setInputFocused] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const deferredSearchQuery = useDeferredValue(searchQuery);
 
   const isLoaded = useSelector((state) => state.bookmarklets.loaded);
   const translations = useSelector(selectTranslations);
   const bookmarklets = useSelector(selectBookmarkletsWithGroup);
-  const results = useSelector(selectResultsFromBookmarkletsSearch(searchQuery));
+  const results = useSelector(
+    selectResultsFromBookmarkletsSearch(deferredSearchQuery)
+  );
   const groups = useSelector(selectBookmarkletGroups);
 
   const hasBookmarklets = bookmarklets.length !== 0;
