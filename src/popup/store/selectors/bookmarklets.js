@@ -59,8 +59,8 @@ export const selectBookmarkletGroups = createSelector(
     // otherwise it looks a bit silly when 2 bookmarklets are split into groups.
     if (bookmarklets.length > MAX_RECENTS_LENGTH && recents.length !== 0) {
       return [
-        { id: 'recent', title: translations['recently_used_heading'] },
-        { id: null, title: translations['other_scripts_heading'] }
+        { id: 'recent', title: translations['recently_used_heading'] || "" },
+        { id: null, title: translations['other_scripts_heading'] || "" }
       ];
     }
   }

@@ -122,7 +122,7 @@ const List = React.forwardRef(
       const previousItem = index === 0 ? null : items[index - 1];
       const groupHeading = getGroupHeadingFromItem(groups, item);
       const showGroupHeading =
-        groupHeading && shouldShowGroupHeading(previousItem, item);
+        (groupHeading !== undefined || groupHeading !== null) && shouldShowGroupHeading(previousItem, item);
       const isSelected = index === selectedItemIndex;
       const listClassNameWithGroup =
         groups.length !== 0 ? 'list__item--group' : '';
@@ -144,7 +144,9 @@ const List = React.forwardRef(
               ref={useHeadingAsRef && showGroupHeading ? selectedItemRef : null}
               className="list__heading"
             >
-              {groupHeading}
+              {/* Empty space is used so that before translations are loaded the
+              heading still takes up space with an empty string. */}
+              {groupHeading}&nbsp;
             </div>
           )}
           <li
