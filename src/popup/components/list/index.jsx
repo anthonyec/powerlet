@@ -122,7 +122,8 @@ const List = React.forwardRef(
       const previousItem = index === 0 ? null : items[index - 1];
       const groupHeading = getGroupHeadingFromItem(groups, item);
       const showGroupHeading =
-        (groupHeading !== undefined || groupHeading !== null) && shouldShowGroupHeading(previousItem, item);
+        (groupHeading !== undefined || groupHeading !== null) &&
+        shouldShowGroupHeading(previousItem, item);
       const isSelected = index === selectedItemIndex;
       const listClassNameWithGroup =
         groups.length !== 0 ? 'list__item--group' : '';
