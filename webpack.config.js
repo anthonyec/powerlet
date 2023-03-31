@@ -15,11 +15,21 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].bundle.js',
-    chunkFilename: '[name].[contentHash:5].chunk.js'
+    chunkFilename: '[name].[contenthash:5].chunk.js'
   },
   optimization: {
-    namedModules: true,
-    namedChunks: true
+    chunkIds: 'named',
+    moduleIds: 'named',
+    splitChunks: {
+      cacheGroups: {
+        styles: {
+          name: 'styles',
+          type: 'css/mini-extract',
+          chunks: 'all',
+          enforce: true
+        }
+      }
+    }
   },
   module: {
     rules: [
@@ -35,17 +45,19 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['*', '.js', '.jsx']
+    extensions: ['.*', '.js', '.jsx']
   },
   plugins: [
     new CleanWebpackPlugin(),
-    new CopyPlugin([
-      './src/manifest.json',
-      './src/pages/examples.html',
-      './src/pages/examples.js',
-      './assets',
-      { from: './src/_locales', to: '_locales' }
-    ]),
+    new CopyPlugin({
+      patterns: [
+        './src/manifest.json',
+        './src/pages/examples.html',
+        './src/pages/examples.js',
+        './assets',
+        { from: './src/_locales', to: '_locales' }
+      ]
+    }),
     new HtmlWebpackPlugin({
       title: 'Powerlet',
       filename: 'popup.html',
@@ -53,8 +65,7 @@ module.exports = {
       excludeChunks: ['background']
     }),
     new MiniCssExtractPlugin({
-      filename: 'popup.[contentHash:5].css',
-      allChunks: true
+      filename: 'popup.[contenthash:5].css'
     }),
     new webpack.DefinePlugin({
       'process.env': JSON.stringify({

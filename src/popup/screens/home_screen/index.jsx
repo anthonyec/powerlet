@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useDeferredValue,
+  useEffect,
+  useRef,
+  useState
+} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import {
@@ -27,12 +33,15 @@ export default function HomeScreen() {
   const setExecutedScript = useCloseWindowAfterExecution();
 
   const searchFieldRef = useRef(null);
-  const [inputFocused, setInputFocused] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const deferredSearchQuery = useDeferredValue(searchQuery);
 
+  const isLoaded = useSelector((state) => state.bookmarklets.loaded);
   const translations = useSelector(selectTranslations);
   const bookmarklets = useSelector(selectBookmarkletsWithGroup);
-  const results = useSelector(selectResultsFromBookmarkletsSearch(searchQuery));
+  const results = useSelector(
+    selectResultsFromBookmarkletsSearch(deferredSearchQuery)
+  );
   const groups = useSelector(selectBookmarkletGroups);
 
   const hasBookmarklets = bookmarklets.length !== 0;
@@ -48,14 +57,6 @@ export default function HomeScreen() {
   const handleSearchFieldChange = (evt) => {
     const value = evt.currentTarget.value;
     setSearchQuery(value);
-  };
-
-  const handleSearchFieldFocus = () => {
-    setInputFocused(true);
-  };
-
-  const handleSearchFieldBlur = () => {
-    setInputFocused(false);
   };
 
   const handleListItemAction = (item) => {
@@ -75,8 +76,6 @@ export default function HomeScreen() {
       <SearchField
         ref={searchFieldRef}
         onChange={handleSearchFieldChange}
-        onFocus={handleSearchFieldFocus}
-        onBlur={handleSearchFieldBlur}
         placeholder={translations['search_scripts_placeholder']}
         showBorder={groups}
       />
@@ -93,7 +92,6 @@ export default function HomeScreen() {
                 groups={groups}
                 onItemAction={handleListItemAction}
                 placeholder="Untitled script"
-                disableKeyboardNavigation={!inputFocused}
               />
             );
           }}
@@ -104,7 +102,7 @@ export default function HomeScreen() {
         <EmptyMessage message={translations['no_search_results_message']} />
       )}
 
-      {doesNotHaveBookmarklets && <OnboardMessage />}
+      {isLoaded && doesNotHaveBookmarklets && <OnboardMessage />}
     </div>
   );
 }

@@ -4,7 +4,6 @@ import storage from 'redux-persist/lib/storage';
 
 import bookmarklets from './bookmarklets';
 import ui from './ui';
-import editor from './editor';
 import locale from './locale';
 
 const bookmarkletsPersistConfig = {
@@ -16,6 +15,5 @@ const bookmarkletsPersistConfig = {
 export default combineReducers({
   bookmarklets: persistReducer(bookmarkletsPersistConfig, bookmarklets),
   ui,
-  editor,
   locale
 });

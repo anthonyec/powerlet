@@ -52,8 +52,8 @@ function createIconRenderer() {
 
     chrome.browserAction.setIcon({
       imageData: {
-        '19': imageData19,
-        '38': imageData38
+        19: imageData19,
+        38: imageData38
       }
     });
 
