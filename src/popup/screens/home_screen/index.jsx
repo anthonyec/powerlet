@@ -33,7 +33,6 @@ export default function HomeScreen() {
   const setExecutedScript = useCloseWindowAfterExecution();
 
   const searchFieldRef = useRef(null);
-  const [inputFocused, setInputFocused] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const deferredSearchQuery = useDeferredValue(searchQuery);
 
@@ -60,14 +59,6 @@ export default function HomeScreen() {
     setSearchQuery(value);
   };
 
-  const handleSearchFieldFocus = () => {
-    setInputFocused(true);
-  };
-
-  const handleSearchFieldBlur = () => {
-    setInputFocused(false);
-  };
-
   const handleListItemAction = (item) => {
     setExecutedScript(item.id);
     dispatch(executeBookmarklet(item.id, item.url));
@@ -85,8 +76,6 @@ export default function HomeScreen() {
       <SearchField
         ref={searchFieldRef}
         onChange={handleSearchFieldChange}
-        onFocus={handleSearchFieldFocus}
-        onBlur={handleSearchFieldBlur}
         placeholder={translations['search_scripts_placeholder']}
         showBorder={groups}
       />
@@ -103,7 +92,6 @@ export default function HomeScreen() {
                 groups={groups}
                 onItemAction={handleListItemAction}
                 placeholder="Untitled script"
-                disableKeyboardNavigation={!inputFocused}
               />
             );
           }}
