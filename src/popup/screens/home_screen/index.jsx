@@ -30,6 +30,7 @@ export default function HomeScreen() {
   const [inputFocused, setInputFocused] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
+  const isLoaded = useSelector((state) => state.bookmarklets.loaded);
   const translations = useSelector(selectTranslations);
   const bookmarklets = useSelector(selectBookmarkletsWithGroup);
   const results = useSelector(selectResultsFromBookmarkletsSearch(searchQuery));
@@ -104,7 +105,7 @@ export default function HomeScreen() {
         <EmptyMessage message={translations['no_search_results_message']} />
       )}
 
-      {doesNotHaveBookmarklets && <OnboardMessage />}
+      {isLoaded && doesNotHaveBookmarklets && <OnboardMessage />}
     </div>
   );
 }

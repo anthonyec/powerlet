@@ -4,6 +4,7 @@ import {
 } from '../actions/bookmarklets';
 
 const defaultState = {
+  loaded: false,
   all: [],
   recent: []
 };
@@ -14,6 +15,7 @@ export default function bookmarksReducer(state = defaultState, action) {
   switch (action.type) {
     case SET_BOOKMARKLETS:
       return Object.assign({}, state, {
+        loaded: true,
         all: action.payload
       });
     case ADD_RECENT_BOOKMARKLET:
