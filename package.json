@@ -13,10 +13,8 @@
   "author": "Anthony Cossins",
   "license": "ISC",
   "dependencies": {
-    "codemirror": "^6.0.1",
     "prettier": "^2.8.7",
     "react": "^18.2.0",
-    "react-codemirror2": "^7.2.1",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.5",
     "redux": "^4.2.1",

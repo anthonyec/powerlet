@@ -6,7 +6,6 @@ import { firePageView } from './store/actions/stats';
 import { fetchLocaleMessages } from './store/actions/locale';
 import HomeScreen from './screens/home_screen';
 const SettingsScreen = React.lazy(() => import('./screens/settings'));
-const EditorScreen = React.lazy(() => import('./screens/editor_screen'));
 
 import './reset.css';
 import './app.css';
@@ -19,8 +18,7 @@ export default function App() {
 
   const screens = {
     home: HomeScreen,
-    settings: SettingsScreen,
-    editor: EditorScreen
+    settings: SettingsScreen
   };
 
   const screenParams = {
