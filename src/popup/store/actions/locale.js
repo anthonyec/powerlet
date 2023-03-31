@@ -18,9 +18,8 @@ export function fetchLocaleMessages() {
 
     const messages = Object.keys(localeMessages).reduce(
       (reducedMessages, localeMessageKey) => {
-        reducedMessages[localeMessageKey] = browser.i18n.getMessage(
-          localeMessageKey
-        );
+        reducedMessages[localeMessageKey] =
+          browser.i18n.getMessage(localeMessageKey);
         return reducedMessages;
       },
       {}

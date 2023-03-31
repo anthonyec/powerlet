@@ -80,8 +80,7 @@ export function createNewBookmarklet() {
     browser.bookmarks.create(
       {
         title: 'New script',
-        url:
-          'javascript: (function() { alert("This is your new script!"); } )();'
+        url: 'javascript: (function() { alert("This is your new script!"); } )();'
       },
       (bookmark) => {
         if (browser.runtime.lastError) {

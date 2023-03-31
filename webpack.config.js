@@ -23,12 +23,12 @@ module.exports = {
     splitChunks: {
       cacheGroups: {
         styles: {
-          name: "styles",
-          type: "css/mini-extract",
-          chunks: "all",
-          enforce: true,
-        },
-      },
+          name: 'styles',
+          type: 'css/mini-extract',
+          chunks: 'all',
+          enforce: true
+        }
+      }
     }
   },
   module: {
@@ -65,7 +65,7 @@ module.exports = {
       excludeChunks: ['background']
     }),
     new MiniCssExtractPlugin({
-      filename: 'popup.[contenthash:5].css',
+      filename: 'popup.[contenthash:5].css'
     }),
     new webpack.DefinePlugin({
       'process.env': JSON.stringify({
