@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 
+import ItemActions from '../item_actions';
+
 import './list.css';
 
 const KEYS = {
@@ -47,7 +49,8 @@ const List = React.forwardRef(
       disableKeyboardNavigation,
 
       /** Callback when item is clicked or enter key is pressed. */
-      onItemAction = () => {}
+      onItemAction = () => {},
+      onEditClick = () => {}
     },
     ref
   ) => {
@@ -157,6 +160,9 @@ const List = React.forwardRef(
             onClick={handleItemClick.bind(null, item)}
           >
             <div className="list__text">{item.title || placeholder}</div>
+            <div class="list__actions">
+              <ItemActions onEditClick={onEditClick.bind(null, item)} />
+            </div>
           </li>
         </React.Fragment>
       );

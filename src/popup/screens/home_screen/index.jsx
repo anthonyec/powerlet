@@ -64,6 +64,11 @@ export default function HomeScreen() {
     dispatch(executeBookmarklet(item.id, item.url));
   };
 
+  const handleListItemEditClick = (item) => {
+    console.log('HELLO', item);
+    window.location.hash = `edit/${item.id}`;
+  };
+
   const onListItemRefChange = useCallback((scrollToElement, element) => {
     // TODO: Why is it null on first render? Because it's mounting?
     if (element !== null) {
@@ -90,8 +95,9 @@ export default function HomeScreen() {
                 }}
                 items={results}
                 groups={groups}
-                onItemAction={handleListItemAction}
                 placeholder="Untitled script"
+                onItemAction={handleListItemAction}
+                onEditClick={handleListItemEditClick}
               />
             );
           }}
