@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Icon from '../icon';
+import IconButton from '../icon_button';
 
 import './item_actions.css';
 
@@ -12,9 +13,9 @@ export default function ItemActions({ onEditClick = () => {} }) {
 
   return (
     <div className="item-actions">
-      <button className="item-actions__button" onClick={handleEditOnClick}>
+      <IconButton onClick={handleEditOnClick}>
         <Icon name="pencil" />
-      </button>
+      </IconButton>
     </div>
   );
 }
