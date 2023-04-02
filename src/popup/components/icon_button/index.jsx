@@ -2,9 +2,9 @@ import React from 'react';
 
 import "./icon_button.css"
 
-export default function IconButton({ children, onClick = () => {} }) {
+export default function IconButton({ className = "", onClick = () => {}, children }) {
   return (
-    <button className="icon-button" onClick={onClick}>
+    <button className={`icon-button ${className}`} onClick={onClick}>
       {children}
     </button>
   )

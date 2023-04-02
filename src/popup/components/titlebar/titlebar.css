@@ -10,6 +10,10 @@
   margin-left: -8px;
 }
 
+.titlebar__back-button .icon svg {
+  height: 16px;
+}
+
 .titlebar__title {
   font-size: 15px;
   font-weight: 500;
