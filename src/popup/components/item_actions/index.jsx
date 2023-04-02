@@ -9,6 +9,7 @@ export default function ItemActions({ onEditClick = () => {} }) {
     evt.stopPropagation();
     onEditClick();
   };
+
   return (
     <div className="item-actions">
       <button className="item-actions__button" onClick={handleEditOnClick}>

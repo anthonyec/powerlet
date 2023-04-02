@@ -52,8 +52,8 @@ export default function App() {
   useEffect(() => {
     dispatch(fetchLocaleMessages());
 
-    addEventListener("hashchange", (event) => {
-      setPath(parseHash(window.location.hash))
+    addEventListener('hashchange', (event) => {
+      setPath(parseHash(window.location.hash));
     });
   }, []);
 

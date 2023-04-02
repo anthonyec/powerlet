@@ -7,7 +7,7 @@ import TextField from '../../components/text_field';
 import Dropdown from '../../components/dropdown';
 import Titlebar from '../../components/titlebar';
 
-import "./edit_bookmarklet_screen.css"
+import './edit_bookmarklet_screen.css';
 
 export default function EditBookmarkletScreen({
   route = { params: {}, base: '' }
@@ -22,13 +22,12 @@ export default function EditBookmarkletScreen({
     });
   }, [route.params.id]);
 
-
   const handleRemoveClick = () => {
-    confirm("Are you sure you want to remove this script?")
+    confirm('Are you sure you want to remove this script?');
   };
 
   const handleBackClick = () => {
-    window.location.hash = ""
+    window.location.hash = '';
   };
 
   return (
@@ -42,7 +41,9 @@ export default function EditBookmarkletScreen({
 
       <div className="edit-bookmarklet-screen__footer">
         <Button onClick={handleRemoveClick}>Remove</Button>
-        <Button onClick={handleRemoveClick} type="primary">Done</Button>
+        <Button onClick={handleRemoveClick} type="primary">
+          Done
+        </Button>
       </div>
     </div>
   );
