@@ -1,0 +1,13 @@
+.edit-bookmarklet-screen {
+  width: 300px;
+}
+
+.edit-bookmarklet-screen__content {
+  padding: 0 20px;
+}
+
+.edit-bookmarklet-screen__footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 24px 20px 20px;
+}

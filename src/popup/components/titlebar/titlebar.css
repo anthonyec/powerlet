@@ -1,0 +1,17 @@
+.titlebar {
+  height: 53px;
+  display: flex;
+  align-items: center;
+  padding: 0 18px;
+  gap: 8px;
+}
+
+.titlebar__back-button {
+  margin-left: -8px;
+}
+
+.titlebar__title {
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.2;
+}
