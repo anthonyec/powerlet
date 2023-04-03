@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 
 import Button from '../../components/button';
-import Icon from '../../components/icon';
 import TextField from '../../components/text_field';
-import Dropdown from '../../components/dropdown';
 import Titlebar from '../../components/titlebar';
 
 import './edit_bookmarklet_screen.css';

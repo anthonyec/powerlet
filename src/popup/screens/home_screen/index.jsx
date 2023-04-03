@@ -50,8 +50,18 @@ export default function HomeScreen() {
   const doesNotHaveSearchResults = results.length === 0;
 
   useEffect(() => {
-    dispatch(fetchAllBookmarklets());
     searchFieldRef.current && searchFieldRef.current.focus();
+
+    const handleBookmarksChange = () => {
+      dispatch(fetchAllBookmarklets());
+    };
+
+    handleBookmarksChange();
+    chrome.bookmarks.onChanged.addListener(handleBookmarksChange);
+
+    return () => {
+      chrome.bookmarks.onChanged.removeListener(handleBookmarksChange);
+    };
   }, []);
 
   const handleSearchFieldChange = (evt) => {
