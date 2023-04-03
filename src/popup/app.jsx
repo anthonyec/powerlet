@@ -50,11 +50,18 @@ export default function App() {
   }, [path]);
 
   useEffect(() => {
+    const handleHashChange = () => {
+      setPath(parseHash(window.location.hash));
+    };
+
+    // Fetch translations on load.
     dispatch(fetchLocaleMessages());
 
-    addEventListener('hashchange', (event) => {
-      setPath(parseHash(window.location.hash));
-    });
+    addEventListener('hashchange', handleHashChange);
+
+    return () => {
+      removeEventListener('hashchange', handleHashChange);
+    };
   }, []);
 
   return (
