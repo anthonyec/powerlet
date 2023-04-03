@@ -30,18 +30,25 @@ export default function EditBookmarkletScreen({
     window.location.hash = '';
   };
 
+  const handleTitleChange = (title) => {
+    chrome.bookmarks.update(bookmarklet.id, { title });
+  };
+
   return (
     <div className="edit-bookmarklet-screen">
       <Titlebar title="Edit script" onBackClick={handleBackClick} />
 
       <div className="edit-bookmarklet-screen__content">
-        <TextField label="Name" defaultValue={bookmarklet.title} />
-        <TextField label="Code" defaultValue={bookmarklet.url} />
+        <TextField
+          label="Name"
+          defaultValue={bookmarklet.title}
+          onChange={handleTitleChange}
+        />
       </div>
 
       <div className="edit-bookmarklet-screen__footer">
         <Button onClick={handleRemoveClick}>Remove</Button>
-        <Button onClick={handleRemoveClick} type="primary">
+        <Button onClick={handleBackClick} type="primary">
           Done
         </Button>
       </div>
