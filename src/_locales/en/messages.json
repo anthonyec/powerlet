@@ -34,5 +34,21 @@
   "getting_started_subtitle": {
     "message": "To add a script, drag it to your Bookmarks Bar.",
     "description": "Subtitle used to explain how to add bookmarklets to the bookmarkbar"
+  },
+  "edit_script_title": {
+    "message": "Edit script",
+    "description": "Title used on the edit script screen"
+  },
+  "done_button": {
+    "message": "Done",
+    "description": "Button label to say you are done with the current screen"
+  },
+  "remove_button": {
+    "message": "Remove",
+    "description": "Button label to say you are performing a destructive remove action"
+  },
+  "name_field_label": {
+    "message": "Name",
+    "description": "Label for a title input field"
   }
 }

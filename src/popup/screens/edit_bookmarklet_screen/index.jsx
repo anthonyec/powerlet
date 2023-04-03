@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import Button from '../../components/button';
 import TextField from '../../components/text_field';
 import Titlebar from '../../components/titlebar';
+import { selectTranslations } from '../../store/selectors/locale';
 
 import './edit_bookmarklet_screen.css';
 
@@ -10,6 +12,7 @@ export default function EditBookmarkletScreen({
   route = { params: {}, base: '' }
 }) {
   const [bookmarklet, setBookmarklet] = useState({});
+  const translations = useSelector(selectTranslations);
 
   useEffect(() => {
     if (!route.params.id) return;
@@ -31,22 +34,29 @@ export default function EditBookmarkletScreen({
     chrome.bookmarks.update(bookmarklet.id, { title });
   };
 
+  console.log(translations);
+
   return (
     <div className="edit-bookmarklet-screen">
-      <Titlebar title="Edit script" onBackClick={handleBackClick} />
+      <Titlebar
+        title={translations['edit_script_title']}
+        onBackClick={handleBackClick}
+      />
 
       <div className="edit-bookmarklet-screen__content">
         <TextField
-          label="Name"
+          label={translations['name_field_label']}
           defaultValue={bookmarklet.title}
           onChange={handleTitleChange}
         />
       </div>
 
       <div className="edit-bookmarklet-screen__footer">
-        <Button onClick={handleRemoveClick}>Remove</Button>
+        <Button onClick={handleRemoveClick}>
+          {translations['remove_button']}
+        </Button>
         <Button onClick={handleBackClick} type="primary">
-          Done
+          {translations['done_button']}
         </Button>
       </div>
     </div>
