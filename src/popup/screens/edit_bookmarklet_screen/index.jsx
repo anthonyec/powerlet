@@ -23,7 +23,15 @@ export default function EditBookmarkletScreen({
   }, [route.params.id]);
 
   const handleRemoveClick = () => {
-    confirm('Are you sure you want to remove this script?');
+    const shouldRemove = confirm(
+      'Are you sure you want to remove this script?'
+    );
+
+    if (shouldRemove) {
+      chrome.bookmarks.remove(bookmarklet.id, () => {
+        window.location.hash = '';
+      });
+    }
   };
 
   const handleBackClick = () => {
