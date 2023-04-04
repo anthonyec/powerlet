@@ -50,5 +50,9 @@
   "name_field_label": {
     "message": "Name",
     "description": "Label for a title input field"
+  },
+  "code_field_label": {
+    "message": "Code",
+    "description": "Label for a code input field"
   }
 }

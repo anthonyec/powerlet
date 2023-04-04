@@ -50,5 +50,9 @@
   "name_field_label": {
     "message": "Name",
     "description": ""
+  },
+  "code_field_label": {
+    "message": "Code",
+    "description": ""
   }
 }

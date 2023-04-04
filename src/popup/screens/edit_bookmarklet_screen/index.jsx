@@ -42,6 +42,10 @@ export default function EditBookmarkletScreen({
     chrome.bookmarks.update(bookmarklet.id, { title });
   };
 
+  const handleCodeChange = (code) => {
+    chrome.bookmarks.update(bookmarklet.id, { url: code });
+  };
+
   return (
     <div className="edit-bookmarklet-screen">
       <Titlebar
@@ -54,6 +58,11 @@ export default function EditBookmarkletScreen({
           label={translations['name_field_label']}
           defaultValue={bookmarklet.title}
           onChange={handleTitleChange}
+        />
+        <TextField
+          label={translations['code_field_label']}
+          defaultValue={bookmarklet.url}
+          onChange={handleCodeChange}
         />
       </div>
 
