@@ -55,6 +55,7 @@ const List = React.forwardRef(
     ref
   ) => {
     const [selectedItemIndex, setSelectedItemIndex] = useState(0);
+    const [hoveredItemIndex, setHoveredItemIndex] = useState(-1);
     const selectItemIndexRef = useRef(selectedItemIndex);
 
     // TODO: Hack fix for enter key to work correctly with up-to-date index
@@ -62,6 +63,14 @@ const List = React.forwardRef(
 
     const handleItemClick = (item) => {
       onItemAction(item);
+    };
+
+    const handleItemMouseEnter = (index) => {
+      setHoveredItemIndex(index);
+    };
+
+    const handleItemMouseLeave = () => {
+      setHoveredItemIndex(-1);
     };
 
     const handleItemEnter = () => {
@@ -124,11 +133,15 @@ const List = React.forwardRef(
     const renderedItems = items.map((item, index) => {
       const previousItem = index === 0 ? null : items[index - 1];
       const groupHeading = getGroupHeadingFromItem(groups, item);
+
       const showGroupHeading =
         groupHeading !== undefined &&
         groupHeading !== null &&
         shouldShowGroupHeading(previousItem, item);
+
       const isSelected = index === selectedItemIndex;
+      const isHovered = index === hoveredItemIndex;
+
       const listClassNameWithGroup =
         groups.length !== 0 ? 'list__item--group' : '';
       const className = isSelected
@@ -158,9 +171,11 @@ const List = React.forwardRef(
             ref={useItemAsRef ? selectedItemRef : null}
             className={className}
             onClick={handleItemClick.bind(null, item)}
+            onMouseEnter={handleItemMouseEnter.bind(null, index)}
+            onMouseLeave={handleItemMouseLeave}
           >
             <div className="list__text">{item.title || placeholder}</div>
-            {isSelected && (
+            {(isSelected || isHovered) && (
               <div class="list__actions">
                 <ItemActions onEditClick={onEditClick.bind(null, item)} />
               </div>

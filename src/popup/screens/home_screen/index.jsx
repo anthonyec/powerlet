@@ -79,7 +79,6 @@ export default function HomeScreen() {
   };
 
   const handleListItemEditClick = (item) => {
-    console.log('HELLO', item);
     window.location.hash = `edit/${item.id}`;
   };
 
