@@ -34,8 +34,6 @@ export default function EditBookmarkletScreen({
     chrome.bookmarks.update(bookmarklet.id, { title });
   };
 
-  console.log(translations);
-
   return (
     <div className="edit-bookmarklet-screen">
       <Titlebar
