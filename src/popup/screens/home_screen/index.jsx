@@ -69,6 +69,10 @@ export default function HomeScreen() {
     setSearchQuery(value);
   };
 
+  const handleAddClick = () => {
+    window.location.hash = 'edit/new';
+  };
+
   const handleListItemAction = (item) => {
     setExecutedScript(item.id);
     dispatch(executeBookmarklet(item.id, item.url));
@@ -91,6 +95,7 @@ export default function HomeScreen() {
       <SearchField
         ref={searchFieldRef}
         onChange={handleSearchFieldChange}
+        onAddClick={handleAddClick}
         placeholder={translations['search_scripts_placeholder']}
         showBorder={groups}
       />

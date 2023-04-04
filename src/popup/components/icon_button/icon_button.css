@@ -1,6 +1,5 @@
 .icon-button {
   color: var(--button-normal-color);
-
   background-color: transparent;
   border-style: solid;
   border-width: 1px;
@@ -12,6 +11,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 /* Big hit area */

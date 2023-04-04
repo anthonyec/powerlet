@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 
 import './icon_button.css';
 
-export default forwardRef(function IconButton(
+const IconButton = forwardRef(function IconButton(
   { className = '', onClick = () => {}, children },
   ref
 ) {
@@ -12,3 +12,5 @@ export default forwardRef(function IconButton(
     </button>
   );
 });
+
+export default IconButton;

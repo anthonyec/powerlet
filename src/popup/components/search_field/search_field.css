@@ -1,4 +1,7 @@
 .search-field {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   padding: 8px;
   position: relative;
   z-index: 2;
@@ -30,4 +33,16 @@
 
 .search-field__input::placeholder {
   color: var(--input-placeholder-color);
+}
+
+.search-field__add-button {
+  width: 50px;
+  height: 37px;
+  min-width: 8px;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.search-field__add-button .icon svg {
+  margin: 0
 }

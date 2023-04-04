@@ -160,9 +160,11 @@ const List = React.forwardRef(
             onClick={handleItemClick.bind(null, item)}
           >
             <div className="list__text">{item.title || placeholder}</div>
-            <div class="list__actions">
-              <ItemActions onEditClick={onEditClick.bind(null, item)} />
-            </div>
+            {isSelected && (
+              <div class="list__actions">
+                <ItemActions onEditClick={onEditClick.bind(null, item)} />
+              </div>
+            )}
           </li>
         </React.Fragment>
       );
