@@ -17,6 +17,19 @@ export default function EditBookmarkletScreen({
   useEffect(() => {
     if (!route.params.id) return;
 
+    if (route.params.id === 'new') {
+      chrome.bookmarks.create(
+        {
+          title: 'New script',
+          url: 'javascript: '
+        },
+        (result) => {
+          window.location.hash = `edit/${result.id}`;
+        }
+      );
+      return;
+    }
+
     chrome.bookmarks.get(route.params.id, (bookmark) => {
       setBookmarklet(bookmark[0]);
     });
