@@ -30,9 +30,25 @@ export default function EditBookmarkletScreen({
       return;
     }
 
-    chrome.bookmarks.get(route.params.id, (bookmark) => {
-      setBookmarklet(bookmark[0]);
-    });
+    const handleBookmarksChange = () => {
+      chrome.bookmarks.get(route.params.id, (bookmark) => {
+        if (!bookmark) {
+          window.location.hash = '';
+          return;
+        }
+
+        setBookmarklet(bookmark[0]);
+      });
+    };
+
+    handleBookmarksChange();
+    chrome.bookmarks.onChanged.addListener(handleBookmarksChange);
+    chrome.bookmarks.onRemoved.addListener(handleBookmarksChange);
+
+    return () => {
+      chrome.bookmarks.onChanged.removeListener(handleBookmarksChange);
+      chrome.bookmarks.onRemoved.removeListener(handleBookmarksChange);
+    };
   }, [route.params.id]);
 
   const handleRemoveClick = () => {

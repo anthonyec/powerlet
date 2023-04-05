@@ -58,9 +58,13 @@ export default function HomeScreen() {
 
     handleBookmarksChange();
     chrome.bookmarks.onChanged.addListener(handleBookmarksChange);
+    chrome.bookmarks.onCreated.addListener(handleBookmarksChange);
+    chrome.bookmarks.onRemoved.addListener(handleBookmarksChange);
 
     return () => {
       chrome.bookmarks.onChanged.removeListener(handleBookmarksChange);
+      chrome.bookmarks.onCreated.removeListener(handleBookmarksChange);
+      chrome.bookmarks.onRemoved.removeListener(handleBookmarksChange);
     };
   }, []);
 
