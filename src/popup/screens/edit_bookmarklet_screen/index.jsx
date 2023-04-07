@@ -20,7 +20,7 @@ export default function EditBookmarkletScreen({
     if (route.params.id === 'new') {
       chrome.bookmarks.create(
         {
-          title: translations["new_script_name"],
+          title: translations['new_script_name'],
           url: 'javascript: '
         },
         (result) => {
@@ -52,9 +52,7 @@ export default function EditBookmarkletScreen({
   }, [route.params.id]);
 
   const handleRemoveClick = () => {
-    const shouldRemove = confirm(
-      translations["remove_script_confirmation"]
-    );
+    const shouldRemove = confirm(translations['remove_script_confirmation']);
 
     if (shouldRemove) {
       chrome.bookmarks.remove(bookmarklet.id, () => {
