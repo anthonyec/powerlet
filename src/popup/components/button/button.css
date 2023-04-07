@@ -36,6 +36,23 @@
   outline: 0;
 }
 
+.button--primary {
+  background-color: var(--button-normal-color);
+  border-color: var(--button-normal-color);
+  color: var(--button-normal-background);
+  font-weight: 600;
+}
+
+.button--primary:hover {
+  background-color: var(--button-hover-color);
+  border-color: var(--button-normal-color);
+  color: var(--button-normal-background);
+}
+
+.button--primary:focus {
+  box-shadow: var(--global-focus-box-shadow), 0 0 0 1px var(--button-normal-background) inset;
+}
+
 .button--toolbar {
   width: 100%;
   border-color: transparent;

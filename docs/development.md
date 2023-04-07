@@ -14,6 +14,10 @@ You can also build the project without it watching for change by using `build:de
 $ npm run build:dev
 ```
 
+## Adding translations
+
+After adding translations to the messages `.json` files in `./src/_locales`, you'll need to reload the extension in `chrome://extensions` for them to take affect.
+
 ## Testing
 
 Sorry, there aren't any. I wrote this in a couple of nights and during a long haul flight.

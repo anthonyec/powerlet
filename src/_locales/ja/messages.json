@@ -34,5 +34,33 @@
   "getting_started_subtitle": {
     "message": "「ブックマークバー」にブックマークレットを左クリックで選択して「ドラッグ&ドロップ」するだけです。",
     "description": ""
+  },
+  "edit_script_title": {
+    "message": "スクリプトを編集",
+    "description": ""
+  },
+  "done_button": {
+    "message": "完了",
+    "description": ""
+  },
+  "remove_button": {
+    "message": "削除",
+    "description": ""
+  },
+  "name_field_label": {
+    "message": "名前",
+    "description": ""
+  },
+  "code_field_label": {
+    "message": "コード",
+    "description": ""
+  },
+  "remove_script_confirmation": {
+    "message": "このスクリプトを削除してもよろしいですか?",
+    "description": ""
+  },
+  "new_script_name": {
+    "message": "新しいスクリプト",
+    "description": ""
   }
 }

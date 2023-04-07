@@ -1,27 +1,38 @@
-import React, { Suspense, useEffect } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import zipObject from '../utils/zipObject';
 import { firePageView } from './store/actions/stats';
 import { fetchLocaleMessages } from './store/actions/locale';
 import HomeScreen from './screens/home_screen';
+
+const EditBookmarkletScreen = React.lazy(() =>
+  import('./screens/edit_bookmarklet_screen')
+);
 const SettingsScreen = React.lazy(() => import('./screens/settings'));
 
 import './reset.css';
 import './app.css';
 
+function parseHash(hash) {
+  return hash.replace('#', '').split('/');
+}
+
 export default function App() {
   const dispatch = useDispatch();
-  const path = window.location.hash.replace('#', '').split('/');
+  const [path, setPath] = useState(parseHash(window.location.hash));
   const base = path[0];
   const params = path.slice(1);
 
   const screens = {
     home: HomeScreen,
+    edit: EditBookmarkletScreen,
     settings: SettingsScreen
   };
 
-  const screenParams = {};
+  const screenParams = {
+    edit: ['id']
+  };
 
   const zippedParams = screenParams[base]
     ? zipObject(params, screenParams[base])
@@ -39,7 +50,18 @@ export default function App() {
   }, [path]);
 
   useEffect(() => {
+    const handleHashChange = () => {
+      setPath(parseHash(window.location.hash));
+    };
+
+    // Fetch translations on load.
     dispatch(fetchLocaleMessages());
+
+    addEventListener('hashchange', handleHashChange);
+
+    return () => {
+      removeEventListener('hashchange', handleHashChange);
+    };
   }, []);
 
   return (

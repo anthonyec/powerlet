@@ -50,8 +50,22 @@ export default function HomeScreen() {
   const doesNotHaveSearchResults = results.length === 0;
 
   useEffect(() => {
-    dispatch(fetchAllBookmarklets());
     searchFieldRef.current && searchFieldRef.current.focus();
+
+    const handleBookmarksChange = () => {
+      dispatch(fetchAllBookmarklets());
+    };
+
+    handleBookmarksChange();
+    chrome.bookmarks.onChanged.addListener(handleBookmarksChange);
+    chrome.bookmarks.onCreated.addListener(handleBookmarksChange);
+    chrome.bookmarks.onRemoved.addListener(handleBookmarksChange);
+
+    return () => {
+      chrome.bookmarks.onChanged.removeListener(handleBookmarksChange);
+      chrome.bookmarks.onCreated.removeListener(handleBookmarksChange);
+      chrome.bookmarks.onRemoved.removeListener(handleBookmarksChange);
+    };
   }, []);
 
   const handleSearchFieldChange = (evt) => {
@@ -59,9 +73,17 @@ export default function HomeScreen() {
     setSearchQuery(value);
   };
 
+  const handleAddClick = () => {
+    window.location.hash = 'edit/new';
+  };
+
   const handleListItemAction = (item) => {
     setExecutedScript(item.id);
     dispatch(executeBookmarklet(item.id, item.url));
+  };
+
+  const handleListItemEditClick = (item) => {
+    window.location.hash = `edit/${item.id}`;
   };
 
   const onListItemRefChange = useCallback((scrollToElement, element) => {
@@ -76,6 +98,7 @@ export default function HomeScreen() {
       <SearchField
         ref={searchFieldRef}
         onChange={handleSearchFieldChange}
+        onAddClick={handleAddClick}
         placeholder={translations['search_scripts_placeholder']}
         showBorder={groups}
       />
@@ -90,8 +113,9 @@ export default function HomeScreen() {
                 }}
                 items={results}
                 groups={groups}
-                onItemAction={handleListItemAction}
                 placeholder="Untitled script"
+                onItemAction={handleListItemAction}
+                onEditClick={handleListItemEditClick}
               />
             );
           }}
