@@ -20,7 +20,7 @@ export default function EditBookmarkletScreen({
     if (route.params.id === 'new') {
       chrome.bookmarks.create(
         {
-          title: 'New script',
+          title: translations["new_script_name"],
           url: 'javascript: '
         },
         (result) => {

@@ -58,5 +58,9 @@
   "remove_script_confirmation": {
     "message": "Are you sure you want to remove this script?",
     "description": "Confirmation message that is shown when removing a script"
+  },
+  "new_script_name": {
+    "message": "New script",
+    "description": "Default name for a newly created script"
   }
 }
