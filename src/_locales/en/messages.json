@@ -54,5 +54,9 @@
   "code_field_label": {
     "message": "Code",
     "description": "Label for a code input field"
+  },
+  "remove_script_confirmation": {
+    "message": "Are you sure you want to remove this script?",
+    "description": "Confirmation message that is shown when removing a script"
   }
 }

@@ -53,7 +53,7 @@ export default function EditBookmarkletScreen({
 
   const handleRemoveClick = () => {
     const shouldRemove = confirm(
-      'Are you sure you want to remove this script?'
+      translations["remove_script_confirmation"]
     );
 
     if (shouldRemove) {
