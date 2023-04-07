@@ -37,7 +37,6 @@ function SearchField(
         autoCapitalize="off"
         spellCheck="false"
       />
-      {/* <Button icon={<Icon name="plus"/>} className="search-field__add-button" onClick={onAddClick}/> */}
       <IconButton onClick={onAddClick}>
         <Icon name="plus" />
       </IconButton>
