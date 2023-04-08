@@ -8,6 +8,7 @@ const PADDING = 5;
 
 export default function ContextMenu({
   position = { x: 0, y: 0 },
+  items = [],
   onDismiss = () => {}
 }) {
   const menuRef = useRef(null);
@@ -52,9 +53,8 @@ export default function ContextMenu({
 
   useEffect(() => {
     const handleKeyDown = (event) => {
-      event.preventDefault();
-
       if (event.code === 'Escape') {
+        event.preventDefault();
         dismiss();
       }
     };
@@ -79,8 +79,17 @@ export default function ContextMenu({
           style={{ left: menuPosition.x, top: menuPosition.y }}
           open
         >
-          <div className="context-menu__item">Move to "Other scripts"</div>
-          <div className="context-menu__item">Delete</div>
+          {items.map((item) => {
+            return (
+              <div
+                key={item.key}
+                className="context-menu__item"
+                onClick={item.action}
+              >
+                {item.title}
+              </div>
+            );
+          })}
         </dialog>
       )}
     </div>

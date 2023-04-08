@@ -94,6 +94,21 @@ export default function HomeScreen() {
     setContextMenu(null);
   };
 
+  const handleContextMenuEdit = () => {
+    console.log('handleContextMenuEdit');
+    window.location.hash = `edit/${contextMenu.item.id}`;
+  };
+
+  const handleContextMenuDelete = () => {
+    const shouldRemove = confirm(translations['remove_script_confirmation']);
+
+    if (shouldRemove) {
+      chrome.bookmarks.remove(contextMenu.item.id, () => {
+        setContextMenu(null);
+      });
+    }
+  };
+
   const handleListItemEditClick = (item) => {
     window.location.hash = `edit/${item.id}`;
   };
@@ -145,6 +160,18 @@ export default function HomeScreen() {
         <Suspense fallback={<div />}>
           <ContextMenu
             position={contextMenu.position}
+            items={[
+              {
+                key: 'edit',
+                title: translations['edit_script_title'],
+                action: handleContextMenuEdit
+              },
+              {
+                key: 'delete',
+                title: translations['remove_button'],
+                action: handleContextMenuDelete
+              }
+            ]}
             onDismiss={handleContextMenuDismiss}
           />
         </Suspense>
