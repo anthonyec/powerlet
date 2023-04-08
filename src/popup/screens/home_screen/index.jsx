@@ -129,7 +129,7 @@ export default function HomeScreen() {
 
     items.push({
       key: 'edit',
-      title: translations['edit_script_title'],
+      title: translations['edit_label'],
       action: handleContextMenuEdit
     });
 
@@ -141,7 +141,10 @@ export default function HomeScreen() {
       if (contextMenu.item.group === 'recent') {
         items.push({
           key: 'move-to-other',
-          title: `Move to "Other scripts"`,
+          title: translations['move_to_group'].replace(
+            '%s',
+            translations['other_scripts_heading']
+          ),
           action: () => {
             dispatch(removeRecentBookmarklet(contextMenu.item.id));
           }
@@ -149,7 +152,10 @@ export default function HomeScreen() {
       } else {
         items.push({
           key: 'move-to-recents',
-          title: `Move to "Recently used"`,
+          title: translations['move_to_group'].replace(
+            '%s',
+            translations['recently_used_heading']
+          ),
           action: () => {
             dispatch(addRecentBookmarklet(contextMenu.item.id));
           }
