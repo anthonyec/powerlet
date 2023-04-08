@@ -119,10 +119,18 @@ export default function ContextMenu({
       }
     };
 
+    const handleMouseUp = () => {
+      if (highlighted !== -1) {
+        executeAction(highlighted);
+      }
+    };
+
     window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('mouseup', handleMouseUp);
 
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('mouseup', handleMouseUp);
     };
   }, [highlighted, executingAction]);
 
@@ -155,7 +163,6 @@ export default function ContextMenu({
               <div
                 key={item.key}
                 className={className}
-                onClick={executeAction.bind(null, index)}
                 onMouseEnter={handleItemMouseEnter.bind(null, index)}
                 onMouseLeave={handleItemMouseLeave}
               >
