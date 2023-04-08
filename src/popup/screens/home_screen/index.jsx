@@ -1,4 +1,5 @@
 import React, {
+  Suspense,
   useCallback,
   useDeferredValue,
   useEffect,
@@ -28,8 +29,11 @@ import EmptyMessage from '../../components/empty_message';
 
 import './home_screen.css';
 
+const ContextMenu = React.lazy(() => import('../../components/context_menu'));
+
 export default function HomeScreen() {
   const dispatch = useDispatch();
+  const [contextMenu, setContextMenu] = useState(null);
   const setExecutedScript = useCloseWindowAfterExecution();
 
   const searchFieldRef = useRef(null);
@@ -82,6 +86,14 @@ export default function HomeScreen() {
     dispatch(executeBookmarklet(item.id, item.url));
   };
 
+  const handleListItemContextMenu = (item, position) => {
+    setContextMenu({ item, position });
+  };
+
+  const handleContextMenuDismiss = () => {
+    setContextMenu(null);
+  };
+
   const handleListItemEditClick = (item) => {
     window.location.hash = `edit/${item.id}`;
   };
@@ -115,6 +127,7 @@ export default function HomeScreen() {
                 groups={groups}
                 placeholder="Untitled script"
                 onItemAction={handleListItemAction}
+                onItemContextMenu={handleListItemContextMenu}
                 onEditClick={handleListItemEditClick}
               />
             );
@@ -127,6 +140,15 @@ export default function HomeScreen() {
       )}
 
       {isLoaded && doesNotHaveBookmarklets && <OnboardMessage />}
+
+      {contextMenu && (
+        <Suspense fallback={<div />}>
+          <ContextMenu
+            position={contextMenu.position}
+            onDismiss={handleContextMenuDismiss}
+          />
+        </Suspense>
+      )}
     </div>
   );
 }

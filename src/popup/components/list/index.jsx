@@ -50,6 +50,7 @@ const List = React.forwardRef(
 
       /** Callback when item is clicked or enter key is pressed. */
       onItemAction = () => {},
+      onItemContextMenu = () => {},
       onEditClick = () => {}
     },
     ref
@@ -61,8 +62,18 @@ const List = React.forwardRef(
     // TODO: Hack fix for enter key to work correctly with up-to-date index
     selectItemIndexRef.current = selectedItemIndex;
 
+    const handleHeadingContextMenu = (event) => {
+      event.preventDefault();
+    };
+
     const handleItemClick = (item) => {
       onItemAction(item);
+    };
+
+    const handleItemContextMenu = (index, item, event) => {
+      event.preventDefault();
+      setSelectedItemIndex(index);
+      onItemContextMenu(item, { x: event.clientX, y: event.clientY });
     };
 
     const handleItemMouseEnter = (index) => {
@@ -161,6 +172,7 @@ const List = React.forwardRef(
             <div
               ref={useHeadingAsRef && showGroupHeading ? selectedItemRef : null}
               className="list__heading"
+              onContextMenu={handleHeadingContextMenu}
             >
               {/* Empty space is used so that before translations are loaded the
               heading still takes up space with an empty string. */}
@@ -171,6 +183,7 @@ const List = React.forwardRef(
             ref={useItemAsRef ? selectedItemRef : null}
             className={className}
             onClick={handleItemClick.bind(null, item)}
+            onContextMenu={handleItemContextMenu.bind(null, index, item)}
             onMouseEnter={handleItemMouseEnter.bind(null, index)}
             onMouseLeave={handleItemMouseLeave}
           >
