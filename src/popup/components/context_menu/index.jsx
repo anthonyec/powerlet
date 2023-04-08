@@ -1,8 +1,8 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
-import './context_menu.css';
+import { clamp } from "../../lib/clamp";
 
-const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
+import './context_menu.css';
 
 const PADDING = 5;
 
