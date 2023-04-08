@@ -1,0 +1,28 @@
+.context-menu {
+  background: var(--context-menu-background);
+  box-shadow: var(--context-menu-shadow);
+  color: var(--context-menu-item-color);
+  border-radius: 4px;
+  position: absolute;
+  min-width: 128px;
+  top: 5px;
+  left: 5px;
+  margin: 0;
+  padding: 8px 0;
+  outline: none;
+  border: none;
+  z-index: 2;
+  user-select: none;
+}
+
+.context-menu__item {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  min-height: 32px;
+}
+
+.context-menu__item:hover {
+  background: var(--item-selected-background);
+}
