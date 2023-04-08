@@ -16,7 +16,7 @@ export default function ContextMenu({
   const [showMenu, setShowMenu] = useState(true);
   const [menuPosition, setMenuPosition] = useState(position);
 
-  const dismiss = (event) => {
+  const dismiss = () => {
     setShowMenu(false);
 
     // Add timeout so that users can't click things underneath accidentally
@@ -107,24 +107,29 @@ export default function ContextMenu({
           style={{ left: menuPosition.x, top: menuPosition.y }}
           open
         >
-          {items.map((item, index) => {
-            const className =
-              highlighted === index
-                ? 'context-menu__item context-menu__item--highlighted'
-                : 'context-menu__item';
+          {items
+            .filter((item) => !item.hidden)
+            .map((item, index) => {
+              const className =
+                highlighted === index
+                  ? 'context-menu__item context-menu__item--highlighted'
+                  : 'context-menu__item';
 
-            return (
-              <div
-                key={item.key}
-                className={className}
-                onClick={item.action}
-                onMouseEnter={handleItemMouseEnter.bind(null, index)}
-                onMouseLeave={handleItemMouseLeave}
-              >
-                {item.title}
-              </div>
-            );
-          })}
+              return (
+                <div
+                  key={item.key}
+                  className={className}
+                  onClick={() => {
+                    item.action();
+                    dismiss();
+                  }}
+                  onMouseEnter={handleItemMouseEnter.bind(null, index)}
+                  onMouseLeave={handleItemMouseLeave}
+                >
+                  {item.title}
+                </div>
+              );
+            })}
         </dialog>
       )}
     </div>

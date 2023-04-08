@@ -10,7 +10,9 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import {
   fetchAllBookmarklets,
-  executeBookmarklet
+  executeBookmarklet,
+  addRecentBookmarklet,
+  removeRecentBookmarklet
 } from '../../store/actions/bookmarklets';
 import {
   selectBookmarkletGroups,
@@ -28,6 +30,7 @@ import OnboardMessage from '../../components/onboard_message';
 import EmptyMessage from '../../components/empty_message';
 
 import './home_screen.css';
+import { MAX_RECENTS_LENGTH } from '../../store/reducers/bookmarklets';
 
 const ContextMenu = React.lazy(() => import('../../components/context_menu'));
 
@@ -106,7 +109,6 @@ export default function HomeScreen() {
     if (shouldRemove) {
       chrome.bookmarks.remove(contextMenu.item.id, () => {
         setInitialSelectedItem(contextMenu.index - 1);
-        setContextMenu(null);
       });
     }
   };
@@ -121,6 +123,35 @@ export default function HomeScreen() {
       scrollToElement(element);
     }
   }, []);
+
+  const contextMenuItems = [
+    {
+      key: 'edit',
+      title: translations['edit_script_title'],
+      action: handleContextMenuEdit
+    },
+    {
+      key: 'move-to-recents',
+      title: `Move to "Recently used"`,
+      hidden: bookmarklets.length < MAX_RECENTS_LENGTH,
+      action: () => {
+        dispatch(addRecentBookmarklet(contextMenu.item.id));
+      }
+    },
+    {
+      key: 'move-to-other',
+      title: `Move to "Other scripts"`,
+      hidden: bookmarklets.length < MAX_RECENTS_LENGTH,
+      action: () => {
+        dispatch(removeRecentBookmarklet(contextMenu.item.id));
+      }
+    },
+    {
+      key: 'delete',
+      title: translations['remove_button'],
+      action: handleContextMenuDelete
+    }
+  ];
 
   return (
     <div className="home-screen">
@@ -164,18 +195,7 @@ export default function HomeScreen() {
         <Suspense fallback={<div />}>
           <ContextMenu
             position={contextMenu.position}
-            items={[
-              {
-                key: 'edit',
-                title: translations['edit_script_title'],
-                action: handleContextMenuEdit
-              },
-              {
-                key: 'delete',
-                title: translations['remove_button'],
-                action: handleContextMenuDelete
-              }
-            ]}
+            items={contextMenuItems}
             onDismiss={handleContextMenuDismiss}
           />
         </Suspense>
