@@ -13,6 +13,7 @@ export default function ContextMenu({
 }) {
   const menuRef = useRef(null);
   const [highlighted, setHighlighted] = useState(-1);
+  const [executingAction, setExecutingAction] = useState(null);
   const [showMenu, setShowMenu] = useState(true);
   const [menuPosition, setMenuPosition] = useState(position);
 
@@ -26,16 +27,43 @@ export default function ContextMenu({
     }, 150);
   };
 
+  const executeAction = (index) => {
+    if (executingAction !== null) {
+      return;
+    }
+
+    setExecutingAction(index);
+
+    // Wait for executing flash animation to finish.
+    setTimeout(() => {
+      items[index].action();
+      dismiss();
+    }, 150);
+  };
+
   const handleContextMenu = (event) => {
     event.preventDefault();
+
+    if (executingAction !== null) {
+      return;
+    }
+
     dismiss();
   };
 
   const handleItemMouseEnter = (index) => {
+    if (executingAction !== null) {
+      return;
+    }
+
     setHighlighted(index);
   };
 
   const handleItemMouseLeave = () => {
+    if (executingAction !== null) {
+      return;
+    }
+
     setHighlighted(-1);
   };
 
@@ -62,6 +90,10 @@ export default function ContextMenu({
 
   useEffect(() => {
     const handleKeyDown = (event) => {
+      if (executingAction) {
+        return;
+      }
+
       if (event.code === 'Escape') {
         event.preventDefault();
         dismiss();
@@ -83,8 +115,7 @@ export default function ContextMenu({
 
       if (event.code === 'Enter') {
         event.preventDefault();
-        items[highlighted].action();
-        dismiss();
+        executeAction(highlighted);
       }
     };
 
@@ -93,14 +124,15 @@ export default function ContextMenu({
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [highlighted]);
+  }, [highlighted, executingAction]);
 
   return (
-    <div
-      className="context-menu"
-      onClick={dismiss}
-      onContextMenu={handleContextMenu}
-    >
+    <div className="context-menu">
+      <div
+        className="context-menu__overlay"
+        onClick={dismiss}
+        onContextMenu={handleContextMenu}
+      />
       {showMenu && (
         <dialog
           ref={menuRef}
@@ -109,19 +141,21 @@ export default function ContextMenu({
           open
         >
           {items.map((item, index) => {
-            const className =
-              highlighted === index
-                ? 'context-menu__item context-menu__item--highlighted'
-                : 'context-menu__item';
+            let className = 'context-menu__item';
+
+            if (highlighted === index) {
+              className += ' context-menu__item--highlighted';
+            }
+
+            if (executingAction === index) {
+              className += ' context-menu__item--executing-action';
+            }
 
             return (
               <div
                 key={item.key}
                 className={className}
-                onClick={() => {
-                  item.action();
-                  dismiss();
-                }}
+                onClick={executeAction.bind(null, index)}
                 onMouseEnter={handleItemMouseEnter.bind(null, index)}
                 onMouseLeave={handleItemMouseLeave}
               >
