@@ -33,6 +33,7 @@ const ContextMenu = React.lazy(() => import('../../components/context_menu'));
 
 export default function HomeScreen() {
   const dispatch = useDispatch();
+  const [initialSelectedItem, setInitialSelectedItem] = useState(0);
   const [contextMenu, setContextMenu] = useState(null);
   const setExecutedScript = useCloseWindowAfterExecution();
 
@@ -75,6 +76,7 @@ export default function HomeScreen() {
   const handleSearchFieldChange = (evt) => {
     const value = evt.currentTarget.value;
     setSearchQuery(value);
+    setInitialSelectedItem(0);
   };
 
   const handleAddClick = () => {
@@ -86,8 +88,8 @@ export default function HomeScreen() {
     dispatch(executeBookmarklet(item.id, item.url));
   };
 
-  const handleListItemContextMenu = (item, position) => {
-    setContextMenu({ item, position });
+  const handleListItemContextMenu = (index, item, position) => {
+    setContextMenu({ index, item, position });
   };
 
   const handleContextMenuDismiss = () => {
@@ -104,6 +106,7 @@ export default function HomeScreen() {
 
     if (shouldRemove) {
       chrome.bookmarks.remove(contextMenu.item.id, () => {
+        setInitialSelectedItem(contextMenu.index);
         setContextMenu(null);
       });
     }
@@ -138,6 +141,7 @@ export default function HomeScreen() {
                 ref={{
                   selectedItem: onListItemRefChange.bind(null, scrollToElement)
                 }}
+                initialSelectedItem={initialSelectedItem}
                 disableKeyboardNavigation={contextMenu}
                 items={results}
                 groups={groups}

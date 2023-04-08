@@ -1,6 +1,6 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
-import { clamp } from "../../lib/clamp";
+import { clamp } from '../../lib/clamp';
 
 import './context_menu.css';
 

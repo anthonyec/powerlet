@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 
+import { clamp } from '../../lib/clamp';
 import ItemActions from '../item_actions';
 
 import './list.css';
@@ -43,6 +44,7 @@ function getGroupHeadingFromItem(groups, item) {
 const List = React.forwardRef(
   (
     {
+      initialSelectedItem = 0,
       items = [],
       groups = [],
       placeholder = '',
@@ -55,7 +57,8 @@ const List = React.forwardRef(
     },
     ref
   ) => {
-    const [selectedItemIndex, setSelectedItemIndex] = useState(0);
+    const [selectedItemIndex, setSelectedItemIndex] =
+      useState(initialSelectedItem);
     const [hoveredItemIndex, setHoveredItemIndex] = useState(-1);
     const selectItemIndexRef = useRef(selectedItemIndex);
 
@@ -73,7 +76,7 @@ const List = React.forwardRef(
     const handleItemContextMenu = (index, item, event) => {
       event.preventDefault();
       setSelectedItemIndex(index);
-      onItemContextMenu(item, { x: event.clientX, y: event.clientY });
+      onItemContextMenu(index, item, { x: event.clientX, y: event.clientY });
     };
 
     const handleItemMouseEnter = (index) => {
@@ -135,10 +138,10 @@ const List = React.forwardRef(
       };
     }, [disableKeyboardNavigation, getArrayAsStringOfIds(items)]);
 
-    // Reset selected to first item when `items` change to avoid selected being
+    // Reset selected item when `items` change to avoid selected being
     // out of bounds when the array length changes.
     useEffect(() => {
-      setSelectedItemIndex(0);
+      setSelectedItemIndex(clamp(initialSelectedItem, 0, items.length - 1));
     }, [getArrayAsStringOfIds(items)]);
 
     const renderedItems = items.map((item, index) => {
