@@ -97,7 +97,6 @@ export default function HomeScreen() {
   };
 
   const handleContextMenuEdit = () => {
-    console.log('handleContextMenuEdit');
     window.location.hash = `edit/${contextMenu.item.id}`;
   };
 
@@ -106,7 +105,7 @@ export default function HomeScreen() {
 
     if (shouldRemove) {
       chrome.bookmarks.remove(contextMenu.item.id, () => {
-        setInitialSelectedItem(contextMenu.index);
+        setInitialSelectedItem(contextMenu.index - 1);
         setContextMenu(null);
       });
     }
