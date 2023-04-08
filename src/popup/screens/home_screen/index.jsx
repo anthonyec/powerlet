@@ -124,34 +124,50 @@ export default function HomeScreen() {
     }
   }, []);
 
-  const contextMenuItems = [
-    {
+  const getContextMenuItems = () => {
+    const items = [];
+
+    items.push({
       key: 'edit',
       title: translations['edit_script_title'],
       action: handleContextMenuEdit
-    },
-    {
-      key: 'move-to-recents',
-      title: `Move to "Recently used"`,
-      hidden: bookmarklets.length < MAX_RECENTS_LENGTH,
-      action: () => {
-        dispatch(addRecentBookmarklet(contextMenu.item.id));
+    });
+
+    console.log(contextMenu);
+    if (
+      contextMenu &&
+      contextMenu.item &&
+      bookmarklets.length > MAX_RECENTS_LENGTH
+    ) {
+      if (contextMenu.item.group === 'recent') {
+        items.push({
+          key: 'move-to-other',
+          title: `Move to "Other scripts"`,
+          action: () => {
+            dispatch(removeRecentBookmarklet(contextMenu.item.id));
+          }
+        });
+      } else {
+        items.push({
+          key: 'move-to-recents',
+          title: `Move to "Recently used"`,
+          action: () => {
+            dispatch(addRecentBookmarklet(contextMenu.item.id));
+          }
+        });
       }
-    },
-    {
-      key: 'move-to-other',
-      title: `Move to "Other scripts"`,
-      hidden: bookmarklets.length < MAX_RECENTS_LENGTH,
-      action: () => {
-        dispatch(removeRecentBookmarklet(contextMenu.item.id));
-      }
-    },
-    {
+    }
+
+    items.push({
       key: 'delete',
       title: translations['remove_button'],
       action: handleContextMenuDelete
-    }
-  ];
+    });
+
+    return items;
+  };
+
+  const contextMenuItems = getContextMenuItems();
 
   return (
     <div className="home-screen">

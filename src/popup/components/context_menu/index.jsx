@@ -84,6 +84,7 @@ export default function ContextMenu({
       if (event.code === 'Enter') {
         event.preventDefault();
         items[highlighted].action();
+        dismiss();
       }
     };
 
@@ -107,29 +108,27 @@ export default function ContextMenu({
           style={{ left: menuPosition.x, top: menuPosition.y }}
           open
         >
-          {items
-            .filter((item) => !item.hidden)
-            .map((item, index) => {
-              const className =
-                highlighted === index
-                  ? 'context-menu__item context-menu__item--highlighted'
-                  : 'context-menu__item';
+          {items.map((item, index) => {
+            const className =
+              highlighted === index
+                ? 'context-menu__item context-menu__item--highlighted'
+                : 'context-menu__item';
 
-              return (
-                <div
-                  key={item.key}
-                  className={className}
-                  onClick={() => {
-                    item.action();
-                    dismiss();
-                  }}
-                  onMouseEnter={handleItemMouseEnter.bind(null, index)}
-                  onMouseLeave={handleItemMouseLeave}
-                >
-                  {item.title}
-                </div>
-              );
-            })}
+            return (
+              <div
+                key={item.key}
+                className={className}
+                onClick={() => {
+                  item.action();
+                  dismiss();
+                }}
+                onMouseEnter={handleItemMouseEnter.bind(null, index)}
+                onMouseLeave={handleItemMouseLeave}
+              >
+                {item.title}
+              </div>
+            );
+          })}
         </dialog>
       )}
     </div>
