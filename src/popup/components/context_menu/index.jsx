@@ -12,6 +12,7 @@ export default function ContextMenu({
   onDismiss = () => {}
 }) {
   const menuRef = useRef(null);
+  const [highlighted, setHighlighted] = useState(-1);
   const [showMenu, setShowMenu] = useState(true);
   const [menuPosition, setMenuPosition] = useState(position);
 
@@ -28,6 +29,14 @@ export default function ContextMenu({
   const handleContextMenu = (event) => {
     event.preventDefault();
     dismiss();
+  };
+
+  const handleItemMouseEnter = (index) => {
+    setHighlighted(index);
+  };
+
+  const handleItemMouseLeave = () => {
+    setHighlighted(-1);
   };
 
   useLayoutEffect(() => {
@@ -57,6 +66,25 @@ export default function ContextMenu({
         event.preventDefault();
         dismiss();
       }
+
+      if (event.code === 'ArrowUp') {
+        event.preventDefault();
+        const nextHighlighted =
+          highlighted - 1 < 0 ? items.length - 1 : highlighted - 1;
+        setHighlighted(nextHighlighted);
+      }
+
+      if (event.code === 'ArrowDown') {
+        event.preventDefault();
+        const nextHighlighted =
+          highlighted + 1 > items.length - 1 ? 0 : highlighted + 1;
+        setHighlighted(nextHighlighted);
+      }
+
+      if (event.code === 'Enter') {
+        event.preventDefault();
+        items[highlighted].action();
+      }
     };
 
     window.addEventListener('keydown', handleKeyDown);
@@ -64,7 +92,7 @@ export default function ContextMenu({
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, []);
+  }, [highlighted]);
 
   return (
     <div
@@ -79,12 +107,19 @@ export default function ContextMenu({
           style={{ left: menuPosition.x, top: menuPosition.y }}
           open
         >
-          {items.map((item) => {
+          {items.map((item, index) => {
+            const className =
+              highlighted === index
+                ? 'context-menu__item context-menu__item--highlighted'
+                : 'context-menu__item';
+
             return (
               <div
                 key={item.key}
-                className="context-menu__item"
+                className={className}
                 onClick={item.action}
+                onMouseEnter={handleItemMouseEnter.bind(null, index)}
+                onMouseLeave={handleItemMouseLeave}
               >
                 {item.title}
               </div>

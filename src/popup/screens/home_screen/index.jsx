@@ -138,6 +138,7 @@ export default function HomeScreen() {
                 ref={{
                   selectedItem: onListItemRefChange.bind(null, scrollToElement)
                 }}
+                disableKeyboardNavigation={contextMenu}
                 items={results}
                 groups={groups}
                 placeholder="Untitled script"

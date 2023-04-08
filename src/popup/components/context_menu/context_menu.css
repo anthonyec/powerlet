@@ -34,6 +34,6 @@
   min-height: 32px;
 }
 
-.context-menu__item:hover {
+.context-menu__item--highlighted {
   background: var(--item-selected-background);
 }
