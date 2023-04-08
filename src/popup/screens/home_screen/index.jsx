@@ -133,7 +133,6 @@ export default function HomeScreen() {
       action: handleContextMenuEdit
     });
 
-    console.log(contextMenu);
     if (
       contextMenu &&
       contextMenu.item &&
