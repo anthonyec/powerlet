@@ -51,6 +51,11 @@ export default function ContextMenu({
     dismiss();
   };
 
+  const handleItemContextMenu = (index, event) => {
+    event.preventDefault();
+    executeAction(index);
+  };
+
   const handleItemMouseEnter = (index) => {
     if (executingAction !== null) {
       return;
@@ -76,16 +81,38 @@ export default function ContextMenu({
 
     const bounds = menuRef.current.getBoundingClientRect();
 
-    const newPosition = {
-      x:
-        position.x -
-        clamp(bounds.right - viewport.width + PADDING, 0, viewport.width),
-      y:
-        position.y -
-        clamp(bounds.bottom - viewport.height + PADDING, 0, viewport.height)
-    };
+    let offsetX = 0;
+    let offsetY = 0;
 
-    setMenuPosition(newPosition);
+    if (bounds.right > viewport.width) {
+      offsetX -= bounds.right - viewport.width + PADDING;
+    }
+
+    if (bounds.bottom > viewport.height) {
+      offsetY -= bounds.height + PADDING;
+    }
+
+    // Viewport is too short, place on either side of the cursor.
+    if (bounds.bottom > viewport.height && position.y - bounds.height < 0) {
+      if (bounds.right > viewport.width) {
+        setMenuPosition({
+          x: position.x - (bounds.width + PADDING),
+          y: viewport.height / 2 - bounds.height / 2
+        });
+      } else {
+        setMenuPosition({
+          x: position.x + PADDING,
+          y: viewport.height / 2 - bounds.height / 2
+        });
+      }
+
+      return;
+    }
+
+    setMenuPosition({
+      x: position.x + offsetX,
+      y: position.y + offsetY
+    });
   }, [position]);
 
   useEffect(() => {
@@ -163,6 +190,7 @@ export default function ContextMenu({
               <div
                 key={item.key}
                 className={className}
+                onContextMenu={handleItemContextMenu.bind(null, index)}
                 onMouseEnter={handleItemMouseEnter.bind(null, index)}
                 onMouseLeave={handleItemMouseLeave}
               >
