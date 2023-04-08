@@ -94,7 +94,7 @@ export default function EditBookmarkletScreen({
       </div>
 
       <div className="edit-bookmarklet-screen__footer">
-        <Button onClick={handleRemoveClick}>
+        <Button onClick={handleRemoveClick} type="danger">
           {translations['remove_button']}
         </Button>
         <Button onClick={handleBackClick} type="primary">

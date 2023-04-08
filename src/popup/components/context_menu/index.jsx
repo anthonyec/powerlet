@@ -186,6 +186,10 @@ export default function ContextMenu({
               className += ' context-menu__item--executing-action';
             }
 
+            if (item.type) {
+              className += ` context-menu__item--${item.type}`;
+            }
+
             return (
               <div
                 key={item.key}

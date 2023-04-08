@@ -25,6 +25,7 @@
   --button-normal-color: #2C7CEA;
   --button-hover-color: #1D74E9;
   --button-active-color: #1D74E9;
+  --button-danger-color: #C5392A;
 
   --input-normal-background: #FFFFFF;
   --input-normal-color: #2A2B2E;
@@ -65,6 +66,7 @@
     --button-normal-color: #8DB8FE;
     --button-hover-color: #8DB8FE;
     --button-active-color: #85AAE9;
+    --button-danger-color: #F28B82;
 
     --input-normal-background: #1D1D1F;
     --input-normal-color: #E1E1E1;

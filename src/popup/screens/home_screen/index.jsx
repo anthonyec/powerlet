@@ -166,6 +166,7 @@ export default function HomeScreen() {
     items.push({
       key: 'delete',
       title: translations['remove_button'],
+      type: 'danger',
       action: handleContextMenuDelete
     });
 

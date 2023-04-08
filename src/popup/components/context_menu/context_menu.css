@@ -50,6 +50,10 @@
   animation: context-menu-item-flash 150ms steps(1) forwards;
 }
 
+.context-menu__item--danger {
+  color: var(--button-danger-color);
+}
+
 @keyframes context-menu-item-flash {
   0% {
     background: transparent;
