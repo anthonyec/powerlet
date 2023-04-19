@@ -15,6 +15,7 @@ export function createShadowDomInside(target) {
   shadowElement.style.height = "0";
   shadowElement.style.minWidth = "0";
   shadowElement.style.minHeight = "0";
+  shadowElement.style.position = "relative";
   shadowElement.style.display = "inline-block";
 
   target.appendChild(shadowElement);
