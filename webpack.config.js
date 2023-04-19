@@ -10,12 +10,13 @@ module.exports = {
   devtool: 'cheap-module-source-map',
   entry: {
     popup: './src/popup/index.js',
-    background: './src/background/index.js'
+    background: './src/background/index.js',
+    content: './src/content/index.js',
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].bundle.js',
-    chunkFilename: '[name].[contenthash:5].chunk.js'
+    chunkFilename: '[name].[contenthash:5].chunk.js',
   },
   optimization: {
     chunkIds: 'named',
@@ -41,6 +42,10 @@ module.exports = {
       {
         test: /\.css$/,
         use: [MiniCssExtractPlugin.loader, 'css-loader']
+      },
+      {
+        test: /\.svg/,
+        type: 'asset/inline',
       }
     ]
   },
