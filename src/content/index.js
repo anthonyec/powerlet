@@ -2,9 +2,9 @@ import { createShadowDomInside } from './create_shadow_dom_inside';
 
 import addIcon from './add_icon.svg';
 
-const POWERLET_BUTTON = "powerlet-button"
-const MANAGE_BUTTON = "manage-button"
-const LABEL_ID = "add-remove-button__label"
+const POWERLET_BUTTON = 'powerlet-button';
+const MANAGE_BUTTON = 'manage-button';
+const LABEL_ID = 'add-remove-button__label';
 
 const scripts = document.body.querySelectorAll('[href*="javascript:"]');
 
@@ -24,7 +24,7 @@ Array.from(scripts).forEach((script) => {
   button.classList.add(MANAGE_BUTTON);
 
   label.classList.add(LABEL_ID);
-  label.textContent = "Add Bookmarklet";
+  label.textContent = 'Add Bookmarklet';
 
   powerletIcon.src = addIcon;
   icon.src = addIcon;
@@ -86,10 +86,13 @@ Array.from(scripts).forEach((script) => {
     event.preventDefault();
     event.stopPropagation();
 
-    chrome.runtime.sendMessage({ action: "create_bookmark", payload: {
-      title,
-      url: script.getAttribute('href'),
-    }});
+    chrome.runtime.sendMessage({
+      action: 'create_bookmark',
+      payload: {
+        title,
+        url: script.getAttribute('href')
+      }
+    });
   });
 
   powerletButton.append(powerletIcon);
@@ -101,4 +104,3 @@ Array.from(scripts).forEach((script) => {
   shadow.appendChild(powerletButton);
   shadow.appendChild(button);
 });
-
