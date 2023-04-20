@@ -100,13 +100,20 @@ Array.from(scripts).forEach((script) => {
     event.preventDefault();
     event.stopPropagation();
 
-    chrome.runtime.sendMessage({
-      action: 'create_bookmark',
-      payload: {
-        title: title.trim(),
-        url: script.getAttribute('href')
-      }
-    });
+    try {
+      chrome.runtime.sendMessage({
+        action: 'create_bookmark',
+        payload: {
+          title: title.trim(),
+          url: script.getAttribute('href')
+        }
+      });
+    } catch (error) {
+      alert(
+        'Powerlet: Something went wrong when adding bookmarklet. Please reload the page and try again.'
+      );
+      return;
+    }
 
     label.textContent = 'Added!';
     button.classList.add(`${MANAGE_BUTTON_CLASS_NAME}--added`);
