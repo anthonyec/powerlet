@@ -75,7 +75,6 @@ Array.from(scripts).forEach((script) => {
       left: 50%;
       transform: translate(-9px, -50%);
       gap: 5px;
-
       width: 19px;
       height: 19px;
     }
@@ -87,12 +86,16 @@ Array.from(scripts).forEach((script) => {
 
     .${MANAGE_BUTTON_CLASS_NAME} img {
       flex-shrink: 0;
+      user-select: none;
+      pointer-events: none;
     }
 
     .${LABEL_CLASS_NAME} {
       margin-right: 4px;
       white-space: nowrap;
       display: none;
+      user-select: none;
+      pointer-events: none;
     }
 
     @keyframes added {

@@ -36,14 +36,25 @@
       display: inline-block;
       font-size: 16px;
       font-weight: 500;
-      padding: 12px 24px;
+      padding: 7px;
       text-decoration: none;
-      margin-bottom: 20px;
-      margin-right: 10px;
+      margin-right: 20px;
+      margin-bottom: 22px;
     }
 
     .bookmarklet:hover {
       color: #2A7CEA;
+    }
+
+    .add-button {
+      background-image: linear-gradient(-30deg, #D86299 0%, #A449D6 100%);
+      border-radius: 100px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 19px;
+      height: 19px;
+      margin: 0 3px;
     }
 
     @media(prefers-color-scheme: dark) {
@@ -66,8 +77,8 @@
       Getting Started
     </h1>
 
-    <h2 data-translation-key="getting_started_subtitle">
-      To add a script, drag it to your Bookmarks Bar.
+    <h2 data-translation-key="getting_started_subtitle" data-translation-replacement='<div class="add-button"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0iZmVhdGhlciBmZWF0aGVyLXBsdXMiPgogICAgPHBhdGggZD0iTTEyIDV2MTRNNSAxMmgxNCIvPgo8L3N2Zz4K" /></div>'>
+      To add a script, drag it to your Bookmarks Bar!
     </h2>
 
     <a class="bookmarklet" href="javascript:window.scrollTo(0,0);">
