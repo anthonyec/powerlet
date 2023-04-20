@@ -100,11 +100,11 @@ Array.from(scripts).forEach((script) => {
 
     @keyframes added {
       from {
-        box-shadow: 0 0 0 rgba(0, 255, 0, 1);
+        box-shadow: 0 0 0 rgba(0, 100, 0, 1);
       }
 
       to {
-        box-shadow: 0 0 50px rgba(0, 255, 0, 0);
+        box-shadow: 0 0 50px rgba(0, 100, 0, 0);
       }
     }
   `;
