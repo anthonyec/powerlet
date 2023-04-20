@@ -72,6 +72,7 @@ Array.from(scripts).forEach((script) => {
 
     .${MANAGE_BUTTON_CLASS_NAME}--added {
       background: green;
+      animation: added 600ms ease;
     }
 
     .${MANAGE_BUTTON_CLASS_NAME} img {
@@ -82,6 +83,16 @@ Array.from(scripts).forEach((script) => {
       margin-right: 4px;
       white-space: nowrap;
       display: none;
+    }
+
+    @keyframes added {
+      from {
+        box-shadow: 0 0 0 rgba(0, 255, 0, 1);
+      }
+
+      to {
+        box-shadow: 0 0 50px rgba(0, 255, 0, 0);
+      }
     }
   `;
 
