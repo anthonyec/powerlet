@@ -10,7 +10,6 @@ export function createShadowDomInside(target) {
   shadowElement.style.top = '0';
   shadowElement.style.left = '0';
   shadowElement.style.transform = 'none';
-  shadowElement.style.zIndex = '2147483647';
   shadowElement.style.width = '0';
   shadowElement.style.height = '0';
   shadowElement.style.minWidth = '0';

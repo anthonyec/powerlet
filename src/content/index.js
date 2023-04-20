@@ -11,6 +11,16 @@ const scripts = document.body.querySelectorAll('[href*="javascript:"]');
 
 Array.from(scripts).forEach((script) => {
   const title = script.textContent;
+  const href = script.getAttribute('href');
+
+  if (href.trim().replaceAll(/\s/g, '') === 'javascript:void(0)') {
+    return;
+  }
+
+  if (title.trim() === '') {
+    return;
+  }
+
   const shadow = createShadowDomInside(script);
   const style = document.createElement('style');
 
@@ -105,7 +115,7 @@ Array.from(scripts).forEach((script) => {
         action: 'create_bookmark',
         payload: {
           title: title.trim(),
-          url: script.getAttribute('href')
+          url: href
         }
       });
     } catch (error) {
