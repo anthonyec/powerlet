@@ -1,10 +1,11 @@
 import { createShadowDomInside } from './create_shadow_dom_inside';
 
 import addIcon from './add_icon.svg';
+import checkIcon from './check_icon.svg';
 
-const POWERLET_BUTTON = 'powerlet-button';
-const MANAGE_BUTTON = 'manage-button';
-const LABEL_ID = 'add-remove-button__label';
+const CONTAINER_CLASS_NAME = 'powerlet-button';
+const MANAGE_BUTTON_CLASS_NAME = 'manage-button';
+const LABEL_CLASS_NAME = 'add-remove-button__label';
 
 const scripts = document.body.querySelectorAll('[href*="javascript:"]');
 
@@ -13,72 +14,74 @@ Array.from(scripts).forEach((script) => {
   const shadow = createShadowDomInside(script);
   const style = document.createElement('style');
 
-  const powerletButton = document.createElement('button');
-  const powerletIcon = document.createElement('img');
+  const container = document.createElement('div');
   const button = document.createElement('button');
   const icon = document.createElement('img');
   const label = document.createElement('span');
 
-  powerletButton.classList.add(POWERLET_BUTTON);
+  container.classList.add(CONTAINER_CLASS_NAME);
+  button.classList.add(MANAGE_BUTTON_CLASS_NAME);
 
-  button.classList.add(MANAGE_BUTTON);
-
-  label.classList.add(LABEL_ID);
+  label.classList.add(LABEL_CLASS_NAME);
   label.textContent = 'Add Bookmarklet';
 
-  powerletIcon.src = addIcon;
   icon.src = addIcon;
 
   style.innerHTML = `
-    .${POWERLET_BUTTON} {
+    .${CONTAINER_CLASS_NAME} {
+      width: 28px;
+      height: 28px;
+      position: absolute;
+      transform: translate(-30%, -100%);
+      top: 50%;
+      left: 50%;
+    }
+
+    .${CONTAINER_CLASS_NAME}:hover .${MANAGE_BUTTON_CLASS_NAME} {
+      padding: 5px;
+      width: auto;
+      height: auto;
+      transform: translate(-12.5px, -50%);
+    }
+
+    .${CONTAINER_CLASS_NAME}:hover .${LABEL_CLASS_NAME} {
+      display: block;
+    }
+
+    .${MANAGE_BUTTON_CLASS_NAME} {
+      color: white;
       background-image: linear-gradient(-30deg, #D86299 0%, #A449D6 100%);
       border-radius: 100px;
       border: none;
       cursor: pointer;
       display: flex;
-      width: 19px;
-      height: 19px;
       align-items: center;
       justify-content: center;
-      position: absolute;
-      transform: translateY(-100%);
-    }
-
-    .${POWERLET_BUTTON}:hover ~ .${MANAGE_BUTTON} {
-      visibility: visible;
-    }
-
-    .${MANAGE_BUTTON} {
-      color: white;
-      background-image: linear-gradient(-30deg, #D86299 0%, #A449D6 100%);
-      border-radius: 13.5px;
-      border: none;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      padding: 5px;
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
       font-size: 15px;
       font-weight: 500;
       position: absolute;
-      transform: translateY(-100%);
-      top: 0;
-      left: 0;
+      top: 50%;
+      left: 50%;
+      transform: translate(-9px, -50%);
       gap: 5px;
-      visibility: hidden;
+
+      width: 19px;
+      height: 19px;
     }
 
-    .${MANAGE_BUTTON}:hover {
-      visibility: visible;
+    .${MANAGE_BUTTON_CLASS_NAME}--added {
+      background: green;
     }
 
-    .${MANAGE_BUTTON} img {
+    .${MANAGE_BUTTON_CLASS_NAME} img {
       flex-shrink: 0;
     }
 
-    .${LABEL_ID} {
+    .${LABEL_CLASS_NAME} {
       margin-right: 4px;
       white-space: nowrap;
+      display: none;
     }
   `;
 
@@ -89,18 +92,20 @@ Array.from(scripts).forEach((script) => {
     chrome.runtime.sendMessage({
       action: 'create_bookmark',
       payload: {
-        title,
+        title: title.trim(),
         url: script.getAttribute('href')
       }
     });
-  });
 
-  powerletButton.append(powerletIcon);
+    label.textContent = 'Added!';
+    button.classList.add(`${MANAGE_BUTTON_CLASS_NAME}--added`);
+    icon.src = checkIcon;
+  });
 
   button.append(icon);
   button.append(label);
+  container.append(button);
 
   shadow.appendChild(style);
-  shadow.appendChild(powerletButton);
-  shadow.appendChild(button);
+  shadow.appendChild(container);
 });

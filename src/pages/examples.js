@@ -1,3 +1,5 @@
+import '../content/index.js';
+
 const translationElements = document.querySelectorAll('[data-translation-key]');
 
 Array.from(translationElements).forEach((element) => {
