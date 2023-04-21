@@ -9,46 +9,8 @@ const LABEL_CLASS_NAME = 'add-remove-button__label';
 
 const scripts = document.body.querySelectorAll('[href*="javascript:"]');
 
-Array.from(scripts).forEach((script) => {
-  const title = script.textContent;
-  const href = script.getAttribute('href');
-  const cleanHref = href.trim().replaceAll(' ', '').replaceAll(';', '');
-  const classList = Array.from(script.classList);
-
-  // A lot of random buttons on websites include `void` code to prevent the
-  // default behaviour of links. These should not be considered bookmarklets.
-  if (cleanHref === 'javascript:void(0)' || cleanHref === 'javascript:') {
-    return;
-  }
-
-  // Empty links are not considered bookmarklets, such as icon buttons.
-  if (title.trim() === '') {
-    return;
-  }
-
-  // A single character, like "x", is something used for buttons. Example on
-  // this cookie banner: https://www.universityofgalway.ie/t4training/bookmarklets.html
-  if (title.length === 1) {
-    return;
-  }
-
-  // To avoid links that are buttons with non-bookmarklet scripts, check the
-  // class name for any reference for "button" but without "bookmarklet".
-  // Currently this basic heuristic is to avoid highlighting the "Add to Card"
-  // and "Add to Wishlist" buttons on the Steam store page. But also keep
-  // it working with things like: https://www.addtoany.com/services/pinboard_button
-  // which have a button class name but also reference bookmarklet.
-  for (const className of classList) {
-    const includesButtonWord =
-      className.includes('btn') || className.includes('button');
-    const includesBookmarkletName = className.includes('bookmarklet');
-
-    if (includesButtonWord && !includesBookmarkletName) {
-      return;
-    }
-  }
-
-  const shadow = createShadowDomInside(script);
+function showButtonInside(target, title, code) {
+  const shadow = createShadowDomInside(target);
   const style = document.createElement('style');
 
   const container = document.createElement('div');
@@ -149,13 +111,14 @@ Array.from(scripts).forEach((script) => {
         action: 'create_bookmark',
         payload: {
           title: title.trim(),
-          url: href
+          url: code.trim()
         }
       });
     } catch (error) {
       alert(
         'Powerlet: Something went wrong when adding bookmarklet. Please reload the page and try again.'
       );
+      console.error(error);
       return;
     }
 
@@ -170,4 +133,46 @@ Array.from(scripts).forEach((script) => {
 
   shadow.appendChild(style);
   shadow.appendChild(container);
+}
+
+Array.from(scripts).forEach((script) => {
+  const title = script.textContent;
+  const href = script.getAttribute('href');
+  const cleanHref = href.trim().replaceAll(' ', '').replaceAll(';', '');
+  const classList = Array.from(script.classList);
+
+  // A lot of random buttons on websites include `void` code to prevent the
+  // default behaviour of links. These should not be considered bookmarklets.
+  if (cleanHref === 'javascript:void(0)' || cleanHref === 'javascript:') {
+    return;
+  }
+
+  // Empty links are not considered bookmarklets, such as icon buttons.
+  if (title.trim() === '') {
+    return;
+  }
+
+  // A single character, like "x", is something used for buttons. Example on
+  // this cookie banner: https://www.universityofgalway.ie/t4training/bookmarklets.html
+  if (title.length === 1) {
+    return;
+  }
+
+  // To avoid links that are buttons with non-bookmarklet scripts, check the
+  // class name for any reference for "button" but without "bookmarklet".
+  // Currently this basic heuristic is to avoid highlighting the "Add to Card"
+  // and "Add to Wishlist" buttons on the Steam store page. But also keep
+  // it working with things like: https://www.addtoany.com/services/pinboard_button
+  // which have a button class name but also reference bookmarklet.
+  for (const className of classList) {
+    const includesButtonWord =
+      className.includes('btn') || className.includes('button');
+    const includesBookmarkletName = className.includes('bookmarklet');
+
+    if (includesButtonWord && !includesBookmarkletName) {
+      return;
+    }
+  }
+
+  showButtonInside(script, title, href);
 });
