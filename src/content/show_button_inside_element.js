@@ -100,6 +100,14 @@ export function showButtonInsideElement(target, title, code) {
     }
   `;
 
+  button.addEventListener('mouseenter', () => {
+    container.style.zIndex = '2147483647';
+  });
+
+  button.addEventListener('mouseleave', () => {
+    container.style.zIndex = 'auto';
+  });
+
   button.addEventListener('click', (event) => {
     event.preventDefault();
     event.stopPropagation();
