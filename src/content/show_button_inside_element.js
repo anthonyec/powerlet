@@ -7,6 +7,8 @@ const CONTAINER_CLASS_NAME = 'powerlet-button';
 const MANAGE_BUTTON_CLASS_NAME = 'manage-button';
 const LABEL_CLASS_NAME = 'add-remove-button__label';
 
+export const CREATE_BOOKMARK = 'CREATE_BOOKMARK';
+
 export function showButtonInsideElement(target, title, code) {
   const shadow = createShadowDomInside(target);
   const style = document.createElement('style');
@@ -118,7 +120,7 @@ export function showButtonInsideElement(target, title, code) {
 
     try {
       chrome.runtime.sendMessage({
-        action: 'create_bookmark',
+        action: CREATE_BOOKMARK,
         payload: {
           title: title.trim(),
           url: code.trim()
