@@ -35,9 +35,9 @@ export function showButtonInsideElement(target, title, code) {
     }
 
     .${CONTAINER_CLASS_NAME}:hover .${MANAGE_BUTTON_CLASS_NAME} {
-      padding: 5px;
       width: auto;
       height: auto;
+      padding: 5px;
       transform: translate(-12.5px, -50%);
     }
 
@@ -54,16 +54,16 @@ export function showButtonInsideElement(target, title, code) {
       display: flex;
       align-items: center;
       justify-content: center;
+      gap: 5px;
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
       font-size: 15px;
       font-weight: 500;
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-9px, -50%);
-      gap: 5px;
       width: 19px;
       height: 19px;
+      transform: translate(-9px, -50%);
     }
 
     .${MANAGE_BUTTON_CLASS_NAME}--added {
