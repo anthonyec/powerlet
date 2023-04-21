@@ -112,6 +112,10 @@ export function showButtonInsideElement(target, title, code) {
     event.preventDefault();
     event.stopPropagation();
 
+    if (button.classList.contains(`${MANAGE_BUTTON_CLASS_NAME}--added`)) {
+      return;
+    }
+
     try {
       chrome.runtime.sendMessage({
         action: 'create_bookmark',
