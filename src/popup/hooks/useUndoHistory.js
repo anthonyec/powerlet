@@ -30,7 +30,7 @@ export function UndoHistoryProvider({ children }) {
     }
 
     setStack([
-      ...stack.slice(stack.length - 1, stack.length - 2)
+      ...stack.slice(0, stack.length - 1)
     ]);
   };
 
