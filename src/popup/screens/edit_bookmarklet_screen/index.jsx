@@ -55,13 +55,19 @@ export default function EditBookmarkletScreen({
 
   const handleRemoveClick = () => {
     chrome.bookmarks.remove(bookmarklet.id, () => {
-      undoHistory.push(() => new Promise((resolve) => {
-        chrome.bookmarks.create({
-          index: bookmarklet.index,
-          title: bookmarklet.title,
-          url: bookmarklet.url,
-        }, resolve);
-      }));
+      undoHistory.push(
+        () =>
+          new Promise((resolve) => {
+            chrome.bookmarks.create(
+              {
+                index: bookmarklet.index,
+                title: bookmarklet.title,
+                url: bookmarklet.url
+              },
+              resolve
+            );
+          })
+      );
 
       window.location.hash = '';
     });

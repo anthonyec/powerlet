@@ -1,9 +1,15 @@
-import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState
+} from 'react';
 
 const UndoHistoryContext = createContext({
   push: () => {},
   pop: () => {},
-  stack: [],
+  stack: []
 });
 
 export function UndoHistoryProvider({ children }) {
@@ -11,7 +17,7 @@ export function UndoHistoryProvider({ children }) {
 
   useEffect(() => {
     const handleKeyDown = (event) => {
-      if (event.code === "KeyZ" && event.metaKey) {
+      if (event.code === 'KeyZ' && event.metaKey) {
         pop();
       }
     };
@@ -20,17 +26,14 @@ export function UndoHistoryProvider({ children }) {
 
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
-    }
-  }, [stack])
+    };
+  }, [stack]);
 
   const push = (action) => {
-    setStack([
-      ...stack,
-      action
-    ]);
+    setStack([...stack, action]);
   };
 
-  const pop = () => {
+  const pop = async () => {
     if (stack.length === 0) {
       return;
     }
@@ -38,9 +41,9 @@ export function UndoHistoryProvider({ children }) {
     const lastAction = stack[stack.length - 1];
 
     try {
-      lastAction();
-    } catch(error) {
-      console.error("Undo failed", error);
+      await lastAction();
+    } catch (error) {
+      console.error('Undo failed', error);
     }
 
     setStack(stack.slice(0, stack.length - 1));
