@@ -54,22 +54,17 @@ export default function EditBookmarkletScreen({
   }, [route.params.id]);
 
   const handleRemoveClick = () => {
-    const shouldRemove = confirm(translations['remove_script_confirmation']);
+    chrome.bookmarks.remove(bookmarklet.id, () => {
+      undoHistory.push(() => new Promise((resolve) => {
+        chrome.bookmarks.create({
+          index: bookmarklet.index,
+          title: bookmarklet.title,
+          url: bookmarklet.url,
+        }, resolve);
+      }));
 
-    if (shouldRemove) {
-      chrome.bookmarks.remove(bookmarklet.id, () => {
-        undoHistory.push(() => new Promise((resolve) => {
-          chrome.bookmarks.create({
-            title: bookmarklet.title,
-            url: bookmarklet.url,
-          }, resolve);
-        }));
-
-        setTimeout(() => {
-          window.location.hash = '';
-        }, 500);
-      });
-    }
+      window.location.hash = '';
+    });
   };
 
   const handleBackClick = () => {

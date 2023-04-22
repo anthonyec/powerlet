@@ -88,14 +88,16 @@ export default function HomeScreen() {
     window.location.hash = `edit/${item.id}`;
   };
 
+  const handleUndoClick = () => {
+    undoHistory.pop();
+  };
+
   const onListItemRefChange = useCallback((scrollToElement, element) => {
     // TODO: Why is it null on first render? Because it's mounting?
     if (element !== null) {
       scrollToElement(element);
     }
   }, []);
-
-  console.log(undoHistory);
 
   return (
     <div className="home-screen">
@@ -131,6 +133,8 @@ export default function HomeScreen() {
       )}
 
       {isLoaded && doesNotHaveBookmarklets && <OnboardMessage />}
+
+      <button onClick={handleUndoClick}>Undo</button>
     </div>
   );
 }
