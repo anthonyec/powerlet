@@ -5,6 +5,7 @@ import Button from '../../components/button';
 import TextField from '../../components/text_field';
 import Titlebar from '../../components/titlebar';
 import { selectTranslations } from '../../store/selectors/locale';
+import { useUndoHistory } from '../../hooks/useUndoHistory';
 
 import './edit_bookmarklet_screen.css';
 
@@ -13,6 +14,7 @@ export default function EditBookmarkletScreen({
 }) {
   const [bookmarklet, setBookmarklet] = useState({});
   const translations = useSelector(selectTranslations);
+  const undoHistory = useUndoHistory();
 
   useEffect(() => {
     if (!route.params.id) return;
@@ -56,7 +58,16 @@ export default function EditBookmarkletScreen({
 
     if (shouldRemove) {
       chrome.bookmarks.remove(bookmarklet.id, () => {
-        window.location.hash = '';
+        undoHistory.push(() => new Promise((resolve) => {
+          chrome.bookmarks.create({
+            title: bookmarklet.title,
+            url: bookmarklet.url,
+          }, resolve);
+        }));
+
+        setTimeout(() => {
+          window.location.hash = '';
+        }, 500);
       });
     }
   };

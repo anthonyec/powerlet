@@ -25,12 +25,14 @@ import ScrollView from '../../components/scroll_view';
 import List from '../../components/list';
 import OnboardMessage from '../../components/onboard_message';
 import EmptyMessage from '../../components/empty_message';
+import { useUndoHistory } from '../../hooks/useUndoHistory';
 
 import './home_screen.css';
 
 export default function HomeScreen() {
   const dispatch = useDispatch();
   const setExecutedScript = useCloseWindowAfterExecution();
+  const undoHistory = useUndoHistory();
 
   const searchFieldRef = useRef(null);
   const [searchQuery, setSearchQuery] = useState('');
@@ -92,6 +94,8 @@ export default function HomeScreen() {
       scrollToElement(element);
     }
   }, []);
+
+  console.log(undoHistory);
 
   return (
     <div className="home-screen">
