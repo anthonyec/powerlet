@@ -26,6 +26,16 @@ export default function EditBookmarkletScreen({
           url: 'javascript: '
         },
         (result) => {
+          const handle = undoHistory.createHandle(result.id);
+
+          undoHistory.push(
+            () =>
+              new Promise((resolve) => {
+                chrome.bookmarks.remove(handle.value, resolve);
+                undoHistory.removeHandle(handle);
+              })
+          );
+
           window.location.hash = `edit/${result.id}`;
         }
       );
@@ -52,9 +62,11 @@ export default function EditBookmarkletScreen({
       chrome.bookmarks.onRemoved.removeListener(handleBookmarksChange);
     };
   }, [route.params.id]);
-
+  2;
   const handleRemoveClick = () => {
     chrome.bookmarks.remove(bookmarklet.id, () => {
+      const handle = undoHistory.getHandleByValue(bookmarklet.id);
+
       undoHistory.push(
         () =>
           new Promise((resolve) => {
@@ -64,7 +76,13 @@ export default function EditBookmarkletScreen({
                 title: bookmarklet.title,
                 url: bookmarklet.url
               },
-              resolve
+              (result) => {
+                if (handle) {
+                  handle.update(result.id);
+                }
+
+                resolve();
+              }
             );
           })
       );
