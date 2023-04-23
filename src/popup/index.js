@@ -5,6 +5,7 @@ import { persistStore } from 'redux-persist';
 import createStats from 'simple-plausible-tracker';
 
 import createStore from './store/index';
+import { ToastProvider } from './hooks/useToast';
 import { UndoHistoryProvider } from './hooks/useUndoHistory';
 import App from './app';
 
@@ -28,9 +29,11 @@ persistStore(store);
 
 ReactDOM.render(
   <Provider store={store}>
-    <UndoHistoryProvider>
-      <App />
-    </UndoHistoryProvider>
+    <ToastProvider>
+      <UndoHistoryProvider>
+        <App />
+      </UndoHistoryProvider>
+    </ToastProvider>
   </Provider>,
   document.getElementById('root')
 );

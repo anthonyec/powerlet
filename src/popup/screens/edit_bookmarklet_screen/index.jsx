@@ -6,6 +6,7 @@ import TextField from '../../components/text_field';
 import Titlebar from '../../components/titlebar';
 import { selectTranslations } from '../../store/selectors/locale';
 import { useUndoHistory } from '../../hooks/useUndoHistory';
+import { useToast } from '../../hooks/useToast';
 
 import './edit_bookmarklet_screen.css';
 
@@ -15,6 +16,7 @@ export default function EditBookmarkletScreen({
   const [bookmarklet, setBookmarklet] = useState({});
   const translations = useSelector(selectTranslations);
   const undoHistory = useUndoHistory();
+  const toast = useToast();
 
   useEffect(() => {
     if (!route.params.id) return;
