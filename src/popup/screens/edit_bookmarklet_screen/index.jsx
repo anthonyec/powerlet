@@ -20,25 +20,23 @@ export default function EditBookmarkletScreen({
     if (!route.params.id) return;
 
     if (route.params.id === 'new') {
-      chrome.bookmarks.create(
-        {
-          title: translations['new_script_name'],
-          url: 'javascript: '
-        },
-        (result) => {
-          const handle = undoHistory.createHandle(result.id);
+      const newBookmarklet = {
+        title: translations['new_script_name'],
+        url: 'javascript: '
+      };
 
-          undoHistory.push(
-            () =>
-              new Promise((resolve) => {
-                chrome.bookmarks.remove(handle.value, resolve);
-                undoHistory.removeHandle(handle);
-              })
-          );
+      chrome.bookmarks.create(newBookmarklet, (result) => {
+        const handle = undoHistory.createHandle(result.id);
 
-          window.location.hash = `edit/${result.id}`;
-        }
-      );
+        undoHistory.push(() => new Promise((resolve) => {
+          chrome.bookmarks.remove(handle.value, () => {
+            undoHistory.removeHandle(handle);
+            resolve();
+          });
+        }));
+
+        window.location.hash = `edit/${result.id}`;
+      });
       return;
     }
 
@@ -62,33 +60,29 @@ export default function EditBookmarkletScreen({
       chrome.bookmarks.onRemoved.removeListener(handleBookmarksChange);
     };
   }, [route.params.id]);
-  2;
-  const handleRemoveClick = () => {
+
+  const handleRemoveClick = async () => {
     chrome.bookmarks.remove(bookmarklet.id, () => {
       const handle = undoHistory.getHandleByValue(bookmarklet.id);
 
-      undoHistory.push(
-        () =>
-          new Promise((resolve) => {
-            chrome.bookmarks.create(
-              {
-                index: bookmarklet.index,
-                title: bookmarklet.title,
-                url: bookmarklet.url
-              },
-              (result) => {
-                if (handle) {
-                  handle.update(result.id);
-                }
+      undoHistory.push(() => new Promise((resolve) => {
+        const result = chrome.bookmarks.create({
+          index: bookmarklet.index,
+          title: bookmarklet.title,
+          url: bookmarklet.url
+        }, (result) => {
+          if (handle) {
+            handle.update(result.id);
+          }
 
-                resolve();
-              }
-            );
-          })
-      );
-
-      window.location.hash = '';
+          resolve();
+        });
+      }));
     });
+
+
+    toast.show(`"${bookmarklet.title}" was deleted.`, undoHistory.pop);
+    window.location.hash = '';
   };
 
   const handleBackClick = () => {
