@@ -30,12 +30,15 @@ export default function EditBookmarkletScreen({
       chrome.bookmarks.create(newBookmarklet, (result) => {
         const handle = undoHistory.createHandle(result.id);
 
-        undoHistory.push(() => new Promise((resolve) => {
-          chrome.bookmarks.remove(handle.value, () => {
-            undoHistory.removeHandle(handle);
-            resolve();
-          });
-        }));
+        undoHistory.push(
+          () =>
+            new Promise((resolve) => {
+              chrome.bookmarks.remove(handle.value, () => {
+                undoHistory.removeHandle(handle);
+                resolve();
+              });
+            })
+        );
 
         window.location.hash = `edit/${result.id}`;
       });
@@ -63,28 +66,38 @@ export default function EditBookmarkletScreen({
     };
   }, [route.params.id]);
 
-  const handleRemoveClick = async () => {
+  const handleRemoveClick = () => {
     chrome.bookmarks.remove(bookmarklet.id, () => {
       const handle = undoHistory.getHandleByValue(bookmarklet.id);
 
-      undoHistory.push(() => new Promise((resolve) => {
-        const result = chrome.bookmarks.create({
-          index: bookmarklet.index,
-          title: bookmarklet.title,
-          url: bookmarklet.url
-        }, (result) => {
-          if (handle) {
-            handle.update(result.id);
-          }
+      undoHistory.push(
+        () =>
+          new Promise((resolve) => {
+            chrome.bookmarks.create(
+              {
+                index: bookmarklet.index,
+                title: bookmarklet.title,
+                url: bookmarklet.url
+              },
+              (result) => {
+                if (handle) {
+                  handle.update(result.id);
+                }
 
-          resolve();
-        });
-      }));
+                toast.hide();
+                resolve();
+              }
+            );
+          })
+      );
+
+      toast.show(
+        `"${bookmarklet.title}" was deleted.`,
+        'Undo',
+        undoHistory.pop
+      );
+      window.location.hash = '';
     });
-
-
-    toast.show(`"${bookmarklet.title}" was deleted.`, undoHistory.pop);
-    window.location.hash = '';
   };
 
   const handleBackClick = () => {

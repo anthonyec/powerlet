@@ -25,14 +25,15 @@ import ScrollView from '../../components/scroll_view';
 import List from '../../components/list';
 import OnboardMessage from '../../components/onboard_message';
 import EmptyMessage from '../../components/empty_message';
+import { useToast } from '../../hooks/useToast';
 import { useUndoHistory } from '../../hooks/useUndoHistory';
 
 import './home_screen.css';
-import Toast from '../../components/toast';
 
 export default function HomeScreen() {
   const dispatch = useDispatch();
   const setExecutedScript = useCloseWindowAfterExecution();
+  const toast = useToast();
   const undoHistory = useUndoHistory();
 
   const searchFieldRef = useRef(null);
@@ -89,10 +90,6 @@ export default function HomeScreen() {
     window.location.hash = `edit/${item.id}`;
   };
 
-  const handleUndoClick = () => {
-    undoHistory.pop();
-  };
-
   const onListItemRefChange = useCallback((scrollToElement, element) => {
     // TODO: Why is it null on first render? Because it's mounting?
     if (element !== null) {
@@ -135,11 +132,7 @@ export default function HomeScreen() {
 
       {isLoaded && doesNotHaveBookmarklets && <OnboardMessage />}
 
-      <Toast
-        message="'New Script' deleted"
-        label="Undo"
-        onActionClick={handleUndoClick}
-      />
+      {toast.display}
     </div>
   );
 }

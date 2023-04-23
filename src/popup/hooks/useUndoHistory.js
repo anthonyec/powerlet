@@ -3,7 +3,8 @@ import React, {
   useContext,
   useEffect,
   useState,
-  useRef
+  useRef,
+  useCallback
 } from 'react';
 
 const UndoHistoryContext = createContext({
@@ -52,20 +53,20 @@ export function UndoHistoryProvider({ children }) {
     setStack([...stack, action]);
   };
 
-  const pop = async () => {
+  const pop = () => {
     if (stack.length === 0) {
       return;
     }
 
     const lastAction = stack[stack.length - 1];
 
-    try {
-      await lastAction();
-    } catch (error) {
-      console.error('Undo failed', error);
-    }
-
-    setStack(stack.slice(0, stack.length - 1));
+    lastAction()
+      .finally(() => {
+        setStack(stack.slice(0, stack.length - 1));
+      })
+      .catch((error) => {
+        console.error('Undo failed', error);
+      });
   };
 
   const createHandle = (value) => {
