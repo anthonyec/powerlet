@@ -1,0 +1,38 @@
+.toast {
+  background: var(--toast-background);
+  box-shadow: var(--toast-box-shadow);
+  color: var(--toast-color);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 500;
+  min-height: 45px;
+  padding: 0 16px;
+  user-select: none;
+  z-index: 1;
+}
+
+.toast__button {
+  color: var(--toast-action-color);
+  background: transparent;
+  border-style: solid;
+  border-width: 1px;
+  border-color: transparent;
+  cursor: pointer;
+  border-radius: 3px;
+  height: 28px;
+  padding: 0 8px;
+  font-weight: 600;
+  margin-right: -8px;
+}
+
+.toast__button:active {
+  background: var(--toast-action-active-background);
+}
+
+.toast__button:focus {
+  border-color: var(--toast-action-focus-border-color);
+  box-shadow: var(--toast-action-focus-box-shadow);
+  outline: 0;
+}

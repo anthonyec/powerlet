@@ -28,6 +28,7 @@ import EmptyMessage from '../../components/empty_message';
 import { useUndoHistory } from '../../hooks/useUndoHistory';
 
 import './home_screen.css';
+import Toast from '../../components/toast';
 
 export default function HomeScreen() {
   const dispatch = useDispatch();
@@ -134,7 +135,11 @@ export default function HomeScreen() {
 
       {isLoaded && doesNotHaveBookmarklets && <OnboardMessage />}
 
-      <button onClick={handleUndoClick}>Undo</button>
+      <Toast
+        message="'New Script' deleted"
+        label="Undo"
+        onActionClick={handleUndoClick}
+      />
     </div>
   );
 }
