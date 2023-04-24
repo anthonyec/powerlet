@@ -37,6 +37,13 @@ export function UndoHistoryProvider({ children }) {
   const latestStack = useRef(_stack);
   const handles = useRef({});
 
+  // Keep tracking of if an undo is being performed to stop multiple `pop`
+  // actions piling up and creating duplicate undoes. This is because the
+  // undo action is asynchronous. It won't wait until the previous undo action
+  // has performed.
+  // TODO: Might be a better way around this as this feels a bit hacky.
+  const currentlyPerformingUndo = useRef(false);
+
   useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.code === 'KeyZ' && event.metaKey) {
@@ -49,7 +56,7 @@ export function UndoHistoryProvider({ children }) {
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [_stack]);
+  }, [latestStack.current]);
 
   const setStack = (newStack) => {
     _setStack(newStack);
@@ -61,15 +68,18 @@ export function UndoHistoryProvider({ children }) {
   };
 
   const pop = () => {
-    if (latestStack.current.length === 0) {
+    if (latestStack.current.length === 0 || currentlyPerformingUndo.current) {
       return;
     }
+
+    currentlyPerformingUndo.current = true;
 
     const lastAction = latestStack.current[latestStack.current.length - 1];
 
     lastAction()
       .finally(() => {
         setStack(latestStack.current.slice(0, latestStack.current.length - 1));
+        currentlyPerformingUndo.current = false;
       })
       .catch((error) => {
         console.error('Undo failed', error);
