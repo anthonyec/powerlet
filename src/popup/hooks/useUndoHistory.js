@@ -3,20 +3,21 @@ import React, {
   useContext,
   useEffect,
   useState,
-  useRef,
-  useCallback
+  useRef
 } from 'react';
 
 const UndoHistoryContext = createContext({
   push: () => {},
   pop: () => {},
-  stack: [],
 
   createHandle: (value) => {},
   removeHandle: (handle) => {},
   getHandleByValue: (value) => {}
 });
 
+/**
+ * A reference that uses an ID that never changes but the value can change.
+ */
 class Handle {
   id = undefined;
   value = undefined;
@@ -32,7 +33,8 @@ class Handle {
 }
 
 export function UndoHistoryProvider({ children }) {
-  const [stack, setStack] = useState([]);
+  const [_stack, _setStack] = useState([]);
+  const latestStack = useRef(_stack);
   const handles = useRef({});
 
   useEffect(() => {
@@ -47,22 +49,27 @@ export function UndoHistoryProvider({ children }) {
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [stack]);
+  }, [_stack]);
+
+  const setStack = (newStack) => {
+    _setStack(newStack);
+    latestStack.current = newStack;
+  };
 
   const push = (action) => {
-    setStack([...stack, action]);
+    setStack([...latestStack.current, action]);
   };
 
   const pop = () => {
-    if (stack.length === 0) {
+    if (latestStack.current.length === 0) {
       return;
     }
 
-    const lastAction = stack[stack.length - 1];
+    const lastAction = latestStack.current[latestStack.current.length - 1];
 
     lastAction()
       .finally(() => {
-        setStack(stack.slice(0, stack.length - 1));
+        setStack(latestStack.current.slice(0, latestStack.current.length - 1));
       })
       .catch((error) => {
         console.error('Undo failed', error);
@@ -91,7 +98,7 @@ export function UndoHistoryProvider({ children }) {
 
   return (
     <UndoHistoryContext.Provider
-      value={{ push, pop, stack, createHandle, removeHandle, getHandleByValue }}
+      value={{ push, pop, createHandle, removeHandle, getHandleByValue }}
     >
       {children}
     </UndoHistoryContext.Provider>
