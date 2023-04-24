@@ -9,7 +9,6 @@ import React, {
 const UndoHistoryContext = createContext({
   push: () => {},
   pop: () => {},
-
   createHandle: (value) => {},
   removeHandle: (handle) => {},
   getHandleByValue: (value) => {}
