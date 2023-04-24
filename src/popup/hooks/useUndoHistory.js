@@ -16,7 +16,7 @@ const UndoHistoryContext = createContext({
 });
 
 /**
- * A reference that uses an ID that never changes but the value can change.
+ * An object that has an ID that never changes but where the value can change.
  */
 class Handle {
   id = undefined;
