@@ -1,4 +1,5 @@
 import React, {
+  Suspense,
   useCallback,
   useDeferredValue,
   useEffect,
@@ -25,16 +26,14 @@ import ScrollView from '../../components/scroll_view';
 import List from '../../components/list';
 import OnboardMessage from '../../components/onboard_message';
 import EmptyMessage from '../../components/empty_message';
-import { useToast } from '../../hooks/useToast';
-import { useUndoHistory } from '../../hooks/useUndoHistory';
 
 import './home_screen.css';
+
+const ToastArea = React.lazy(() => import('../../components/toast_area'));
 
 export default function HomeScreen() {
   const dispatch = useDispatch();
   const setExecutedScript = useCloseWindowAfterExecution();
-  const toast = useToast();
-  const undoHistory = useUndoHistory();
 
   const searchFieldRef = useRef(null);
   const [searchQuery, setSearchQuery] = useState('');
@@ -132,7 +131,9 @@ export default function HomeScreen() {
 
       {isLoaded && doesNotHaveBookmarklets && <OnboardMessage />}
 
-      {toast.display}
+      <Suspense fallback={<div />}>
+        <ToastArea />
+      </Suspense>
     </div>
   );
 }

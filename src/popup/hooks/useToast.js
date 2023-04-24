@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
+
 import Toast from '../components/toast';
 
 const DEFAULT_TOAST_DETAILS = { message: '', label: '', action: () => {} };
@@ -16,7 +17,7 @@ export function ToastProvider({ children }) {
   useEffect(() => {
     const timeout = setTimeout(() => {
       setShowToast(false);
-    }, 10_000);
+    }, 8_000);
 
     return () => {
       clearTimeout(timeout);

@@ -19,6 +19,10 @@ export default function EditBookmarkletScreen({
   const toast = useToast();
 
   useEffect(() => {
+    toast.hide();
+  }, []);
+
+  useEffect(() => {
     if (!route.params.id) return;
 
     if (route.params.id === 'new') {
@@ -110,7 +114,7 @@ export default function EditBookmarkletScreen({
       );
 
       toast.show(
-        `"${bookmarklet.title}" was deleted.`,
+        `"${bookmarklet.title}" deleted.`,
         'Undo',
         undoHistory.pop
       );

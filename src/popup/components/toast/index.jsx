@@ -1,6 +1,5 @@
 import React from 'react';
 
-import './toast_container.css';
 import './toast.css';
 
 export default function Toast({
@@ -9,13 +8,11 @@ export default function Toast({
   onActionClick = () => {}
 }) {
   return (
-    <div className="toast-container">
-      <div className="toast">
-        {message}
-        <button className="toast__button" onClick={onActionClick}>
-          {label}
-        </button>
-      </div>
+    <div className="toast">
+      {message}
+      <button className="toast__button" onClick={onActionClick}>
+        {label}
+      </button>
     </div>
   );
 }

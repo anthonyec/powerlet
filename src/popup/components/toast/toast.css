@@ -7,8 +7,8 @@
   align-items: center;
   justify-content: space-between;
   font-weight: 500;
-  min-height: 45px;
-  padding: 0 16px;
+  line-height: 1.5;
+  padding: 8px 16px;
   user-select: none;
   z-index: 1;
 }
