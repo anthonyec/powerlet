@@ -62,5 +62,9 @@
   "new_script_name": {
     "message": "New script",
     "description": "Default name for a newly created script"
+  },
+  "script_deleted_toast": {
+    "message": "\"%s\" deleted.",
+    "description": "Message displayed when a script is deleted"
   }
 }

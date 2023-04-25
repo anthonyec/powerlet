@@ -113,7 +113,11 @@ export default function EditBookmarkletScreen({
           })
       );
 
-      toast.show(`"${bookmarklet.title}" deleted.`, 'Undo', undoHistory.pop);
+      toast.show(
+        translations['script_deleted_toast'].replace('%s', bookmarklet.title),
+        'Undo',
+        undoHistory.pop
+      );
       window.location.hash = '';
     });
   };

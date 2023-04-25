@@ -62,5 +62,9 @@
   "new_script_name": {
     "message": "新しいスクリプト",
     "description": ""
+  },
+  "script_deleted_toast": {
+    "message": "\"%s\"を削除しました",
+    "description": "Message displayed when a script is deleted"
   }
 }
