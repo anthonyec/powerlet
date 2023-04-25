@@ -66,5 +66,9 @@
   "script_deleted_toast": {
     "message": "\"%s\" deleted.",
     "description": "Message displayed when a script is deleted"
+  },
+  "undo_label": {
+    "message": "Undo",
+    "description": "Label for undo button"
   }
 }

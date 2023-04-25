@@ -65,6 +65,10 @@
   },
   "script_deleted_toast": {
     "message": "\"%s\"を削除しました",
+    "description": ""
+  },
+  "undo_label": {
+    "message": "取消",
     "description": "Message displayed when a script is deleted"
   }
 }
