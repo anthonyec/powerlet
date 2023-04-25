@@ -95,6 +95,7 @@ export default function EditBookmarkletScreen({
           new Promise((resolve) => {
             chrome.bookmarks.create(
               {
+                parentId: bookmarklet.parentId,
                 index: bookmarklet.index,
                 title: bookmarklet.title,
                 url: bookmarklet.url
