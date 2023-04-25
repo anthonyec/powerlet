@@ -113,11 +113,7 @@ export default function EditBookmarkletScreen({
           })
       );
 
-      toast.show(
-        `"${bookmarklet.title}" deleted.`,
-        'Undo',
-        undoHistory.pop
-      );
+      toast.show(`"${bookmarklet.title}" deleted.`, 'Undo', undoHistory.pop);
       window.location.hash = '';
     });
   };

@@ -7,9 +7,9 @@ import './toast_area.css';
 export default function ToastArea() {
   const toast = useToast();
 
-  return (
-    <div className="toast-container">
-      {toast.display}
-    </div>
-  );
+  if (!toast.display) {
+    return null;
+  }
+
+  return <div className="toast-area">{toast.display}</div>;
 }
