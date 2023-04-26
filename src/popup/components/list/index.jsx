@@ -176,7 +176,7 @@ const List = React.forwardRef(
           >
             <div className="list__text">{item.title || placeholder}</div>
             {(isSelected || isHovered) && (
-              <div class="list__actions">
+              <div className="list__actions">
                 <ItemActions onEditClick={onEditClick.bind(null, item)} />
               </div>
             )}
