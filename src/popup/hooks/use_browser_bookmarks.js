@@ -19,10 +19,10 @@ export function useBrowserBookmarks() {
   const create = (options) => {
     return new Promise((resolve) => {
       chrome.bookmarks.create(options, (result) => {
-        // A handle to get a dynamic reference to the bookmark ID. The bookmark
-        // ID can potentially change between deleting bookmarks and undoes,
-        // causing a "Can't find bookmark for id" error and preventing undo
-        // working correctly.
+        // Use a handle to get a dynamic reference to the bookmark ID. The
+        // bookmark ID can potentially change between deleting bookmarks and
+        // undoes, causing a "Can't find bookmark for id" error and preventing
+        // undo working correctly.
         //
         // Without handles, the following scenario can happen because we can't
         // control what ID is used for creating bookmarks.

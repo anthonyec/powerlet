@@ -36,7 +36,7 @@ export function UndoHistoryProvider({ children }) {
   const latestStack = useRef(_stack);
   const handles = useRef({});
 
-  // Keep tracking of if an undo is being performed to stop multiple `pop`
+  // Keep track of if an undo is being performed to stop multiple `pop`
   // actions piling up and creating duplicate undoes. This is because the
   // undo action is asynchronous. It won't wait until the previous undo action
   // has performed.
