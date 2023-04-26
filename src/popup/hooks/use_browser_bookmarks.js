@@ -95,7 +95,7 @@ export function useBrowserBookmarks() {
             '%s',
             bookmark.title || 'Untitled script'
           ),
-          'Undo',
+          translations['undo_label'],
           undoHistory.pop
         );
 
