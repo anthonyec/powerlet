@@ -1,19 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Button from '../../components/button';
 import TextField from '../../components/text_field';
 import Titlebar from '../../components/titlebar';
 import { selectTranslations } from '../../store/selectors/locale';
+import { selectRecents } from '../../store/selectors/bookmarklets';
 import { useUndoHistory } from '../../hooks/useUndoHistory';
 import { useToast } from '../../hooks/useToast';
 
 import './edit_bookmarklet_screen.css';
+import { addRecentBookmarklet } from '../../store/actions/bookmarklets';
 
 export default function EditBookmarkletScreen({
   route = { params: {}, base: '' }
 }) {
+  const dispatch = useDispatch();
   const [bookmarklet, setBookmarklet] = useState({});
+  const recents = useSelector(selectRecents);
   const translations = useSelector(selectTranslations);
   const undoHistory = useUndoHistory();
   const toast = useToast();
@@ -89,6 +93,7 @@ export default function EditBookmarkletScreen({
   const handleRemoveClick = () => {
     chrome.bookmarks.remove(bookmarklet.id, () => {
       const handle = undoHistory.getHandleByValue(bookmarklet.id);
+      const isRecent = recents.includes(bookmarklet.id);
 
       undoHistory.push(
         () =>
@@ -105,6 +110,10 @@ export default function EditBookmarkletScreen({
                   // Update the old ID with the new ID so that when undoing
                   // creation of bookmarks, the correct ID is always available.
                   handle.update(result.id);
+                }
+
+                if (isRecent) {
+                  dispatch(addRecentBookmarklet(result.id));
                 }
 
                 toast.hide();

@@ -8,7 +8,7 @@ function setBookmarklets(bookmarklets = []) {
   };
 }
 
-function addRecentBookmarklet(id) {
+export function addRecentBookmarklet(id) {
   return {
     type: ADD_RECENT_BOOKMARKLET,
     payload: id
