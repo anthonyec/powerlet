@@ -6,8 +6,8 @@ import {
   addRecentBookmarklet,
   removeRecentBookmarklet
 } from '../store/actions/bookmarklets';
-import { useToast } from './useToast';
-import { useUndoHistory } from './useUndoHistory';
+import { useToast } from './use_toast';
+import { useUndoHistory } from './use_undo_history';
 
 export function useBrowserBookmarks() {
   const dispatch = useDispatch();

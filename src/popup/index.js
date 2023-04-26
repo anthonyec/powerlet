@@ -5,8 +5,8 @@ import { persistStore } from 'redux-persist';
 import createStats from 'simple-plausible-tracker';
 
 import createStore from './store/index';
-import { ToastProvider } from './hooks/useToast';
-import { UndoHistoryProvider } from './hooks/useUndoHistory';
+import { ToastProvider } from './hooks/use_toast';
+import { UndoHistoryProvider } from './hooks/use_undo_history';
 import App from './app';
 
 const statsDomain =

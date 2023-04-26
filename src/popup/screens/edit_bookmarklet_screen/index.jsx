@@ -6,7 +6,7 @@ import TextField from '../../components/text_field';
 import Titlebar from '../../components/titlebar';
 import { selectTranslations } from '../../store/selectors/locale';
 import { useBrowserBookmarks } from '../../hooks/use_browser_bookmarks';
-import { useToast } from '../../hooks/useToast';
+import { useToast } from '../../hooks/use_toast';
 
 import './edit_bookmarklet_screen.css';
 
