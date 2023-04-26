@@ -1,0 +1,65 @@
+.context-menu {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+
+.context-menu__overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+
+.context-menu__menu {
+  background: var(--context-menu-background);
+  box-shadow: var(--context-menu-shadow);
+  color: var(--context-menu-item-color);
+  border-radius: 4px;
+  position: absolute;
+  min-width: 128px;
+  line-height: 1.4;
+  top: 0px;
+  left: 0px;
+  margin: 0;
+  padding: 8px 0;
+  outline: none;
+  border: none;
+  user-select: none;
+  /* https://stackoverflow.com/questions/68197079/dont-shrink-absolute-positioned-element-with-a-max-width */
+  margin-right: -100vw;
+  z-index: 3;
+}
+
+.context-menu__item {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  min-height: 32px;
+}
+
+.context-menu__item--highlighted {
+  background: var(--item-selected-background);
+}
+
+.context-menu__item--executing-action {
+  animation: context-menu-item-flash 150ms steps(1) forwards;
+}
+
+.context-menu__item--danger {
+  color: var(--button-danger-color);
+}
+
+@keyframes context-menu-item-flash {
+  0% {
+    background: transparent;
+  }
+
+  50% {
+    background: var(--item-selected-background);
+  }
+}

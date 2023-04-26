@@ -1,10 +1,18 @@
 export const SET_BOOKMARKLETS = 'SET_BOOKMARKLETS';
 export const ADD_RECENT_BOOKMARKLET = 'ADD_RECENT_BOOKMARKLET';
+export const REMOVE_RECENT_BOOKMARKLET = 'REMOVE_RECENT_BOOKMARKLET';
 
 function setBookmarklets(bookmarklets = []) {
   return {
     type: SET_BOOKMARKLETS,
     payload: bookmarklets
+  };
+}
+
+export function removeRecentBookmarklet(id) {
+  return {
+    type: REMOVE_RECENT_BOOKMARKLET,
+    payload: id
   };
 }
 

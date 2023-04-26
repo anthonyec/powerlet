@@ -1,6 +1,7 @@
 import {
   SET_BOOKMARKLETS,
-  ADD_RECENT_BOOKMARKLET
+  ADD_RECENT_BOOKMARKLET,
+  REMOVE_RECENT_BOOKMARKLET
 } from '../actions/bookmarklets';
 
 const defaultState = {
@@ -44,6 +45,23 @@ export default function bookmarksReducer(state = defaultState, action) {
       return {
         ...state,
         recent: trimmedRecents
+      };
+    case REMOVE_RECENT_BOOKMARKLET:
+      const id = action.payload;
+      const index = state.recent.indexOf(id);
+
+      if (index === -1) {
+        return state;
+      }
+
+      const recentsWithRemoved = [
+        ...state.recent.slice(0, index),
+        ...state.recent.slice(index + 1)
+      ];
+
+      return {
+        ...state,
+        recent: recentsWithRemoved
       };
     default:
       return state;
