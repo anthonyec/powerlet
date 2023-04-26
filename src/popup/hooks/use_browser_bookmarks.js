@@ -2,7 +2,10 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { selectTranslations } from '../store/selectors/locale';
 import { selectRecents } from '../store/selectors/bookmarklets';
-import { addRecentBookmarklet } from '../store/actions/bookmarklets';
+import {
+  addRecentBookmarklet,
+  removeRecentBookmarklet
+} from '../store/actions/bookmarklets';
 import { useToast } from './useToast';
 import { useUndoHistory } from './useUndoHistory';
 
@@ -54,6 +57,10 @@ export function useBrowserBookmarks() {
       chrome.bookmarks.remove(bookmark.id, () => {
         const handle = undoHistory.getHandleByValue(bookmark.id);
         const isRecent = recents.includes(bookmark.id);
+
+        if (isRecent) {
+          dispatch(removeRecentBookmarklet(bookmark.id));
+        }
 
         undoHistory.push(
           () =>
