@@ -10,9 +10,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import {
   fetchAllBookmarklets,
-  executeBookmarklet,
-  addRecentBookmarklet,
-  removeRecentBookmarklet
+  executeBookmarklet
 } from '../../store/actions/bookmarklets';
 import {
   selectBookmarkletGroups,
@@ -22,6 +20,7 @@ import {
 import { selectTranslations } from '../../store/selectors/locale';
 
 import useCloseWindowAfterExecution from './use_close_window_after_execution';
+import { useListItemContextMenu } from './use_list_item_context_menu';
 
 import SearchField from '../../components/search_field';
 import ScrollView from '../../components/scroll_view';
@@ -30,7 +29,6 @@ import OnboardMessage from '../../components/onboard_message';
 import EmptyMessage from '../../components/empty_message';
 
 import './home_screen.css';
-import { MAX_RECENTS_LENGTH } from '../../store/reducers/bookmarklets';
 
 const ContextMenu = React.lazy(() => import('../../components/context_menu'));
 
@@ -39,6 +37,7 @@ export default function HomeScreen() {
   const [initialSelectedItem, setInitialSelectedItem] = useState(0);
   const [contextMenu, setContextMenu] = useState(null);
   const setExecutedScript = useCloseWindowAfterExecution();
+  const contextMenuItems = useListItemContextMenu(contextMenu);
 
   const searchFieldRef = useRef(null);
   const [searchQuery, setSearchQuery] = useState('');
@@ -95,26 +94,12 @@ export default function HomeScreen() {
     setContextMenu({ index, item, position });
   };
 
-  const handleContextMenuDismiss = () => {
-    setContextMenu(null);
-  };
-
-  const handleContextMenuEdit = () => {
-    window.location.hash = `edit/${contextMenu.item.id}`;
-  };
-
-  const handleContextMenuDelete = () => {
-    const shouldRemove = confirm(translations['remove_script_confirmation']);
-
-    if (shouldRemove) {
-      chrome.bookmarks.remove(contextMenu.item.id, () => {
-        setInitialSelectedItem(contextMenu.index - 1);
-      });
-    }
-  };
-
   const handleListItemEditClick = (item) => {
     window.location.hash = `edit/${item.id}`;
+  };
+
+  const handleContextMenuDismiss = () => {
+    setContextMenu(null);
   };
 
   const onListItemRefChange = useCallback((scrollToElement, element) => {
@@ -123,57 +108,6 @@ export default function HomeScreen() {
       scrollToElement(element);
     }
   }, []);
-
-  const getContextMenuItems = () => {
-    const items = [];
-
-    items.push({
-      key: 'edit',
-      title: translations['edit_label'],
-      action: handleContextMenuEdit
-    });
-
-    if (
-      contextMenu &&
-      contextMenu.item &&
-      bookmarklets.length > MAX_RECENTS_LENGTH
-    ) {
-      if (contextMenu.item.group === 'recent') {
-        items.push({
-          key: 'move-to-other',
-          title: translations['move_to_group'].replace(
-            '%s',
-            translations['other_scripts_heading']
-          ),
-          action: () => {
-            dispatch(removeRecentBookmarklet(contextMenu.item.id));
-          }
-        });
-      } else {
-        items.push({
-          key: 'move-to-recents',
-          title: translations['move_to_group'].replace(
-            '%s',
-            translations['recently_used_heading']
-          ),
-          action: () => {
-            dispatch(addRecentBookmarklet(contextMenu.item.id));
-          }
-        });
-      }
-    }
-
-    items.push({
-      key: 'delete',
-      title: translations['remove_button'],
-      type: 'danger',
-      action: handleContextMenuDelete
-    });
-
-    return items;
-  };
-
-  const contextMenuItems = getContextMenuItems();
 
   return (
     <div className="home-screen">

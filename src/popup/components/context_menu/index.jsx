@@ -11,7 +11,7 @@ export default function ContextMenu({
   items = [],
   onDismiss = () => {}
 }) {
-  const menuRef = useRef(null);
+  const menuElement = useRef(null);
   const [highlighted, setHighlighted] = useState(-1);
   const [executingAction, setExecutingAction] = useState(null);
   const [showMenu, setShowMenu] = useState(true);
@@ -75,11 +75,11 @@ export default function ContextMenu({
   useLayoutEffect(() => {
     const viewport = { width: window.innerWidth, height: window.innerHeight };
 
-    if (!menuRef.current) {
+    if (!menuElement.current) {
       return;
     }
 
-    const bounds = menuRef.current.getBoundingClientRect();
+    const bounds = menuElement.current.getBoundingClientRect();
 
     let offsetX = 0;
     let offsetY = 0;
@@ -170,7 +170,7 @@ export default function ContextMenu({
       />
       {showMenu && (
         <dialog
-          ref={menuRef}
+          ref={menuElement}
           className="context-menu__menu"
           style={{ left: menuPosition.x, top: menuPosition.y }}
           open
