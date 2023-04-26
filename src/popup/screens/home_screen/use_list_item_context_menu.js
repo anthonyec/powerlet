@@ -46,7 +46,7 @@ export function useListItemContextMenu(contextMenu = null) {
     if (contextMenu.item.group === 'recent') {
       items.push({
         key: 'move-to-other',
-        title: translations['move_to_group'].replace(
+        title: translations['move_to_group_label'].replace(
           '%s',
           translations['other_scripts_heading']
         ),
@@ -57,7 +57,7 @@ export function useListItemContextMenu(contextMenu = null) {
     } else {
       items.push({
         key: 'move-to-recents',
-        title: translations['move_to_group'].replace(
+        title: translations['move_to_group_label'].replace(
           '%s',
           translations['recently_used_heading']
         ),

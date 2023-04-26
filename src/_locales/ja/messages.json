@@ -75,7 +75,7 @@
     "message": "編集",
     "description": ""
   },
-  "move_to_group": {
+  "move_to_group_label": {
     "message": "\"%s\"に移動",
     "description": ""
   }
