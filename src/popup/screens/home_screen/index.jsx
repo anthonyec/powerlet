@@ -38,7 +38,9 @@ export default function HomeScreen() {
   const [initialSelectedItem, setInitialSelectedItem] = useState(0);
   const [contextMenu, setContextMenu] = useState(null);
   const setExecutedScript = useCloseWindowAfterExecution();
-  const contextMenuItems = useListItemContextMenu(contextMenu);
+  const contextMenuItems = useListItemContextMenu(contextMenu, () => {
+    setInitialSelectedItem(contextMenu.index);
+  });
 
   const searchFieldRef = useRef(null);
   const [searchQuery, setSearchQuery] = useState('');

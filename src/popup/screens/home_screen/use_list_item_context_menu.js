@@ -8,7 +8,10 @@ import { selectBookmarkletsWithGroup } from '../../store/selectors/bookmarklets'
 import { MAX_RECENTS_LENGTH } from '../../store/reducers/bookmarklets';
 import { useBrowserBookmarks } from '../../hooks/use_browser_bookmarks';
 
-export function useListItemContextMenu(contextMenu = null) {
+export function useListItemContextMenu(
+  contextMenu = null,
+  onDelete = () => {}
+) {
   const dispatch = useDispatch();
   const translations = useSelector(selectTranslations);
   const bookmarklets = useSelector(selectBookmarkletsWithGroup);
@@ -22,8 +25,9 @@ export function useListItemContextMenu(contextMenu = null) {
     window.location.hash = `edit/${contextMenu.item.id}`;
   };
 
-  const handleContextMenuDelete = () => {
-    bookmarks.remove(contextMenu.item);
+  const handleContextMenuDelete = async () => {
+    await bookmarks.remove(contextMenu.item);
+    onDelete();
   };
 
   const items = [];

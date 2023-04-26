@@ -40,6 +40,8 @@ export default function EditBookmarkletScreen({
           console.error('Failed to create bookmark', error);
           window.location.hash = ``;
         });
+
+      return;
     }
 
     const handleBookmarksChange = () => {
