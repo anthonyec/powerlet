@@ -71,6 +71,10 @@
   background-color: var(--button-active-background);
 }
 
+.button--danger, .button--danger:hover, .button--danger:active {
+  color: var(--button-danger-color);
+}
+
 .button__icon svg {
   height: 14px;
   margin-right: 8px;

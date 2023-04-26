@@ -62,5 +62,13 @@
   "new_script_name": {
     "message": "新しいスクリプト",
     "description": ""
+  },
+  "edit_label": {
+    "message": "編集",
+    "description": ""
+  },
+  "move_to_group": {
+    "message": "\"%s\"に移動",
+    "description": ""
   }
 }
