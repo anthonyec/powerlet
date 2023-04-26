@@ -2,17 +2,17 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import Toast from '../components/toast';
 
-const DEFAULT_TOAST_DETAILS = { message: '', label: '', action: () => {} };
+const DEFAULT_TOAST_OPTIONS = { message: '', label: '', action: () => {} };
 
 const ToastContext = createContext({
   display: null,
-  show: (options = { message: '', label: '', action: () => {} }) => {},
+  show: (options = DEFAULT_TOAST_OPTIONS) => {},
   hide: () => {}
 });
 
 export function ToastProvider({ children }) {
   const [showToast, setShowToast] = useState(false);
-  const [details, setDetails] = useState(DEFAULT_TOAST_DETAILS);
+  const [options, setOptions] = useState(DEFAULT_TOAST_OPTIONS);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -25,20 +25,20 @@ export function ToastProvider({ children }) {
   }, [showToast]);
 
   const show = ({ message, label, action }) => {
-    setDetails({ message, label, action });
+    setOptions({ message, label, action });
     setShowToast(true);
   };
 
   const hide = () => {
     setShowToast(false);
-    setDetails(DEFAULT_TOAST_DETAILS);
+    setOptions(DEFAULT_TOAST_OPTIONS);
   };
 
   const display = showToast ? (
     <Toast
-      message={details.message}
-      label={details.label}
-      onActionClick={details.action}
+      message={options.message}
+      label={options.label}
+      onActionClick={options.action}
     />
   ) : null;
 
