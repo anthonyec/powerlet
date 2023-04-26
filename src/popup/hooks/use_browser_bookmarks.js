@@ -90,14 +90,14 @@ export function useBrowserBookmarks() {
             })
         );
 
-        toast.show(
-          translations['script_deleted_toast'].replace(
+        toast.show({
+          message: translations['script_deleted_toast'].replace(
             '%s',
             bookmark.title || 'Untitled script'
           ),
-          translations['undo_label'],
-          undoHistory.pop
-        );
+          label: translations['undo_label'],
+          action: undoHistory.pop
+        });
 
         resolve();
       });

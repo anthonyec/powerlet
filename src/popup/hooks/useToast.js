@@ -6,7 +6,7 @@ const DEFAULT_TOAST_DETAILS = { message: '', label: '', action: () => {} };
 
 const ToastContext = createContext({
   display: null,
-  show: (message, label, action) => {},
+  show: (options = { message: '', label: '', action: () => {} }) => {},
   hide: () => {}
 });
 
@@ -24,7 +24,7 @@ export function ToastProvider({ children }) {
     };
   }, [showToast]);
 
-  const show = (message, label, action) => {
+  const show = ({ message, label, action }) => {
     setDetails({ message, label, action });
     setShowToast(true);
   };
