@@ -91,7 +91,10 @@ export function useBrowserBookmarks() {
         );
 
         toast.show(
-          translations['script_deleted_toast'].replace('%s', bookmark.title),
+          translations['script_deleted_toast'].replace(
+            '%s',
+            bookmark.title || 'Untitled script'
+          ),
           'Undo',
           undoHistory.pop
         );
