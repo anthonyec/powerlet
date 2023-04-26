@@ -6,11 +6,13 @@ import {
 import { selectTranslations } from '../../store/selectors/locale';
 import { selectBookmarkletsWithGroup } from '../../store/selectors/bookmarklets';
 import { MAX_RECENTS_LENGTH } from '../../store/reducers/bookmarklets';
+import { useBrowserBookmarks } from '../../hooks/use_browser_bookmarks';
 
 export function useListItemContextMenu(contextMenu = null) {
   const dispatch = useDispatch();
   const translations = useSelector(selectTranslations);
   const bookmarklets = useSelector(selectBookmarkletsWithGroup);
+  const bookmarks = useBrowserBookmarks();
 
   if (!contextMenu) {
     return;
@@ -21,13 +23,7 @@ export function useListItemContextMenu(contextMenu = null) {
   };
 
   const handleContextMenuDelete = () => {
-    const shouldRemove = confirm(translations['remove_script_confirmation']);
-
-    if (shouldRemove) {
-      chrome.bookmarks.remove(contextMenu.item.id, () => {
-        setInitialSelectedItem(contextMenu.index - 1);
-      });
-    }
+    bookmarks.remove(contextMenu.item);
   };
 
   const items = [];
