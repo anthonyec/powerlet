@@ -5,6 +5,8 @@ import Button from '../../components/button';
 import TextField from '../../components/text_field';
 import Titlebar from '../../components/titlebar';
 import { selectTranslations } from '../../store/selectors/locale';
+import { useBrowserBookmarks } from '../../hooks/use_browser_bookmarks';
+import { useToast } from '../../hooks/use_toast';
 
 import './edit_bookmarklet_screen.css';
 
@@ -13,20 +15,32 @@ export default function EditBookmarkletScreen({
 }) {
   const [bookmarklet, setBookmarklet] = useState({});
   const translations = useSelector(selectTranslations);
+  const toast = useToast();
+  const bookmarks = useBrowserBookmarks();
+
+  useEffect(() => {
+    toast.hide();
+  }, []);
 
   useEffect(() => {
     if (!route.params.id) return;
 
     if (route.params.id === 'new') {
-      chrome.bookmarks.create(
-        {
-          title: translations['new_script_name'],
-          url: 'javascript: '
-        },
-        (result) => {
+      const newBookmarklet = {
+        title: translations['new_script_name'],
+        url: 'javascript: '
+      };
+
+      bookmarks
+        .create(newBookmarklet)
+        .then((result) => {
           window.location.hash = `edit/${result.id}`;
-        }
-      );
+        })
+        .catch((error) => {
+          console.error('Failed to create bookmark', error);
+          window.location.hash = ``;
+        });
+
       return;
     }
 
@@ -51,14 +65,9 @@ export default function EditBookmarkletScreen({
     };
   }, [route.params.id]);
 
-  const handleRemoveClick = () => {
-    const shouldRemove = confirm(translations['remove_script_confirmation']);
-
-    if (shouldRemove) {
-      chrome.bookmarks.remove(bookmarklet.id, () => {
-        window.location.hash = '';
-      });
-    }
+  const handleRemoveClick = async () => {
+    await bookmarks.remove(bookmarklet);
+    window.location.hash = '';
   };
 
   const handleBackClick = () => {

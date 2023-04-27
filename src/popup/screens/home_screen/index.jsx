@@ -30,6 +30,7 @@ import EmptyMessage from '../../components/empty_message';
 
 import './home_screen.css';
 
+const ToastArea = React.lazy(() => import('../../components/toast_area'));
 const ContextMenu = React.lazy(() => import('../../components/context_menu'));
 
 export default function HomeScreen() {
@@ -37,7 +38,9 @@ export default function HomeScreen() {
   const [initialSelectedItem, setInitialSelectedItem] = useState(0);
   const [contextMenu, setContextMenu] = useState(null);
   const setExecutedScript = useCloseWindowAfterExecution();
-  const contextMenuItems = useListItemContextMenu(contextMenu);
+  const contextMenuItems = useListItemContextMenu(contextMenu, () => {
+    setInitialSelectedItem(contextMenu.index);
+  });
 
   const searchFieldRef = useRef(null);
   const [searchQuery, setSearchQuery] = useState('');
@@ -66,11 +69,13 @@ export default function HomeScreen() {
     handleBookmarksChange();
     chrome.bookmarks.onChanged.addListener(handleBookmarksChange);
     chrome.bookmarks.onCreated.addListener(handleBookmarksChange);
+    chrome.bookmarks.onMoved.addListener(handleBookmarksChange);
     chrome.bookmarks.onRemoved.addListener(handleBookmarksChange);
 
     return () => {
       chrome.bookmarks.onChanged.removeListener(handleBookmarksChange);
       chrome.bookmarks.onCreated.removeListener(handleBookmarksChange);
+      chrome.bookmarks.onMoved.removeListener(handleBookmarksChange);
       chrome.bookmarks.onRemoved.removeListener(handleBookmarksChange);
     };
   }, []);
@@ -146,6 +151,10 @@ export default function HomeScreen() {
       )}
 
       {isLoaded && doesNotHaveBookmarklets && <OnboardMessage />}
+
+      <Suspense fallback={<div />}>
+        <ToastArea />
+      </Suspense>
 
       {contextMenu && (
         <Suspense fallback={<div />}>

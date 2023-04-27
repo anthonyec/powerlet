@@ -6,11 +6,16 @@ import {
 import { selectTranslations } from '../../store/selectors/locale';
 import { selectBookmarkletsWithGroup } from '../../store/selectors/bookmarklets';
 import { MAX_RECENTS_LENGTH } from '../../store/reducers/bookmarklets';
+import { useBrowserBookmarks } from '../../hooks/use_browser_bookmarks';
 
-export function useListItemContextMenu(contextMenu = null) {
+export function useListItemContextMenu(
+  contextMenu = null,
+  onDelete = () => {}
+) {
   const dispatch = useDispatch();
   const translations = useSelector(selectTranslations);
   const bookmarklets = useSelector(selectBookmarkletsWithGroup);
+  const bookmarks = useBrowserBookmarks();
 
   if (!contextMenu) {
     return;
@@ -20,14 +25,9 @@ export function useListItemContextMenu(contextMenu = null) {
     window.location.hash = `edit/${contextMenu.item.id}`;
   };
 
-  const handleContextMenuDelete = () => {
-    const shouldRemove = confirm(translations['remove_script_confirmation']);
-
-    if (shouldRemove) {
-      chrome.bookmarks.remove(contextMenu.item.id, () => {
-        setInitialSelectedItem(contextMenu.index - 1);
-      });
-    }
+  const handleContextMenuDelete = async () => {
+    await bookmarks.remove(contextMenu.item);
+    onDelete();
   };
 
   const items = [];
@@ -46,7 +46,7 @@ export function useListItemContextMenu(contextMenu = null) {
     if (contextMenu.item.group === 'recent') {
       items.push({
         key: 'move-to-other',
-        title: translations['move_to_group'].replace(
+        title: translations['move_to_group_label'].replace(
           '%s',
           translations['other_scripts_heading']
         ),
@@ -57,7 +57,7 @@ export function useListItemContextMenu(contextMenu = null) {
     } else {
       items.push({
         key: 'move-to-recents',
-        title: translations['move_to_group'].replace(
+        title: translations['move_to_group_label'].replace(
           '%s',
           translations['recently_used_heading']
         ),

@@ -63,11 +63,19 @@
     "message": "New script",
     "description": "Default name for a newly created script"
   },
+  "script_deleted_toast": {
+    "message": "\"%s\" deleted.",
+    "description": "Message displayed when a script is deleted"
+  },
+  "undo_label": {
+    "message": "Undo",
+    "description": "Label for undo button"
+  },
   "edit_label": {
     "message": "Edit",
     "description": "Generic edit action label"
   },
-  "move_to_group": {
+  "move_to_group_label": {
     "message": "Move to \"%s\"",
     "description": "Move to a specific group action label"
   }

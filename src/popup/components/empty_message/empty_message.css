@@ -1,6 +1,8 @@
 .empty-message {
   text-align: center;
-  padding: 24px 16px;
+  padding: 0 25px;
+  padding-top: 30px;
+  padding-bottom: 35px;
 }
 
 .empty-message__message {

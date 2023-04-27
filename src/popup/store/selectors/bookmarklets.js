@@ -6,7 +6,7 @@ import { fuzzyMatchArray } from '../../lib/fuzzy_match';
 
 const selectBookmarklets = (state) => state.bookmarklets.all;
 
-const selectRecents = (state) => state.bookmarklets.recent;
+export const selectRecents = (state) => state.bookmarklets.recent;
 
 const sortResultsByGroup = (results) => {
   return [...results].sort((a, b) => {
