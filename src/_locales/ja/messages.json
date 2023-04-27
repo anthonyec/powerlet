@@ -62,5 +62,21 @@
   "new_script_name": {
     "message": "新しいスクリプト",
     "description": ""
+  },
+  "script_deleted_toast": {
+    "message": "\"%s\"を削除しました",
+    "description": ""
+  },
+  "undo_label": {
+    "message": "取消",
+    "description": "Message displayed when a script is deleted"
+  },
+  "edit_label": {
+    "message": "編集",
+    "description": ""
+  },
+  "move_to_group_label": {
+    "message": "\"%s\"に移動",
+    "description": ""
   }
 }

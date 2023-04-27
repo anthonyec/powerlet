@@ -25,6 +25,7 @@
   --button-normal-color: #2C7CEA;
   --button-hover-color: #1D74E9;
   --button-active-color: #1D74E9;
+  --button-danger-color: #C5392A;
 
   --input-normal-background: #FFFFFF;
   --input-normal-color: #2A2B2E;
@@ -38,6 +39,19 @@
   --list-heading-background: var(--global-background);
   --list-heading-color: #5F6368;
   --list-heading-border-color: #DADCE0;
+
+  --toast-background: #323232;
+  --toast-color: #FFFFFF;
+  --toast-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.28);
+  --toast-action-color: #8DB8FE;
+  --toast-action-active-background: #363B46;
+  --toast-action-focus-border-color: #2088FF;
+  --toast-action-focus-box-shadow: 0 0 0 1px rgba(32, 136, 255, 1);
+
+  --context-menu-shadow: 0 2px 6px #9E9E9E;
+  --context-menu-background: #FFFFFF;
+  --context-menu-item-hover-background: var(--item-selected-background);
+  --context-menu-item-color: var(--global-color);
 }
 
 @media(prefers-color-scheme: dark) {
@@ -60,6 +74,7 @@
     --button-normal-color: #8DB8FE;
     --button-hover-color: #8DB8FE;
     --button-active-color: #85AAE9;
+    --button-danger-color: #F28B82;
 
     --input-normal-background: #1D1D1F;
     --input-normal-color: #E1E1E1;
@@ -73,6 +88,14 @@
     --list-heading-background: var(--global-background);
     --list-heading-color: #9AA0A6;
     --list-heading-border-color: #3C4043;
+
+    --toast-background: #303134;
+    --toast-color: #E8EAED;
+
+    --context-menu-shadow: rgba(0, 0, 0, .3) 0 1px 2px 0, rgba(0, 0, 0, .15) 0 3px 6px 2px;
+    --context-menu-background: #303134;
+    --context-menu-item-hover-background: var(--item-selected-background);
+    --context-menu-item-color: var(--global-color);
   }
 }
 

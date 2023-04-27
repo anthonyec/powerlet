@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 
+import { clamp } from '../../lib/clamp';
 import ItemActions from '../item_actions';
 
 import './list.css';
@@ -43,6 +44,7 @@ function getGroupHeadingFromItem(groups, item) {
 const List = React.forwardRef(
   (
     {
+      initialSelectedItem = 0,
       items = [],
       groups = [],
       placeholder = '',
@@ -50,19 +52,31 @@ const List = React.forwardRef(
 
       /** Callback when item is clicked or enter key is pressed. */
       onItemAction = () => {},
+      onItemContextMenu = () => {},
       onEditClick = () => {}
     },
     ref
   ) => {
-    const [selectedItemIndex, setSelectedItemIndex] = useState(0);
+    const [selectedItemIndex, setSelectedItemIndex] =
+      useState(initialSelectedItem);
     const [hoveredItemIndex, setHoveredItemIndex] = useState(-1);
     const selectItemIndexRef = useRef(selectedItemIndex);
 
     // TODO: Hack fix for enter key to work correctly with up-to-date index
     selectItemIndexRef.current = selectedItemIndex;
 
+    const handleHeadingContextMenu = (event) => {
+      event.preventDefault();
+    };
+
     const handleItemClick = (item) => {
       onItemAction(item);
+    };
+
+    const handleItemContextMenu = (index, item, event) => {
+      event.preventDefault();
+      setSelectedItemIndex(index);
+      onItemContextMenu(index, item, { x: event.clientX, y: event.clientY });
     };
 
     const handleItemMouseEnter = (index) => {
@@ -124,10 +138,10 @@ const List = React.forwardRef(
       };
     }, [disableKeyboardNavigation, getArrayAsStringOfIds(items)]);
 
-    // Reset selected to first item when `items` change to avoid selected being
+    // Reset selected item when `items` change to avoid selected being
     // out of bounds when the array length changes.
     useEffect(() => {
-      setSelectedItemIndex(0);
+      setSelectedItemIndex(clamp(initialSelectedItem, 0, items.length - 1));
     }, [getArrayAsStringOfIds(items)]);
 
     const renderedItems = items.map((item, index) => {
@@ -161,6 +175,7 @@ const List = React.forwardRef(
             <div
               ref={useHeadingAsRef && showGroupHeading ? selectedItemRef : null}
               className="list__heading"
+              onContextMenu={handleHeadingContextMenu}
             >
               {/* Empty space is used so that before translations are loaded the
               heading still takes up space with an empty string. */}
@@ -171,12 +186,13 @@ const List = React.forwardRef(
             ref={useItemAsRef ? selectedItemRef : null}
             className={className}
             onClick={handleItemClick.bind(null, item)}
+            onContextMenu={handleItemContextMenu.bind(null, index, item)}
             onMouseEnter={handleItemMouseEnter.bind(null, index)}
             onMouseLeave={handleItemMouseLeave}
           >
             <div className="list__text">{item.title || placeholder}</div>
             {(isSelected || isHovered) && (
-              <div class="list__actions">
+              <div className="list__actions">
                 <ItemActions onEditClick={onEditClick.bind(null, item)} />
               </div>
             )}
