@@ -23,7 +23,10 @@ export default function EditBookmarkletScreen({
   }, []);
 
   useEffect(() => {
-    if (!route.params.id) return;
+    if (!route.params.id) {
+      window.location.hash = '';
+      return;
+    }
 
     if (route.params.id === 'new') {
       const newBookmarklet = {
@@ -56,11 +59,9 @@ export default function EditBookmarkletScreen({
     };
 
     handleBookmarksChange();
-    chrome.bookmarks.onChanged.addListener(handleBookmarksChange);
     chrome.bookmarks.onRemoved.addListener(handleBookmarksChange);
 
     return () => {
-      chrome.bookmarks.onChanged.removeListener(handleBookmarksChange);
       chrome.bookmarks.onRemoved.removeListener(handleBookmarksChange);
     };
   }, [route.params.id]);
