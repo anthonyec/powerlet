@@ -111,17 +111,6 @@ export default function EditBookmarkletScreen({
     setBookmarklet({ ...bookmarklet, url: code });
   };
 
-  if (!bookmarklet) {
-    return (
-      <div className="edit-bookmarklet-screen">
-        <Titlebar
-          title={translations['edit_script_title']}
-          onBackClick={handleBackClick}
-        />
-      </div>
-    );
-  }
-
   return (
     <div className="edit-bookmarklet-screen">
       <Titlebar
@@ -132,16 +121,16 @@ export default function EditBookmarkletScreen({
       <div className="edit-bookmarklet-screen__content">
         <TextField
           label={translations['name_field_label']}
-          defaultValue={bookmarklet.title}
+          defaultValue={bookmarklet?.title || ''}
           onChange={handleTitleChange}
         />
         <TextField
           label={translations['code_field_label']}
-          defaultValue={bookmarklet.url}
+          defaultValue={bookmarklet?.url || ''}
           onChange={handleCodeChange}
         />
 
-        {!bookmarklet.url.startsWith('javascript:') && (
+        {bookmarklet !== null && !bookmarklet.url.startsWith('javascript:') && (
           <div style={{ marginLeft: 58 }}>
             <Toast
               inline
