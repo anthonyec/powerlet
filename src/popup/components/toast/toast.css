@@ -12,6 +12,17 @@
   user-select: none;
 }
 
+.toast--inline {
+  padding: 0;
+  box-shadow: none;
+  background: none;
+  border-radius: 0;
+}
+
+.toast--warning {
+  color: var(--button-danger-color);
+}
+
 .toast__button {
   color: var(--toast-action-color);
   background: transparent;
