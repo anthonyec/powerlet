@@ -4,16 +4,21 @@ import { useSelector } from 'react-redux';
 import Button from '../../components/button';
 import TextField from '../../components/text_field';
 import Titlebar from '../../components/titlebar';
+import Toast from '../../components/toast';
 import { selectTranslations } from '../../store/selectors/locale';
 import { useBrowserBookmarks } from '../../hooks/use_browser_bookmarks';
 import { useToast } from '../../hooks/use_toast';
 
 import './edit_bookmarklet_screen.css';
 
+function returnToHomeScreen() {
+  window.location.hash = '';
+}
+
 export default function EditBookmarkletScreen({
   route = { params: {}, base: '' }
 }) {
-  const [bookmarklet, setBookmarklet] = useState({});
+  const [bookmarklet, setBookmarklet] = useState(null);
   const translations = useSelector(selectTranslations);
   const toast = useToast();
   const bookmarks = useBrowserBookmarks();
@@ -24,7 +29,7 @@ export default function EditBookmarkletScreen({
 
   useEffect(() => {
     if (!route.params.id) {
-      window.location.hash = '';
+      returnToHomeScreen();
       return;
     }
 
@@ -47,41 +52,71 @@ export default function EditBookmarkletScreen({
       return;
     }
 
-    const handleBookmarksChange = () => {
-      chrome.bookmarks.get(route.params.id, (bookmark) => {
-        if (!bookmark) {
-          window.location.hash = '';
-          return;
-        }
+    chrome.bookmarks.get(route.params.id, (bookmark) => {
+      if (!bookmark || chrome.runtime.lastError) {
+        returnToHomeScreen();
+        return;
+      }
 
-        setBookmarklet(bookmark[0]);
-      });
+      setBookmarklet(bookmark[0]);
+    });
+
+    const handleBookmarkRemoved = (id) => {
+      if (id === route.params.id) {
+        returnToHomeScreen();
+      }
     };
 
-    handleBookmarksChange();
-    chrome.bookmarks.onRemoved.addListener(handleBookmarksChange);
+    chrome.bookmarks.onRemoved.addListener(handleBookmarkRemoved);
 
     return () => {
-      chrome.bookmarks.onRemoved.removeListener(handleBookmarksChange);
+      chrome.bookmarks.onRemoved.removeListener(handleBookmarkRemoved);
     };
   }, [route.params.id]);
 
   const handleRemoveClick = async () => {
     await bookmarks.remove(bookmarklet);
-    window.location.hash = '';
+    returnToHomeScreen();
   };
 
   const handleBackClick = () => {
-    window.location.hash = '';
+    if (bookmarklet.url.trim() && !bookmarklet.url.startsWith('javascript:')) {
+      toast.show({
+        message: `"${bookmarklet.title}" is not visible.`,
+        label: 'Fix',
+        action: () => {
+          window.location.hash = `edit/${bookmarklet.id}`;
+        }
+      });
+    }
+
+    returnToHomeScreen();
+  };
+
+  const handleToastActionClick = () => {
+    setBookmarklet({ ...bookmarklet, url: 'javascript: ' + bookmarklet.url });
   };
 
   const handleTitleChange = (title) => {
     chrome.bookmarks.update(bookmarklet.id, { title });
+    setBookmarklet({ ...bookmarklet, title });
   };
 
   const handleCodeChange = (code) => {
     chrome.bookmarks.update(bookmarklet.id, { url: code });
+    setBookmarklet({ ...bookmarklet, url: code });
   };
+
+  if (!bookmarklet) {
+    return (
+      <div className="edit-bookmarklet-screen">
+        <Titlebar
+          title={translations['edit_script_title']}
+          onBackClick={handleBackClick}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="edit-bookmarklet-screen">
@@ -101,6 +136,18 @@ export default function EditBookmarkletScreen({
           defaultValue={bookmarklet.url}
           onChange={handleCodeChange}
         />
+
+        {!bookmarklet.url.startsWith('javascript:') && (
+          <div style={{ marginLeft: 58 }}>
+            <Toast
+              inline
+              warning
+              message={`Scripts need to start with the keyword "javascript:".`}
+              label="Fix"
+              onActionClick={handleToastActionClick}
+            />
+          </div>
+        )}
       </div>
 
       <div className="edit-bookmarklet-screen__footer">
