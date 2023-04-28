@@ -82,8 +82,11 @@ export default function EditBookmarkletScreen({
   const handleBackClick = () => {
     if (bookmarklet.url.trim() && !bookmarklet.url.startsWith('javascript:')) {
       toast.show({
-        message: `"${bookmarklet.title}" is not visible.`,
-        label: 'Fix',
+        message: translations['script_not_visible_toast'].replace(
+          '%s',
+          bookmarklet.title
+        ),
+        label: translations['fix_label'],
         action: () => {
           window.location.hash = `edit/${bookmarklet.id}`;
         }
@@ -142,8 +145,8 @@ export default function EditBookmarkletScreen({
             <Toast
               inline
               warning
-              message={`Scripts need to start with the keyword "javascript:".`}
-              label="Fix"
+              message={translations['script_missing_keyword_message']}
+              label={translations['fix_label']}
               onActionClick={handleToastActionClick}
             />
           </div>

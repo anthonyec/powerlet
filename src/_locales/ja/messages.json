@@ -69,7 +69,7 @@
   },
   "undo_label": {
     "message": "取消",
-    "description": "Message displayed when a script is deleted"
+    "description": ""
   },
   "edit_label": {
     "message": "編集",
@@ -77,6 +77,18 @@
   },
   "move_to_group_label": {
     "message": "\"%s\"に移動",
+    "description": ""
+  },
+  "script_not_visible_toast": {
+    "message": "\"%s\"スクリプトが無効です",
+    "description": "Note this translation only mentions the script is invalid, not hidden"
+  },
+  "fix_label": {
+    "message": "修正",
+    "description": ""
+  },
+  "script_missing_keyword_message": {
+    "message": "スクリプトはキーワード「javascript:」で開始する必要があります。",
     "description": ""
   }
 }
