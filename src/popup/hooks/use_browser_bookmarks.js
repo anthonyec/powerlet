@@ -8,6 +8,7 @@ import {
 } from '../store/actions/bookmarklets';
 import { useToast } from './use_toast';
 import { useUndoHistory } from './use_undo_history';
+import clampText from '../lib/clamp_text';
 
 export function useBrowserBookmarks() {
   const dispatch = useDispatch();
@@ -93,7 +94,7 @@ export function useBrowserBookmarks() {
         toast.show({
           message: translations['script_deleted_toast'].replace(
             '%s',
-            bookmark.title || 'Untitled script'
+            clampText(bookmark.title) || 'Untitled script'
           ),
           label: translations['undo_label'],
           action: undoHistory.pop

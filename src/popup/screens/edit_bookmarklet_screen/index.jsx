@@ -8,6 +8,7 @@ import Toast from '../../components/toast';
 import { selectTranslations } from '../../store/selectors/locale';
 import { useBrowserBookmarks } from '../../hooks/use_browser_bookmarks';
 import { useToast } from '../../hooks/use_toast';
+import clampText from '../../lib/clamp_text';
 
 import './edit_bookmarklet_screen.css';
 
@@ -84,7 +85,7 @@ export default function EditBookmarkletScreen({
       toast.show({
         message: translations['script_not_visible_toast'].replace(
           '%s',
-          bookmarklet.title
+          clampText(bookmarklet.title)
         ),
         label: translations['fix_label'],
         action: () => {
