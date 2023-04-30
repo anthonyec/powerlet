@@ -11,8 +11,15 @@ const ToastContext = createContext({
 });
 
 export function ToastProvider({ children }) {
-  const [showToast, setShowToast] = useState(false);
+  const [showToast, _setShowToast] = useState(false);
   const [options, setOptions] = useState(DEFAULT_TOAST_OPTIONS);
+
+  const setShowToast = (show) => {
+    // Use timestamp show that showing a toast when a toast is already visible
+    // resets the timer. This would not happen if only using booleans.
+    const value = show ? Date.now() : null;
+    _setShowToast(value);
+  };
 
   useEffect(() => {
     const timeout = setTimeout(() => {
