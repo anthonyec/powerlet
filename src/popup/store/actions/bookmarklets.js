@@ -47,6 +47,35 @@ export function executeBookmarklet(id, url) {
   };
 }
 
+// Clean up any recently used bookmarks that no longer exist.
+export function removeNonExistentRecents() {
+  return async (dispatch, getState, { browser }) => {
+    const { bookmarklets } = getState();
+
+    const getBookmarkPromises = bookmarklets.recent.map((id) => {
+      return new Promise((resolve, reject) => {
+        browser.bookmarks.get(id, (result) => {
+          if (browser.runtime.lastError) {
+            reject(id);
+          }
+
+          if (result) {
+            resolve(id);
+          }
+        });
+      });
+    });
+
+    const results = await Promise.allSettled(getBookmarkPromises);
+
+    for (const result of results) {
+      if (result.status === 'rejected' && result.reason) {
+        dispatch(removeRecentBookmarklet(result.reason));
+      }
+    }
+  };
+}
+
 export function fetchAllBookmarklets() {
   return (dispatch, getState, { browser }) => {
     browser.bookmarks.search(
