@@ -10,7 +10,8 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import {
   fetchAllBookmarklets,
-  executeBookmarklet
+  executeBookmarklet,
+  removeNonExistentRecents
 } from '../../store/actions/bookmarklets';
 import {
   selectBookmarkletGroups,
@@ -64,6 +65,7 @@ export default function HomeScreen() {
 
     const handleBookmarksChange = () => {
       dispatch(fetchAllBookmarklets());
+      dispatch(removeNonExistentRecents());
     };
 
     handleBookmarksChange();
