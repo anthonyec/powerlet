@@ -161,6 +161,18 @@ export default function ContextMenu({
     };
   }, [highlighted, executingAction]);
 
+  useEffect(() => {
+    const handleResize = () => {
+      dismiss();
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    }
+  }, []);
+
   return (
     <div className="context-menu">
       <div
