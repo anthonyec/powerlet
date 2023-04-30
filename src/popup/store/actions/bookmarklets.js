@@ -69,7 +69,7 @@ export function removeNonExistentRecents() {
     const results = await Promise.allSettled(getBookmarkPromises);
 
     for (const result of results) {
-      if (result.status === 'rejected') {
+      if (result.status === 'rejected' && result.reason) {
         dispatch(removeRecentBookmarklet(result.reason));
       }
     }
