@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useState } from 'react';
+import React, { Suspense, startTransition, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import zipObject from '../utils/zipObject';
@@ -51,7 +51,9 @@ export default function App() {
 
   useEffect(() => {
     const handleHashChange = () => {
-      setPath(parseHash(window.location.hash));
+      startTransition(() => {
+        setPath(parseHash(window.location.hash));
+      });
     };
 
     // Fetch translations on load.

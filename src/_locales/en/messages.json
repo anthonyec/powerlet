@@ -78,5 +78,17 @@
   "move_to_group_label": {
     "message": "Move to \"%s\"",
     "description": "Move to a specific group action label"
+  },
+  "script_not_visible_toast": {
+    "message": "\"%s\" is not visible because it's not a bookmarklet.",
+    "description": "Message displayed when the script is not a valid bookmarklet"
+  },
+  "fix_label": {
+    "message": "Fix",
+    "description": "Label for button to fix a script"
+  },
+  "script_missing_keyword_message": {
+    "message": "Scripts need to start with the keyword \"javascript:\".",
+    "description": "Message shown when the script is missing the 'javascript': keyword at the start"
   }
 }
