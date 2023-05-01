@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Button from '../../components/button';
 import TextField from '../../components/text_field';
@@ -11,14 +11,21 @@ import { useToast } from '../../hooks/use_toast';
 import clampText from '../../lib/clamp_text';
 
 import './edit_bookmarklet_screen.css';
+import { fetchAllBookmarklets } from '../../store/actions/bookmarklets';
 
-function returnToHomeScreen() {
+function returnToHomeScreen(id) {
+  if (id) {
+    window.location.hash = `?selected=${id}`;
+    return;
+  }
+
   window.location.hash = '';
 }
 
 export default function EditBookmarkletScreen({
   route = { params: {}, base: '' }
 }) {
+  const dispatch = useDispatch();
   const [bookmarklet, setBookmarklet] = useState(null);
   const translations = useSelector(selectTranslations);
   const toast = useToast();
@@ -60,6 +67,10 @@ export default function EditBookmarkletScreen({
       }
 
       setBookmarklet(bookmark[0]);
+
+      // Fetch bookmarks before returning to home screen to ensure new bookmark
+      // exists so that it can be scrolled to.
+      dispatch(fetchAllBookmarklets());
     });
 
     const handleBookmarkRemoved = (id) => {
@@ -94,7 +105,7 @@ export default function EditBookmarkletScreen({
       });
     }
 
-    returnToHomeScreen();
+    returnToHomeScreen(bookmarklet.id);
   };
 
   const handleToastActionClick = () => {
