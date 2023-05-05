@@ -62,7 +62,12 @@ module.exports = {
       title: 'Powerlet',
       filename: 'popup.html',
       template: './src/popup/index.ejs',
-      excludeChunks: ['background']
+      excludeChunks: ['background'],
+
+      // Blocking required otherwise the "options_ui" page will not load
+      // because there is no visible content for Chrome to show a dialog. It's
+      // a bug in Chrome.
+      scriptLoading: "blocking"
     }),
     new MiniCssExtractPlugin({
       filename: 'popup.[contenthash:5].css'
