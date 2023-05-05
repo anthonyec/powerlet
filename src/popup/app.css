@@ -52,6 +52,16 @@
   --context-menu-background: #FFFFFF;
   --context-menu-item-hover-background: var(--item-selected-background);
   --context-menu-item-color: var(--global-color);
+
+  --option-control-title-color: var(--global-color);
+  --option-control-description-color: #5f6368;
+
+  --toggle-checked-track-background-color: #94B9F4;
+  --toggle-checked-knob-background-color: #1C72E8;
+  --toggle-unchecked-track-background-color: #BDC1C5;
+  --toggle-unchecked-knob-background-color: #FFFFFF;
+  --toggle-checked-focus-background-color: rgba(26, 115, 232, 0.2);
+  --toggle-unchecked-focus-background-color: rgba(128, 134, 139, 0.15);
 }
 
 @media(prefers-color-scheme: dark) {
@@ -96,6 +106,16 @@
     --context-menu-background: #303134;
     --context-menu-item-hover-background: var(--item-selected-background);
     --context-menu-item-color: var(--global-color);
+
+    --option-control-title-color: var(--global-color);
+    --option-control-description-color: #9aa0a6;
+
+    --toggle-checked-track-background-color: #596F92;
+    --toggle-checked-knob-background-color: #8BB4F7;
+    --toggle-unchecked-track-background-color: #9AA0A6;
+    --toggle-unchecked-knob-background-color: #DADCE0;
+    --toggle-checked-focus-background-color: rgba(102, 157, 246, 0.4);
+    --toggle-unchecked-focus-background-color: rgba(218, 220, 224, 0.4);
   }
 }
 

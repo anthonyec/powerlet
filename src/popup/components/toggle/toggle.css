@@ -1,0 +1,71 @@
+.toggle {
+  width: 32px;
+  height: 16px;
+  position: relative;
+}
+
+.toggle__input {
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  z-index: 3;
+}
+
+.toggle__input:checked ~ .toggle__track {
+  background-color: var(--toggle-checked-track-background-color);
+}
+
+.toggle__input:checked ~ .toggle__knob {
+  background-color: var(--toggle-checked-knob-background-color);
+  transform: translateX(18px);
+}
+
+.toggle__input:checked ~ .toggle__knob:after {
+  background: var(--toggle-checked-focus-background-color);
+}
+
+.toggle:not(.toggle--clicked) .toggle__input:focus ~ .toggle__knob:after {
+  opacity: 1;
+}
+
+.toggle__track {
+  background: var(--toggle-unchecked-track-background-color);
+  border-radius: 100px;
+  width: 28px;
+  height: 12px;
+  top: 50%;
+  left: 3px;
+  transform: translateY(-50%);
+  transition: background-color 80ms linear;
+  position: absolute;
+  z-index: 1;
+}
+
+.toggle__knob {
+  background-color: var(--toggle-unchecked-knob-background-color);
+  border-radius: 100px;
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.4);
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  transition: transform 80ms linear, background-color 80ms linear;
+  z-index: 2;
+}
+
+.toggle__knob:after {
+  content: "";
+  background-color: var(--toggle-unchecked-focus-background-color);
+  border-radius: 100px;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: opacity 80ms 100ms linear, background-color 80ms 0ms linear;
+  opacity: 0;
+}
