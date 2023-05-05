@@ -9,7 +9,7 @@ import HomeScreen from './screens/home_screen';
 const EditBookmarkletScreen = React.lazy(() =>
   import('./screens/edit_bookmarklet_screen')
 );
-const SettingsScreen = React.lazy(() => import('./screens/settings'));
+const OptionsScreen = React.lazy(() => import('./screens/options_screen'));
 
 import './reset.css';
 import './app.css';
@@ -27,7 +27,7 @@ export default function App() {
   const screens = {
     home: HomeScreen,
     edit: EditBookmarkletScreen,
-    settings: SettingsScreen
+    options: OptionsScreen
   };
 
   const screenParams = {
