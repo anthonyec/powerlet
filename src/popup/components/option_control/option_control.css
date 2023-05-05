@@ -1,3 +1,25 @@
 .option-control {
+  color: var(--global-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
+.option-control__details {
+  color: var(--option-control-title-color);
+  display: flex;
+  flex-direction: column;
+  line-height: 1.45;
+}
+
+.option-control__title {
+  color: var(--option-control-title-color);
+}
+
+.option-control__description {
+  color: var(--option-control-description-color);
+}
+
+.option-control__control {
+  flex-shrink: 0;
 }
