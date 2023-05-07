@@ -90,5 +90,17 @@
   "script_missing_keyword_message": {
     "message": "スクリプトはキーワード「javascript:」で開始する必要があります。",
     "description": ""
+  },
+  "options_show_add_bookmarklet_heading": {
+    "message": "TODO: Add bookmarklet button",
+    "description": ""
+  },
+  "options_show_add_bookmarklet_description": {
+    "message": "TODO: Display a button next to links that might be bookmarklets.",
+    "description": ""
+  },
+  "options_made_by_label": {
+    "message": "%s 作られた",
+    "description": ""
   }
 }

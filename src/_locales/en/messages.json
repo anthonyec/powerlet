@@ -90,5 +90,17 @@
   "script_missing_keyword_message": {
     "message": "Scripts need to start with the keyword \"javascript:\".",
     "description": "Message shown when the script is missing the 'javascript': keyword at the start"
+  },
+  "options_show_add_bookmarklet_heading": {
+    "message": "Add bookmarklet button",
+    "description": "Heading shown for the options setting to toggle showing the add button"
+  },
+  "options_show_add_bookmarklet_description": {
+    "message": "Display a button next to links that might be bookmarklets.",
+    "description": "Explain what the setting does when toggling showing the add button"
+  },
+  "options_made_by_label": {
+    "message": "Made by %s",
+    "description": "Little message showing the credits"
   }
 }

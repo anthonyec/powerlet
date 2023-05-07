@@ -1,23 +1,32 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
+import { selectTranslations } from '../../store/selectors/locale';
+import Toggle from '../../components/toggle';
 import OptionControl from '../../components/option_control';
 
 import './options_screen.css';
-import Toggle from '../../components/toggle';
 
 export default function OptionsScreen() {
+  const translations = useSelector(selectTranslations);
+
   return (
     <div className="options-screen">
       <section className="options-screen__section">
         <OptionControl
-          title="Show add button"
-          description={`Display a button next to links that might be bookmarklets.`}
+          title={translations['options_show_add_bookmarklet_heading']}
+          description={translations['options_show_add_bookmarklet_description']}
         >
           <Toggle checked />
         </OptionControl>
       </section>
       <section className="options-screen__section options-screen__section--footer">
-        Made by <a href="https://twitter.com/anthonyec" target="_blank">Anthony Cossins</a>
+        <a href="https://twitter.com/anthonyec" target="_blank">
+          {translations['options_made_by_label'].replace(
+            '%s',
+            'Anthony Cossins'
+          )}
+        </a>
       </section>
     </div>
   );
