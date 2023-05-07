@@ -28,7 +28,7 @@
   background: var(--toggle-checked-focus-background-color);
 }
 
-.toggle:not(.toggle--clicked) .toggle__input:focus ~ .toggle__knob:after {
+.toggle:not(.toggle--disable-focus-styles) .toggle__input:focus ~ .toggle__knob:after {
   opacity: 1;
 }
 
