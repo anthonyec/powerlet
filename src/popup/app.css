@@ -55,6 +55,7 @@
 
   --option-control-title-color: var(--global-color);
   --option-control-description-color: #5f6368;
+  --option-control-border-color: #F0F0F0;
 
   --toggle-checked-track-background-color: #94B9F4;
   --toggle-checked-knob-background-color: #1C72E8;
@@ -109,6 +110,7 @@
 
     --option-control-title-color: var(--global-color);
     --option-control-description-color: #9aa0a6;
+    --option-control-border-color: #3F4042;
 
     --toggle-checked-track-background-color: #596F92;
     --toggle-checked-knob-background-color: #8BB4F7;

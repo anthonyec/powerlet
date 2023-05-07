@@ -12,7 +12,7 @@ export default function OptionControl({
     <div className="option-control" onClick={onClick}>
       <div className="option-control__details">
         <div className="option-control__title">{title}</div>
-        <div className="option-control__description">{description}</div>
+        {description && <div className="option-control__description">{description}</div>}
       </div>
 
       <div className="option-control__control">{children}</div>

@@ -3,13 +3,14 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 12px 20px;
 }
 
 .option-control__details {
   color: var(--option-control-title-color);
   display: flex;
   flex-direction: column;
-  line-height: 1.45;
+  line-height: 1.5;
 }
 
 .option-control__title {
