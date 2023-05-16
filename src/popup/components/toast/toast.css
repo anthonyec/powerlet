@@ -12,6 +12,17 @@
   user-select: none;
 }
 
+.toast--inline {
+  padding: 0;
+  box-shadow: none;
+  background: none;
+  border-radius: 0;
+}
+
+.toast--warning {
+  color: var(--button-danger-color);
+}
+
 .toast__button {
   color: var(--toast-action-color);
   background: transparent;
@@ -24,6 +35,7 @@
   padding: 0 8px;
   font-weight: 600;
   margin-right: -8px;
+  flex-shrink: 0;
 }
 
 .toast__button:active {
