@@ -14,13 +14,41 @@ const SettingsScreen = React.lazy(() => import('./screens/settings'));
 import './reset.css';
 import './app.css';
 
-function parseHash(hash) {
-  return hash.replace('#', '').split('/');
+function parseHashPath(hash) {
+  const hashPath = hash.replace('#', '');
+
+  if (hashPath.startsWith('?')) {
+    return [];
+  }
+
+  const [segments] = hashPath.split('?');
+
+  return segments.split('/');
+}
+
+function parseHashQuery(hash) {
+  const rawQueries = hash.replace('#', '').split('?');
+
+  if (rawQueries.length <= 1) {
+    return {};
+  }
+
+  const [_, queries] = rawQueries;
+  const params = queries
+    .split('&')
+    .map((query) => query.split('='))
+    .reduce((acc, param) => {
+      acc[param[0]] = param[1];
+      return acc;
+    }, {});
+
+  return params;
 }
 
 export default function App() {
   const dispatch = useDispatch();
-  const [path, setPath] = useState(parseHash(window.location.hash));
+  const [path, setPath] = useState(parseHashPath(window.location.hash));
+  const [query, setQuery] = useState(parseHashQuery(window.location.hash));
   const base = path[0];
   const params = path.slice(1);
 
@@ -40,7 +68,8 @@ export default function App() {
 
   const route = {
     base,
-    params: zippedParams
+    params: zippedParams,
+    query
   };
 
   const Screen = screens[base] ? screens[base] : screens.home;
@@ -52,7 +81,8 @@ export default function App() {
   useEffect(() => {
     const handleHashChange = () => {
       startTransition(() => {
-        setPath(parseHash(window.location.hash));
+        setPath(parseHashPath(window.location.hash));
+        setQuery(parseHashQuery(window.location.hash));
       });
     };
 

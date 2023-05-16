@@ -34,9 +34,21 @@ import './home_screen.css';
 const ToastArea = React.lazy(() => import('../../components/toast_area'));
 const ContextMenu = React.lazy(() => import('../../components/context_menu'));
 
-export default function HomeScreen() {
+const getInitialSelectedIndex = (results = [], route = {}) => {
+  if (!route.query.selected) {
+    return 0;
+  }
+
+  const id = route.query.selected;
+  const index = results.findIndex((result) => {
+    return result.id === id;
+  });
+
+  return index;
+};
+
+export default function HomeScreen({ route }) {
   const dispatch = useDispatch();
-  const [initialSelectedItem, setInitialSelectedItem] = useState(0);
   const [contextMenu, setContextMenu] = useState(null);
   const setExecutedScript = useCloseWindowAfterExecution();
   const contextMenuItems = useListItemContextMenu(contextMenu, () => {
@@ -54,6 +66,9 @@ export default function HomeScreen() {
     selectResultsFromBookmarkletsSearch(deferredSearchQuery)
   );
   const groups = useSelector(selectBookmarkletGroups);
+  const [initialSelectedItem, setInitialSelectedItem] = useState(
+    getInitialSelectedIndex(results, route)
+  );
 
   const hasBookmarklets = bookmarklets.length !== 0;
   const hasSearchResults = results.length !== 0;
