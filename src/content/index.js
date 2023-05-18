@@ -39,6 +39,8 @@ function main() {
     // is bananas!
     FUNCTION_REGEX.lastIndex = 0;
 
+    // Look for `href` values that are single function calls. If it's not a
+    // default window method, then it's probably not a bookmarklet.
     const match = FUNCTION_REGEX.exec(cleanHrefWithoutPrefix);
 
     if (match) {
@@ -48,22 +50,6 @@ function main() {
       );
 
       if (!isDefaultWindowMethod) {
-        return;
-      }
-    }
-
-    // To avoid links that are buttons with non-bookmarklet scripts, check the
-    // class name for any reference for "button" but without "bookmarklet".
-    // Currently this basic heuristic is to avoid highlighting the "Add to Card"
-    // and "Add to Wishlist" buttons on the Steam store page. But also keep
-    // it working with things like: https://www.addtoany.com/services/pinboard_button
-    // which have a button class name but also reference bookmarklet.
-    for (const className of classList) {
-      const includesButtonWord =
-        className.includes('btn') || className.includes('button');
-      const includesBookmarkletName = className.includes('bookmarklet');
-
-      if (includesButtonWord && !includesBookmarkletName) {
         return;
       }
     }
