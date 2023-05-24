@@ -9,6 +9,13 @@ export default function TextField({
 }) {
   const [value, setValue] = useState(defaultValue);
 
+  const handleKeyDown = (event) => {
+    if (event.code === 'KeyZ' && event.metaKey) {
+      // Prevent undo hook from happening, but allow undo in the textfield.
+      event.stopPropagation();
+    }
+  };
+
   // When `defaultValue` prop changes, change the local state with that value.
   useEffect(() => {
     setValue(defaultValue);
@@ -26,6 +33,7 @@ export default function TextField({
         className="text-field__input"
         type="text"
         value={value}
+        onKeyDown={handleKeyDown}
         onChange={handleOnChange}
       />
     </div>

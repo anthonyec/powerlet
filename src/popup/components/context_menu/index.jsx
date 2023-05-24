@@ -1,7 +1,5 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
-import { clamp } from '../../lib/clamp';
-
 import './context_menu.css';
 
 const PADDING = 5;
@@ -117,6 +115,10 @@ export default function ContextMenu({
 
   useEffect(() => {
     const handleKeyDown = (event) => {
+      if (event.code === 'KeyZ' && event.metaKey) {
+        dismiss();
+      }
+
       if (executingAction) {
         return;
       }
