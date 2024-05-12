@@ -10,7 +10,9 @@ module.exports = {
   devtool: 'cheap-module-source-map',
   entry: {
     popup: './src/popup/index.js',
-    background: './src/background/index.js'
+    background: './src/background/index.js',
+    content_main: './src/content/main.js',
+    content_isolated: './src/content/isolated.js'
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -62,7 +64,7 @@ module.exports = {
       title: 'Powerlet',
       filename: 'popup.html',
       template: './src/popup/index.ejs',
-      excludeChunks: ['background']
+      excludeChunks: ['background', 'content']
     }),
     new MiniCssExtractPlugin({
       filename: 'popup.[contenthash:5].css'
