@@ -1,14 +1,14 @@
 import { useDispatch, useSelector } from 'react-redux';
 
-import { selectTranslations } from '../store/selectors/locale';
-import { selectRecents } from '../store/selectors/bookmarklets';
+import clampText from '../lib/clamp_text';
 import {
   addRecentBookmarklet,
   removeRecentBookmarklet
 } from '../store/actions/bookmarklets';
+import { selectRecents } from '../store/selectors/bookmarklets';
+import { selectTranslations } from '../store/selectors/locale';
 import { useToast } from './use_toast';
 import { useUndoHistory } from './use_undo_history';
-import clampText from '../lib/clamp_text';
 
 export function useBrowserBookmarks() {
   const dispatch = useDispatch();
@@ -27,15 +27,17 @@ export function useBrowserBookmarks() {
         //
         // Without handles, the following scenario can happen because we can't
         // control what ID is used for creating bookmarks.
-        // - User creates a bookmark, Chrome gives it the ID of `1`.
-        // - Push onto the undo stack: Delete bookmark with ID `1`.
-        // - User deletes bookmark with ID `1`
-        // - Push onto the undo stack: Create bookmark
-        // - User undoes
-        // - Pop the stack and create a bookmark, Chrome gives it the ID of `2`
-        // - User undoes
-        // - Pop the stack and try delete bookmark with ID `1`
-        // - Bookmark with that ID does not exist!
+        //
+        // For example:
+        // 1. User creates a bookmark, Chrome gives it the ID of `1`.
+        // 2. Push onto the undo stack: Delete bookmark with ID `1`.
+        // 3. User deletes bookmark with ID `1`
+        // 4. Push onto the undo stack: Create bookmark
+        // 5. User undoes
+        // 6. Pop the stack and create a bookmark, Chrome gives it the ID of `2`
+        // 7. User undoes
+        // 8. Pop the stack and try delete bookmark with ID `1`
+        // 9. Bookmark with that ID does not exist!
         const handle = undoHistory.createHandle(result.id);
 
         undoHistory.push(

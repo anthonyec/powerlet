@@ -4,18 +4,21 @@ import { Provider } from 'react-redux';
 import { persistStore } from 'redux-persist';
 import createStats from 'simple-plausible-tracker';
 
-import createStore from './store/index';
+import App from './app';
 import { ToastProvider } from './hooks/use_toast';
 import { UndoHistoryProvider } from './hooks/use_undo_history';
-import App from './app';
+import createStore from './store/index';
 
 const statsDomain =
   process.env.NODE_ENV !== 'development' && process.env.STATS_DOMAIN;
-const stats = createStats(statsDomain, {
-  onFireError: (err) => {
-    console.error(err);
-  }
-});
+
+const stats = statsDomain
+  ? createStats(statsDomain, {
+      onFireError: (err) => {
+        console.error(err);
+      }
+    })
+  : { fire: () => {} };
 
 const store = createStore(
   {},

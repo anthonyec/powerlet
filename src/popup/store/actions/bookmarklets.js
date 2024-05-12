@@ -23,27 +23,19 @@ export function addRecentBookmarklet(id) {
   };
 }
 
+// TODO(anthony): Move this to a hook?
 export function executeBookmarklet(id, url) {
   return async (dispatch, getState, { browser }) => {
-    let bookmarkletCode;
-
-    try {
-      bookmarkletCode = decodeURIComponent(url);
-    } catch (err) {
-      bookmarkletCode = url;
-    }
-
-    const code = `
-      try {
-        ${bookmarkletCode}
-      } catch(err) {
-        console.error(err);
-        alert('Bookmarklet error: ' + err.message);
-      }
-    `;
-
     dispatch(addRecentBookmarklet(id));
-    await browser.tabs.executeScript({ code, runAt: 'document_start' });
+
+    chrome.tabs.query({ active: true, currentWindow: true }, (tab) => {
+      if (!tab[0]) return;
+
+      chrome.tabs.sendMessage(tab[0].id, {
+        type: 'execute-bookmarklet',
+        id: id
+      });
+    });
   };
 }
 
