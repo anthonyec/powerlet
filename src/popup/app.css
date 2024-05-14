@@ -8,7 +8,7 @@
   --item-selected-background: #EAEBEB;
 
   --item-padding: 10px 15px;
-  --item-padding-left-right: 15px;
+  --item-padding-left-right: 20px;
 
   --button-normal-background: #FFFFFF;
   --button-hover-background: #FAFAFA;
@@ -28,6 +28,7 @@
   --button-danger-color: #C5392A;
 
   --input-normal-background: #FFFFFF;
+  --input-hover-background: #F2F2F2;
   --input-normal-color: #2A2B2E;
   --input-normal-border-color: #B1B1B1;
   --input-placeholder-color: #757575;
@@ -40,10 +41,10 @@
   --list-heading-color: #5F6368;
   --list-heading-border-color: #DADCE0;
 
-  --toast-background: #323232;
-  --toast-color: #FFFFFF;
+  --toast-background: #303030;
+  --toast-color: #F2F2F2;
   --toast-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.28);
-  --toast-action-color: #8DB8FE;
+  --toast-action-color: #A8C7FA;
   --toast-action-active-background: #363B46;
   --toast-action-focus-border-color: #2088FF;
   --toast-action-focus-box-shadow: 0 0 0 1px rgba(32, 136, 255, 1);
@@ -52,18 +53,32 @@
   --context-menu-background: #FFFFFF;
   --context-menu-item-hover-background: var(--item-selected-background);
   --context-menu-item-color: var(--global-color);
+
+  --scrollbar-thumb-color: #5F6369;
+  --scrollbar-track-color: #FFFFFF;
+
+  --toggle-track-normal-background: #E1E3E1;
+  --toggle-track-checked-background: #0A57D0;
+
+  --toggle-track-normal-border-color: #757775;
+  --toggle-track-checked-border-color: #0A57D0;
+
+  --toggle-knob-normal-background: #757775;
+  --toggle-knob-hover-background: #C8D7F0;
+  --toggle-knob-checked-background: #FFFFFF;
 }
 
 @media(prefers-color-scheme: dark) {
   :root {
-    --global-background: #292A2D;
+    --global-background: #1F1F1F;
     --global-color: #E1E1E1;
-    --global-focus-box-shadow: 0 0 0 1px rgba(32, 136, 255, 1);
+    --global-focus-border-color: #729CEF;
+    --global-focus-box-shadow: 0 0 0 1px #729CEF;
 
-    --item-hover-background: #38393C;
-    --item-selected-background: #4C4E52;
+    --item-hover-background: #2F2F2F;
+    --item-selected-background: #363636;
 
-    --button-normal-background: #292A2D;
+    --button-normal-background: #1F1F1F;
     --button-hover-background: #303339;
     --button-active-background: #363B46;
 
@@ -76,26 +91,42 @@
     --button-active-color: #85AAE9;
     --button-danger-color: #F28B82;
 
-    --input-normal-background: #1D1D1F;
+    --input-normal-background: #1F1F1F;
+    --input-hover-background: #363636;
     --input-normal-color: #E1E1E1;
     --input-normal-border-color: #5F6368;
     --input-placeholder-color: #919191;
 
-    --icon-normal-fill: #9AA0A7;
+    --icon-normal-fill: #C7C7C7;
 
     --toolbar-border-color: #393D40;
 
     --list-heading-background: var(--global-background);
     --list-heading-color: #9AA0A6;
-    --list-heading-border-color: #3C4043;
+    --list-heading-border-color: #363636;
 
-    --toast-background: #303134;
-    --toast-color: #E8EAED;
+    --toast-background: #FFFFFF;
+    --toast-color: #1F1F1F;
+    --toast-action-color: #0A57D0;
+    --toast-action-active-background: transparent;
 
     --context-menu-shadow: rgba(0, 0, 0, .3) 0 1px 2px 0, rgba(0, 0, 0, .15) 0 3px 6px 2px;
-    --context-menu-background: #303134;
+    --context-menu-background: #262626;
     --context-menu-item-hover-background: var(--item-selected-background);
     --context-menu-item-color: var(--global-color);
+
+    --scrollbar-thumb-color: #C7C7C7;
+    --scrollbar-track-color: #1F1F1F;
+
+    --toggle-track-normal-background: #454746;
+    --toggle-track-checked-background: #A8C7FA;
+
+    --toggle-track-normal-border-color: #8F918F;
+    --toggle-track-checked-border-color: #A8C7FA;
+
+    --toggle-knob-normal-background: #8F918F;
+    --toggle-knob-hover-background: #2755AA;
+    --toggle-knob-checked-background: #062E6F;
   }
 }
 

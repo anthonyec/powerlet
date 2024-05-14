@@ -18,12 +18,8 @@ function SearchField(
   },
   ref
 ) {
-  const className = showBorder
-    ? 'search-field search-field--with-border'
-    : 'search-field';
-
   return (
-    <div className={className}>
+    <div className="search-field">
       <input
         className="search-field__input"
         type="text"
@@ -39,7 +35,7 @@ function SearchField(
         autoCapitalize="off"
         spellCheck="false"
       />
-      <IconButton onClick={onAddClick} disabled={disabled}>
+      <IconButton className="search-field__add-button" onClick={onAddClick}>
         <Icon name="plus" />
       </IconButton>
     </div>

@@ -1,4 +1,10 @@
-.list {}
+.list {
+  padding: 8px 0;
+}
+
+.list--with-groups {
+  padding: 0;
+}
 
 .list__heading {
   background: var(--list-heading-background);
@@ -11,13 +17,14 @@
 }
 
 .list__heading:first-child {
+  border-top: 0;
   margin-top: 0;
 }
 
 .list__item {
   padding-left: var(--item-padding-left-right);
   padding-right: var(--item-padding-left-right);
-  height: 34px;
+  height: 40px;
   font-size: 12px;
   line-height: 20px;
   user-select: none;
