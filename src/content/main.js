@@ -1,4 +1,4 @@
-const idToHash = new Map();
+const QUEUED_BOOKMARKLET_KEY = '_powerlet_queued_bookmarklet';
 
 function isObject(value) {
   return typeof value === 'object' && !Array.isArray(value) && value !== null;
@@ -8,43 +8,61 @@ function isFunction(value) {
   return typeof value === 'function';
 }
 
-function executeBookmarklet(id, hash) {
-  const bookmarklet = window[`_powerlet_bookmarklet_${id}`];
+function getPowerletFunction(name, id) {
+  const powerletFunction = window[`_powerlet_${name}_${id}`];
+  if (!isFunction(powerletFunction)) return null;
 
-  const existingHash = idToHash.get(id);
-  console.log(id, hash, idToHash.get(id));
+  return powerletFunction;
+}
 
-  if (!isFunction(bookmarklet) || (existingHash && existingHash !== hash)) {
-    window.localStorage.setItem('_powerlet_queued_bookmarklet', id);
-    window.location.reload();
-    return;
+function getPowerletBookmarkletFunction(id) {
+  return getPowerletFunction('bookmarklet', id);
+}
+
+function getPowerletHashFunction(id) {
+  return getPowerletFunction('get_hash', id);
+}
+
+function queueBookmarkletAndReload(id) {
+  window.localStorage.setItem(QUEUED_BOOKMARKLET_KEY, id);
+  window.location.reload();
+}
+
+function executeBookmarklet(id, currentHash, retry = true) {
+  const bookmarklet = getPowerletBookmarkletFunction(id);
+
+  if (retry && !bookmarklet) {
+    return queueBookmarkletAndReload();
+  }
+
+  const getHash = getPowerletHashFunction(id);
+  const existingHash = getHash && getHash();
+  const isHashDifferent = existingHash && existingHash !== currentHash;
+
+  if (retry && isHashDifferent) {
+    return queueBookmarkletAndReload(id);
   }
 
   try {
     bookmarklet();
   } catch (err) {
-    alert('Failed to run bookmarklet:\n' + err);
+    alert('Failed to run bookmarklet:\n', err);
   }
 }
 
-window._powerlet_register_bookmarklet = (id = '', hash = '') => {
-  console.log('_powerlet_register_bookmarklet', id, hash);
-  if (!id || !hash) return;
-  idToHash.set(id, hash);
-};
-
 window.addEventListener('load', () => {
-  console.log('LOADED');
-  console.log(idToHash);
-  // const queuedBookmarkletId = window.localStorage.getItem(
-  //   '_powerlet_queued_bookmarklet'
-  // );
-  // window.localStorage.removeItem('_powerlet_queued_bookmarklet');
-  // if (queuedBookmarkletId) {
-  //   const bookmarklet = window[`_powerlet_bookmarklet_${queuedBookmarkletId}`];
-  //   if (!isFunction(bookmarklet)) return;
-  //   executeBookmarklet(queuedBookmarkletId);
-  // }
+  const queuedBookmarkletId = JSON.parse(
+    window.localStorage.getItem(QUEUED_BOOKMARKLET_KEY)
+  );
+  window.localStorage.removeItem(QUEUED_BOOKMARKLET_KEY); // TODO(anthony): Replace with chrome.storage API or in background in-memory value? Seems broken.
+  console.log(QUEUED_BOOKMARKLET_KEY, { queuedBookmarkletId });
+
+  if (queuedBookmarkletId) {
+    const bookmarklet = getPowerletBookmarkletFunction(queuedBookmarkletId);
+    if (!bookmarklet) return;
+
+    executeBookmarklet(queuedBookmarkletId, false);
+  }
 });
 
 window.addEventListener('powerlet-event', (event) => {

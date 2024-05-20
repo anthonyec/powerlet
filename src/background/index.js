@@ -8,13 +8,13 @@ async function getBookmarklets() {
     query: 'javascript:'
   });
 
-  return bookmarks.filter((bookmarklet) => {
-    return bookmarklet.url && bookmarklet.url.match(/^javascript\:/);
+  return bookmarks.filter((bookmark) => {
+    return bookmark.url && bookmark.url.match(/^javascript\:/);
   });
 }
 
-function getUserScriptId(bookmarkletId) {
-  return `powerlet_bookmarklet_${bookmarkletId}`;
+function getUserScriptId(bookmarkId) {
+  return `powerlet_bookmarklet_${bookmarkId}`;
 }
 
 function getBookmarkletAsUserScript(id, title, url = '') {
@@ -36,7 +36,10 @@ function getBookmarkletAsUserScript(id, title, url = '') {
   const hash = cyrb53(url);
 
   const code = joinLines(
-    `typeof window._powerlet_register_bookmarklet === "function" && window._powerlet_register_bookmarklet("${id}", "${hash}");`,
+    `function _powerlet_get_hash_${id}() {`,
+    `  console.log("_powerlet_get_hash_", ${id});`,
+    `  return "${hash}";`,
+    `}`,
     `function _${userScriptId}() {`,
     `  // ${title}`,
     `  ${bookmarkletCode}`,
@@ -67,8 +70,11 @@ async function updateUserScript(userScript) {
   ]);
 }
 
+async function removeUserScript(bookmarkId) {
+  return chrome.userScripts.unregister({ ids: [getUserScriptId(bookmarkId)] });
+}
+
 async function registerAllBookmarklets() {
-  const userScripts = await chrome.userScripts.getScripts();
   const bookmarklets = await getBookmarklets();
 
   for (const bookmarklet of bookmarklets) {
@@ -79,9 +85,6 @@ async function registerAllBookmarklets() {
     );
     await registerUserScript(userScript);
   }
-
-  console.log(userScripts);
-  console.log(bookmarklets);
 }
 
 async function main() {
@@ -103,10 +106,10 @@ async function main() {
   });
 
   chrome.bookmarks.onRemoved.addListener((id) => {
-    chrome.userScripts.unregister({ ids: [getUserScriptId(id)] });
+    removeUserScript(id);
   });
 
-  chrome.bookmarks.onChanged.addListener((id, bookmark) => {
+  chrome.bookmarks.onChanged.addListener(async (id, bookmark) => {
     const userScript = getBookmarkletAsUserScript(
       id,
       bookmark.title,

@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useBrowserBookmarks } from '../../hooks/use_browser_bookmarks';
-import { useUserScripts } from '../../hooks/use_user_scripts';
 import {
   addRecentBookmarklet,
   removeRecentBookmarklet
@@ -17,8 +16,6 @@ export function useListItemContextMenu(
   const translations = useSelector(selectTranslations);
   const bookmarklets = useSelector(selectBookmarkletsWithGroup);
   const bookmarks = useBrowserBookmarks();
-
-  useUserScripts();
 
   if (!contextMenu) {
     return;
