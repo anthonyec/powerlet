@@ -1,3 +1,5 @@
+const idToHash = new Map();
+
 function isObject(value) {
   return typeof value === 'object' && !Array.isArray(value) && value !== null;
 }
@@ -6,16 +8,17 @@ function isFunction(value) {
   return typeof value === 'function';
 }
 
-function executeBookmarklet(id) {
+function executeBookmarklet(id, hash) {
   const bookmarklet = window[`_powerlet_bookmarklet_${id}`];
 
-  if (!isFunction(bookmarklet)) {
+  const existingHash = idToHash.get(id);
+  console.log(id, hash, idToHash.get(id));
+
+  if (!isFunction(bookmarklet) || (existingHash && existingHash !== hash)) {
     window.localStorage.setItem('_powerlet_queued_bookmarklet', id);
     window.location.reload();
     return;
   }
-
-  window.localStorage.removeItem('_powerlet_queued_bookmarklet');
 
   try {
     bookmarklet();
@@ -24,21 +27,24 @@ function executeBookmarklet(id) {
   }
 }
 
-window._powerlet_bookmarklet_loaded = (id) => {
-  // console.log('_powerlet_bookmarklet_loaded', id);
+window._powerlet_register_bookmarklet = (id = '', hash = '') => {
+  console.log('_powerlet_register_bookmarklet', id, hash);
+  if (!id || !hash) return;
+  idToHash.set(id, hash);
 };
 
 window.addEventListener('load', () => {
-  const queuedBookmarkletId = window.localStorage.getItem(
-    '_powerlet_queued_bookmarklet'
-  );
-
-  if (queuedBookmarkletId) {
-    const bookmarklet = window[`_powerlet_bookmarklet_${queuedBookmarkletId}`];
-    if (!isFunction(bookmarklet)) return;
-
-    executeBookmarklet(queuedBookmarkletId);
-  }
+  console.log('LOADED');
+  console.log(idToHash);
+  // const queuedBookmarkletId = window.localStorage.getItem(
+  //   '_powerlet_queued_bookmarklet'
+  // );
+  // window.localStorage.removeItem('_powerlet_queued_bookmarklet');
+  // if (queuedBookmarkletId) {
+  //   const bookmarklet = window[`_powerlet_bookmarklet_${queuedBookmarkletId}`];
+  //   if (!isFunction(bookmarklet)) return;
+  //   executeBookmarklet(queuedBookmarkletId);
+  // }
 });
 
 window.addEventListener('powerlet-event', (event) => {
@@ -47,6 +53,6 @@ window.addEventListener('powerlet-event', (event) => {
   if (!('type' in event.detail)) return;
 
   if (event.detail.type === 'execute-bookmarklet') {
-    executeBookmarklet(event.detail.id);
+    executeBookmarklet(event.detail.id, event.detail.hash);
   }
 });

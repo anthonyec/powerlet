@@ -11,7 +11,8 @@ module.exports = {
   entry: {
     popup: './src/popup/index.js',
     content_main: './src/content/main.js',
-    content_isolated: './src/content/isolated.js'
+    content_isolated: './src/content/isolated.js',
+    background: './src/background/index.js'
   },
   output: {
     path: path.resolve(__dirname, 'dist'),

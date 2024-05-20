@@ -1,3 +1,5 @@
+import { cyrb53 } from '../../../utils/cyrb53';
+
 export const SET_BOOKMARKLETS = 'SET_BOOKMARKLETS';
 export const ADD_RECENT_BOOKMARKLET = 'ADD_RECENT_BOOKMARKLET';
 export const REMOVE_RECENT_BOOKMARKLET = 'REMOVE_RECENT_BOOKMARKLET';
@@ -24,17 +26,25 @@ export function addRecentBookmarklet(id) {
 }
 
 // TODO(anthony): Move this to a hook?
-export function executeBookmarklet(id, url) {
-  return async (dispatch, getState, { browser }) => {
+export function executeBookmarklet(id) {
+  return async (dispatch) => {
     dispatch(addRecentBookmarklet(id));
 
-    chrome.tabs.query({ active: true, currentWindow: true }, (tab) => {
-      if (!tab[0]) return;
+    const [tab] = await chrome.tabs.query({
+      active: true,
+      currentWindow: true
+    });
+    if (!tab) return;
 
-      chrome.tabs.sendMessage(tab[0].id, {
-        type: 'execute-bookmarklet',
-        id: id
-      });
+    const [bookmarklet] = await chrome.bookmarks.get(id);
+    if (!bookmarklet) return;
+
+    const hash = cyrb53(bookmarklet.url);
+
+    chrome.tabs.sendMessage(tab.id, {
+      type: 'execute-bookmarklet',
+      id,
+      hash
     });
   };
 }
