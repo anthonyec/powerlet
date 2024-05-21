@@ -1,5 +1,3 @@
-import { cyrb53 } from '../../../utils/cyrb53';
-
 export const SET_BOOKMARKLETS = 'SET_BOOKMARKLETS';
 export const ADD_RECENT_BOOKMARKLET = 'ADD_RECENT_BOOKMARKLET';
 export const REMOVE_RECENT_BOOKMARKLET = 'REMOVE_RECENT_BOOKMARKLET';
@@ -30,22 +28,14 @@ export function executeBookmarklet(id) {
   return async (dispatch) => {
     dispatch(addRecentBookmarklet(id));
 
-    const [tab] = await chrome.tabs.query({
-      active: true,
-      currentWindow: true
-    });
-    if (!tab) return;
-
-    const [bookmarklet] = await chrome.bookmarks.get(id);
-    if (!bookmarklet) return;
-
-    const hash = cyrb53(bookmarklet.url);
-
-    chrome.tabs.sendMessage(tab.id, {
-      type: 'execute-bookmarklet',
-      id,
-      hash
-    });
+    try {
+      await chrome.runtime.sendMessage({
+        type: 'execute-bookmarklet',
+        id
+      });
+    } catch (err) {
+      console.log(err);
+    }
   };
 }
 

@@ -1,11 +1,15 @@
-const QUEUED_BOOKMARKLET_KEY = '_powerlet_queued_bookmarklet';
-
-function isObject(value) {
-  return typeof value === 'object' && !Array.isArray(value) && value !== null;
-}
+import { isObject } from '../utils/is_object';
 
 function isFunction(value) {
   return typeof value === 'function';
+}
+
+function sendMessage(message) {
+  const event = new CustomEvent('_powerlet_runtime_message', {
+    detail: message
+  });
+
+  window.dispatchEvent(event);
 }
 
 function getPowerletFunction(name, id) {
@@ -23,16 +27,18 @@ function getPowerletHashFunction(id) {
   return getPowerletFunction('get_hash', id);
 }
 
-function queueBookmarkletAndReload(id) {
-  window.localStorage.setItem(QUEUED_BOOKMARKLET_KEY, id);
-  window.location.reload();
+function queueAndReload(id) {
+  sendMessage({
+    type: 'queue-and-reload',
+    id
+  });
 }
 
 function executeBookmarklet(id, currentHash, retry = true) {
   const bookmarklet = getPowerletBookmarkletFunction(id);
 
   if (retry && !bookmarklet) {
-    return queueBookmarkletAndReload();
+    return queueAndReload(id);
   }
 
   const getHash = getPowerletHashFunction(id);
@@ -40,7 +46,7 @@ function executeBookmarklet(id, currentHash, retry = true) {
   const isHashDifferent = existingHash && existingHash !== currentHash;
 
   if (retry && isHashDifferent) {
-    return queueBookmarkletAndReload(id);
+    return queueAndReload(id);
   }
 
   try {
@@ -50,27 +56,16 @@ function executeBookmarklet(id, currentHash, retry = true) {
   }
 }
 
-window.addEventListener('load', () => {
-  const queuedBookmarkletId = JSON.parse(
-    window.localStorage.getItem(QUEUED_BOOKMARKLET_KEY)
-  );
-  window.localStorage.removeItem(QUEUED_BOOKMARKLET_KEY); // TODO(anthony): Replace with chrome.storage API or in background in-memory value? Seems broken.
-  console.log(QUEUED_BOOKMARKLET_KEY, { queuedBookmarkletId });
-
-  if (queuedBookmarkletId) {
-    const bookmarklet = getPowerletBookmarkletFunction(queuedBookmarkletId);
-    if (!bookmarklet) return;
-
-    executeBookmarklet(queuedBookmarkletId, false);
+function handleMessage(message) {
+  if (message.type === 'execute-bookmarklet') {
+    executeBookmarklet(message.id, message.hash);
   }
-});
+}
 
-window.addEventListener('powerlet-event', (event) => {
+window.addEventListener('_powerlet_content_message', (event) => {
   if (!isObject(event)) return;
-  if (!('type' in event) || event.type !== 'powerlet-event') return;
+  if (!('type' in event) || event.type !== '_powerlet_content_message') return;
   if (!('type' in event.detail)) return;
 
-  if (event.detail.type === 'execute-bookmarklet') {
-    executeBookmarklet(event.detail.id, event.detail.hash);
-  }
+  handleMessage(event.detail);
 });

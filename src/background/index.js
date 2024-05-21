@@ -1,5 +1,54 @@
 import { cyrb53 } from '../utils/cyrb53';
-import { joinLines } from '../utils/joinLines';
+import { isObject } from '../utils/is_object';
+import { joinLines } from '../utils/join_lines';
+
+async function waitForContentScriptReady() {}
+
+async function queueAndReload(bookmarkId) {
+  const [activeTab] = await chrome.tabs.query({
+    active: true,
+    currentWindow: true
+  });
+  if (!activeTab) return;
+
+  await chrome.tabs.reload(activeTab.id);
+  await executeBookmarklet(bookmarkId, false);
+}
+
+async function executeBookmarklet(bookmarkId, retry = true) {
+  console.log('executeBookmarklet', bookmarkId, retry);
+  const [activeTab] = await chrome.tabs.query({
+    active: true,
+    currentWindow: true
+  });
+  if (!activeTab) return console.error('No active tab found');
+
+  console.log('executeBookmarklet', activeTab);
+
+  const [bookmark] = await chrome.bookmarks.get(bookmarkId);
+  if (!bookmark) return console.error('No bookmark found');
+
+  const hash = cyrb53(bookmark.url);
+
+  try {
+    await chrome.tabs.sendMessage(activeTab.id, {
+      type: 'execute-bookmarklet',
+      id: bookmarkId,
+      hash
+    });
+  } catch (err) {
+    console.error(
+      retry
+        ? 'Failed to execute bookmarklet, retrying...'
+        : 'Failed to execute bookmarklet',
+      err
+    );
+
+    if (retry) {
+      queueAndReload(bookmarkId);
+    }
+  }
+}
 
 async function getBookmarklets() {
   const bookmarks = await chrome.bookmarks.search({
@@ -37,7 +86,6 @@ function getBookmarkletAsUserScript(id, title, url = '') {
 
   const code = joinLines(
     `function _powerlet_get_hash_${id}() {`,
-    `  console.log("_powerlet_get_hash_", ${id});`,
     `  return "${hash}";`,
     `}`,
     `function _${userScriptId}() {`,
@@ -117,6 +165,18 @@ async function main() {
     );
 
     updateUserScript(userScript);
+  });
+
+  chrome.runtime.onMessage.addListener(async (message) => {
+    if (!isObject(message) || !('type' in message)) return;
+
+    if (message.type === 'execute-bookmarklet') {
+      executeBookmarklet(message.id);
+    }
+
+    if (message.type === 'queue-and-reload') {
+      queueAndReload(message.id);
+    }
   });
 }
 
