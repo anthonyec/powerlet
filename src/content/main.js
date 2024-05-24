@@ -1,3 +1,4 @@
+import * as identifiers from '../identifiers';
 import { isObject } from '../utils/is_object';
 
 function isFunction(value) {
@@ -5,7 +6,7 @@ function isFunction(value) {
 }
 
 function sendMessage(message) {
-  const event = new CustomEvent('_powerlet_runtime_message', {
+  const event = new CustomEvent(identifiers.runtimeMessageEvent, {
     detail: message
   });
 
@@ -28,10 +29,10 @@ function getPowerletHashFunction(id) {
 }
 
 function queueAndReload(id) {
-  sendMessage({
-    type: 'queue-and-reload',
-    id
-  });
+  // sendMessage({
+  //   type: identifiers.queueAndReloadEvent,
+  //   id
+  // });
 }
 
 function executeBookmarklet(id, currentHash, retry = true) {
@@ -57,14 +58,21 @@ function executeBookmarklet(id, currentHash, retry = true) {
 }
 
 function handleMessage(message) {
-  if (message.type === 'execute-bookmarklet') {
+  if (message.type === identifiers.executeBookmarkletEvent) {
     executeBookmarklet(message.id, message.hash);
   }
 }
 
-window.addEventListener('_powerlet_content_message', (event) => {
+window[identifiers.invokeProxyFunction] = (name, args = []) => {
+  // TODO(anthony): Find out why messages sent twice? Or are there 2 listeners?
+  console.log(identifiers.invokeProxyFunction);
+  sendMessage({ type: identifiers.invokeProxyFunction, name, args });
+};
+
+window.addEventListener(identifiers.contentMessageEvent, (event) => {
   if (!isObject(event)) return;
-  if (!('type' in event) || event.type !== '_powerlet_content_message') return;
+  if (!('type' in event) || event.type !== identifiers.contentMessageEvent)
+    return;
   if (!('type' in event.detail)) return;
 
   handleMessage(event.detail);

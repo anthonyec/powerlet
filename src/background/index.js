@@ -1,8 +1,67 @@
+import * as identifiers from '../identifiers';
 import { cyrb53 } from '../utils/cyrb53';
 import { isObject } from '../utils/is_object';
 import { joinLines } from '../utils/join_lines';
 
 async function waitForContentScriptReady() {}
+
+function parseBoolean(value) {
+  if (!value) return true;
+  if (value === 'yes' || value === '1' || value === 'true') return true;
+  return false;
+}
+
+function parseWindowFeatures(windowFeatures = '') {
+  const params = {};
+  const pairs = windowFeatures.split(',');
+
+  for (const pair of pairs) {
+    const [key, value] = pair.split('=');
+    const numericValue = parseInt(value);
+    params[key] = isNaN(numericValue) ? parseBoolean(value) : numericValue;
+  }
+
+  return params;
+}
+
+async function invokeProxyFunction(name, args = []) {
+  console.log('invokeProxyFunction');
+
+  switch (name) {
+    case 'open': {
+      const [url = '', _target = '', windowFeatures = ''] = args;
+
+      if (
+        windowFeatures.includes('width') ||
+        windowFeatures.includes('height')
+      ) {
+        const params = parseWindowFeatures(windowFeatures);
+        const left = params['left'] || params['screenX'];
+        const top = params['top'] || params['screenY'];
+        const width = params['width'] || params['innerWidth'];
+        const height = params['height'] || params['innerHeight'];
+        const type = params['toolbar'] === 'no' ? 'popup' : 'normal';
+
+        // TODO(anthony): Parse arguments and convert them to create options.
+        chrome.windows.create({
+          url,
+          type,
+          left,
+          top,
+          width,
+          height,
+          setSelfAsOpener: true
+        });
+      } else {
+        // TODO(anthony): Ensure tab is created after the last active tab.
+        chrome.tabs.create({ url });
+      }
+      break;
+    }
+    default:
+      console.error(`No proxy function found for: ${name}`);
+  }
+}
 
 async function queueAndReload(bookmarkId) {
   const [activeTab] = await chrome.tabs.query({
@@ -16,14 +75,11 @@ async function queueAndReload(bookmarkId) {
 }
 
 async function executeBookmarklet(bookmarkId, retry = true) {
-  console.log('executeBookmarklet', bookmarkId, retry);
   const [activeTab] = await chrome.tabs.query({
     active: true,
     currentWindow: true
   });
   if (!activeTab) return console.error('No active tab found');
-
-  console.log('executeBookmarklet', activeTab);
 
   const [bookmark] = await chrome.bookmarks.get(bookmarkId);
   if (!bookmark) return console.error('No bookmark found');
@@ -32,7 +88,7 @@ async function executeBookmarklet(bookmarkId, retry = true) {
 
   try {
     await chrome.tabs.sendMessage(activeTab.id, {
-      type: 'execute-bookmarklet',
+      type: identifiers.executeBookmarkletEvent,
       id: bookmarkId,
       hash
     });
@@ -90,6 +146,9 @@ function getBookmarkletAsUserScript(id, title, url = '') {
     `}`,
     `function _${userScriptId}() {`,
     `  // ${title}`,
+    `  const powerletOpen = (...args) => ${identifiers.invokeProxyFunction}("open", args);`,
+    `  const window = { ...globalThis, open: powerletOpen };`,
+    `  const open = powerletOpen;`,
     `  ${bookmarkletCode}`,
     '}'
   );
@@ -131,6 +190,7 @@ async function registerAllBookmarklets() {
       bookmarklet.title,
       bookmarklet.url
     );
+
     await registerUserScript(userScript);
   }
 }
@@ -169,13 +229,18 @@ async function main() {
 
   chrome.runtime.onMessage.addListener(async (message) => {
     if (!isObject(message) || !('type' in message)) return;
+    console.log('background', message);
 
-    if (message.type === 'execute-bookmarklet') {
+    if (message.type === identifiers.executeBookmarkletEvent) {
       executeBookmarklet(message.id);
     }
 
-    if (message.type === 'queue-and-reload') {
+    if (message.type === identifiers.queueAndReloadEvent) {
       queueAndReload(message.id);
+    }
+
+    if (message.type === identifiers.invokeProxyFunction) {
+      invokeProxyFunction(message.name, message.args);
     }
   });
 }

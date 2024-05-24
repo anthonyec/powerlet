@@ -1,3 +1,5 @@
+import * as identifiers from '../../../identifiers';
+
 export const SET_BOOKMARKLETS = 'SET_BOOKMARKLETS';
 export const ADD_RECENT_BOOKMARKLET = 'ADD_RECENT_BOOKMARKLET';
 export const REMOVE_RECENT_BOOKMARKLET = 'REMOVE_RECENT_BOOKMARKLET';
@@ -30,7 +32,7 @@ export function executeBookmarklet(id) {
 
     try {
       await chrome.runtime.sendMessage({
-        type: 'execute-bookmarklet',
+        type: identifiers.executeBookmarkletEvent,
         id
       });
     } catch (err) {
