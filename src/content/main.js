@@ -64,8 +64,6 @@ function handleMessage(message) {
 }
 
 window[identifiers.invokeProxyFunction] = (name, args = []) => {
-  // TODO(anthony): Find out why messages sent twice? Or are there 2 listeners?
-  console.log(identifiers.invokeProxyFunction);
   sendMessage({ type: identifiers.invokeProxyFunction, name, args });
 };
 

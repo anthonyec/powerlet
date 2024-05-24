@@ -36,7 +36,7 @@ export function executeBookmarklet(id) {
         id
       });
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
 }

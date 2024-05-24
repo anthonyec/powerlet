@@ -5,64 +5,6 @@ import { joinLines } from '../utils/join_lines';
 
 async function waitForContentScriptReady() {}
 
-function parseBoolean(value) {
-  if (!value) return true;
-  if (value === 'yes' || value === '1' || value === 'true') return true;
-  return false;
-}
-
-function parseWindowFeatures(windowFeatures = '') {
-  const params = {};
-  const pairs = windowFeatures.split(',');
-
-  for (const pair of pairs) {
-    const [key, value] = pair.split('=');
-    const numericValue = parseInt(value);
-    params[key] = isNaN(numericValue) ? parseBoolean(value) : numericValue;
-  }
-
-  return params;
-}
-
-async function invokeProxyFunction(name, args = []) {
-  console.log('invokeProxyFunction');
-
-  switch (name) {
-    case 'open': {
-      const [url = '', _target = '', windowFeatures = ''] = args;
-
-      if (
-        windowFeatures.includes('width') ||
-        windowFeatures.includes('height')
-      ) {
-        const params = parseWindowFeatures(windowFeatures);
-        const left = params['left'] || params['screenX'];
-        const top = params['top'] || params['screenY'];
-        const width = params['width'] || params['innerWidth'];
-        const height = params['height'] || params['innerHeight'];
-        const type = params['toolbar'] === 'no' ? 'popup' : 'normal';
-
-        // TODO(anthony): Parse arguments and convert them to create options.
-        chrome.windows.create({
-          url,
-          type,
-          left,
-          top,
-          width,
-          height,
-          setSelfAsOpener: true
-        });
-      } else {
-        // TODO(anthony): Ensure tab is created after the last active tab.
-        chrome.tabs.create({ url });
-      }
-      break;
-    }
-    default:
-      console.error(`No proxy function found for: ${name}`);
-  }
-}
-
 async function queueAndReload(bookmarkId) {
   const [activeTab] = await chrome.tabs.query({
     active: true,
@@ -146,9 +88,12 @@ function getBookmarkletAsUserScript(id, title, url = '') {
     `}`,
     `function _${userScriptId}() {`,
     `  // ${title}`,
-    `  const powerletOpen = (...args) => ${identifiers.invokeProxyFunction}("open", args);`,
-    `  const window = { ...globalThis, open: powerletOpen };`,
-    `  const open = powerletOpen;`,
+    // Chrome's popup blocker will stop windows from opening since this user
+    // script is executing in the "MAIN" world. To avoid this, `open` is
+    // overridden our own function for opening windows. This does not affect
+    // global `window.open` thanks to variable scoping.
+    `  const open = (...args) => ${identifiers.invokeProxyFunction}("open", args);`,
+    `  const window = { ...globalThis, open };`,
     `  ${bookmarkletCode}`,
     '}'
   );
@@ -229,7 +174,6 @@ async function main() {
 
   chrome.runtime.onMessage.addListener(async (message) => {
     if (!isObject(message) || !('type' in message)) return;
-    console.log('background', message);
 
     if (message.type === identifiers.executeBookmarkletEvent) {
       executeBookmarklet(message.id);
@@ -237,10 +181,6 @@ async function main() {
 
     if (message.type === identifiers.queueAndReloadEvent) {
       queueAndReload(message.id);
-    }
-
-    if (message.type === identifiers.invokeProxyFunction) {
-      invokeProxyFunction(message.name, message.args);
     }
   });
 }
