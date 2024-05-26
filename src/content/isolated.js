@@ -21,11 +21,20 @@ function invokeProxyFunction(name, args = []) {
 chrome.runtime.onMessage.addListener((message) => {
   if (!isMessage(message)) return;
 
-  logger.log('onMessage', message);
+  logger.log('runtime_message', message);
 
   const event = new CustomEvent(identifiers.messageToContentScript, {
     detail: message
   });
 
   window.dispatchEvent(event);
+});
+
+window.addEventListener(identifiers.messageToIsolatedScript, (event) => {
+  const message = event.detail;
+  if (!isMessage(message)) return;
+
+  logger.log('window_message', message);
+
+  chrome.runtime.sendMessage(message);
 });

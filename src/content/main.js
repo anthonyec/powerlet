@@ -9,7 +9,7 @@ function isFunction(value) {
 }
 
 function sendMessage(message) {
-  const event = new CustomEvent(identifiers.runtimeMessageEvent, {
+  const event = new CustomEvent(identifiers.messageToIsolatedScript, {
     detail: message
   });
 
@@ -31,23 +31,27 @@ function getPowerletHashFunction(id) {
   return getPowerletFunction('get_hash', id);
 }
 
-function queueAndReload(id) {
-  // TODO(anthony): POST MESSAGE
+function queueAndReload(bookmarkId, tabId) {
+  // TODO(anthony): There is a glitch where it will execute the bookmarklet
+  // twice on reload.
+  sendMessage({ type: identifiers.queueAndReloadEvent, bookmarkId, tabId });
 }
 
-function executeBookmarklet(id, currentHash, retry = true) {
-  const bookmarklet = getPowerletBookmarkletFunction(id);
+function executeBookmarklet(bookmarkId, tabId, currentHash, retry = true) {
+  const bookmarklet = getPowerletBookmarkletFunction(bookmarkId);
 
   if (retry && !bookmarklet) {
-    return queueAndReload(id);
+    logger.error(`Could not find bookmarklet: ${bookmarkId}`);
+    return queueAndReload(bookmarkId);
   }
 
-  const getHash = getPowerletHashFunction(id);
+  const getHash = getPowerletHashFunction(bookmarkId);
   const existingHash = getHash && getHash();
   const isHashDifferent = existingHash && existingHash !== currentHash;
 
   if (retry && isHashDifferent) {
-    return queueAndReload(id);
+    logger.error('Hash is different, reloading and retrying');
+    return queueAndReload(bookmarkId, tabId);
   }
 
   try {
@@ -65,9 +69,14 @@ window.addEventListener(identifiers.messageToContentScript, (event) => {
   const message = event.detail;
   if (!isMessage(message)) return;
 
-  logger.log('onEvent', message);
+  logger.log('window_message', message);
 
   if (message.type === identifiers.executeBookmarkletEvent) {
-    executeBookmarklet(message.bookmarkId, message.hash);
+    executeBookmarklet(
+      message.bookmarkId,
+      message.tabId,
+      message.hash,
+      message.retry
+    );
   }
 });

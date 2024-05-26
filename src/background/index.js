@@ -38,7 +38,9 @@ async function executeBookmarklet(bookmarkId, tabId, retry = true) {
     await chrome.tabs.sendMessage(tabId, {
       type: identifiers.executeBookmarkletEvent,
       bookmarkId,
-      hash
+      tabId,
+      hash,
+      retry
     });
   } catch (err) {
     logger.error('Failed to execute bookmarklet', err);
@@ -205,9 +207,13 @@ chrome.bookmarks.onChanged.addListener(async (id, bookmark) => {
 chrome.runtime.onMessage.addListener((message) => {
   if (!isMessage(message)) return;
 
-  logger.log('onMessage', message);
+  logger.log('runtime_message', message);
 
   if (message.type === identifiers.executeBookmarkletEvent) {
     executeBookmarklet(message.bookmarkId, message.tabId);
+  }
+
+  if (message.type === identifiers.queueAndReloadEvent) {
+    queueAndReload(message.bookmarkId, message.tabId);
   }
 });
