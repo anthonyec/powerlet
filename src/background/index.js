@@ -6,14 +6,13 @@ import { joinLines } from '../utils/join_lines';
 async function waitForContentScriptReady() {}
 
 async function queueAndReload(bookmarkId) {
-  const [activeTab] = await chrome.tabs.query({
-    active: true,
-    currentWindow: true
-  });
-  if (!activeTab) return;
-
-  await chrome.tabs.reload(activeTab.id);
-  await executeBookmarklet(bookmarkId, false);
+  // const [activeTab] = await chrome.tabs.query({
+  //   active: true,
+  //   currentWindow: true
+  // });
+  // if (!activeTab) return;
+  // chrome.tabs.reload(activeTab.id);
+  // await executeBookmarklet(bookmarkId, false);
 }
 
 async function executeBookmarklet(bookmarkId, retry = true) {
@@ -21,15 +20,17 @@ async function executeBookmarklet(bookmarkId, retry = true) {
     active: true,
     currentWindow: true
   });
-  if (!activeTab) return console.error('No active tab found');
+  if (!activeTab || !activeTab.id) return console.error('No active tab found');
 
   const [bookmark] = await chrome.bookmarks.get(bookmarkId);
   if (!bookmark) return console.error('No bookmark found');
 
   const hash = cyrb53(bookmark.url);
 
+  const port = chrome.tabs.connect(activeTab.id);
+
   try {
-    await chrome.tabs.sendMessage(activeTab.id, {
+    port.postMessage(activeTab.id, {
       type: identifiers.executeBookmarkletEvent,
       id: bookmarkId,
       hash
@@ -48,6 +49,10 @@ async function executeBookmarklet(bookmarkId, retry = true) {
   }
 }
 
+function isBookmarklet(bookmark) {
+  return bookmark.url && bookmark.url.match(/^javascript\:/);
+}
+
 async function getBookmarklets() {
   const bookmarks = await chrome.bookmarks.search({
     // Use query because it's a fuzzy search. Searching by URL would
@@ -55,9 +60,7 @@ async function getBookmarklets() {
     query: 'javascript:'
   });
 
-  return bookmarks.filter((bookmark) => {
-    return bookmark.url && bookmark.url.match(/^javascript\:/);
-  });
+  return bookmarks.filter(isBookmarklet);
 }
 
 function getUserScriptId(bookmarkId) {
@@ -76,6 +79,10 @@ function getBookmarkletAsUserScript(id, title, url = '') {
   }
 
   bookmarkletCode = bookmarkletCode.trim();
+
+  if (bookmarkletCode === 'javascript:') {
+    bookmarkletCode = '// javascript:';
+  }
 
   // Original bookmarklet URL is used instead of decoded URI/trimmed code
   // because the hash needs to be compared elsewhere, where we don't have access
@@ -126,6 +133,14 @@ async function removeUserScript(bookmarkId) {
   return chrome.userScripts.unregister({ ids: [getUserScriptId(bookmarkId)] });
 }
 
+async function hasUserScript(bookmarkId) {
+  const userScripts = await chrome.userScripts.getScripts({
+    ids: [getUserScriptId(bookmarkId)]
+  });
+
+  return userScripts.length > 0;
+}
+
 async function registerAllBookmarklets() {
   const bookmarklets = await getBookmarklets();
 
@@ -140,49 +155,68 @@ async function registerAllBookmarklets() {
   }
 }
 
-async function main() {
-  // TODO(anthony): Add check here for userScripts support.
-
+async function reloadAllUserScripts() {
   // When restarting the service working, either by reloading or disabling the
   // extension, reload all registered user scripts.
   await chrome.userScripts.unregister();
   await registerAllBookmarklets();
+}
 
-  chrome.bookmarks.onCreated.addListener((id, bookmark) => {
-    const userScript = getBookmarkletAsUserScript(
-      id,
-      bookmark.title,
-      bookmark.url
-    );
+// TODO(anthony): Add check here for userScripts support.
 
-    registerUserScript(userScript);
-  });
+chrome.runtime.onInstalled.addListener(async () => {
+  await reloadAllUserScripts();
+});
 
-  chrome.bookmarks.onRemoved.addListener((id) => {
-    removeUserScript(id);
-  });
+chrome.bookmarks.onCreated.addListener(async (id, bookmark) => {
+  if (!isBookmarklet(bookmark)) return;
 
-  chrome.bookmarks.onChanged.addListener(async (id, bookmark) => {
-    const userScript = getBookmarkletAsUserScript(
-      id,
-      bookmark.title,
-      bookmark.url
-    );
+  const userScript = getBookmarkletAsUserScript(
+    id,
+    bookmark.title,
+    bookmark.url
+  );
 
-    updateUserScript(userScript);
-  });
+  await registerUserScript(userScript);
+});
 
-  chrome.runtime.onMessage.addListener(async (message) => {
+chrome.bookmarks.onRemoved.addListener(async (id) => {
+  await removeUserScript(id);
+});
+
+chrome.bookmarks.onChanged.addListener(async (id, bookmark) => {
+  if (!isBookmarklet(bookmark)) return;
+
+  const userScript = getBookmarkletAsUserScript(
+    id,
+    bookmark.title,
+    bookmark.url
+  );
+
+  if (hasUserScript(id)) {
+    await updateUserScript(userScript);
+  } else {
+    await registerUserScript(userScript);
+  }
+});
+
+chrome.runtime.onConnect.addListener((port) => {
+  console.log('connect', port);
+
+  port.onMessage.addListener(async (message) => {
     if (!isObject(message) || !('type' in message)) return;
+    console.log(message);
+
+    if (message.type === identifiers.reloadAllUserScriptsEvent) {
+      await reloadAllUserScripts();
+    }
 
     if (message.type === identifiers.executeBookmarkletEvent) {
-      executeBookmarklet(message.id);
+      await executeBookmarklet(message.id);
     }
 
     if (message.type === identifiers.queueAndReloadEvent) {
-      queueAndReload(message.id);
+      await queueAndReload(message.id);
     }
   });
-}
-
-main();
+});

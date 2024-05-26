@@ -30,8 +30,10 @@ export function executeBookmarklet(id) {
   return async (dispatch) => {
     dispatch(addRecentBookmarklet(id));
 
+    const port = chrome.runtime.connect({ name: 'events' });
+
     try {
-      await chrome.runtime.sendMessage({
+      port.postMessage({
         type: identifiers.executeBookmarkletEvent,
         id
       });

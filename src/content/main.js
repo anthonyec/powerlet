@@ -53,11 +53,13 @@ function executeBookmarklet(id, currentHash, retry = true) {
   try {
     bookmarklet();
   } catch (err) {
-    alert('Failed to run bookmarklet:\n', err);
+    alert(`Failed to run bookmarklet:\n${err}`);
   }
 }
 
 function handleMessage(message) {
+  console.log('connect->handleMessage', message);
+
   if (message.type === identifiers.executeBookmarkletEvent) {
     executeBookmarklet(message.id, message.hash);
   }

@@ -1,3 +1,4 @@
+export const reloadAllUserScriptsEvent = '_powerlet_reload_all_user_scripts';
 export const invokeProxyFunction = '_powerlet_invoke_proxy_function';
 export const contentMessageEvent = '_powerlet_content_message';
 export const runtimeMessageEvent = '_powerlet_runtime_message';
