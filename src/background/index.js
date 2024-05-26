@@ -101,12 +101,33 @@ function getBookmarkletAsUserScript(id, title, url = '') {
     `}`,
     `function _${userScriptId}() {`,
     `  // ${title}`,
-    // Chrome's popup blocker will stop windows from opening since this user
-    // script is executing in the "MAIN" world. To avoid this, `open` is
-    // overridden with our own function for opening windows. This does not
-    // affect global `window.open` thanks to variable scoping.
+    // Chrome's popup blocker will stop windows from opening because the user
+    // script is executing in the "MAIN" world.
+    //
+    // To avoid this, `open` is overridden with our own function located in the
+    // isolated content script, which is not affected by the popup blocker.
+    //
+    // This uses a `Proxy` because trying to set the prototype or using `assign`
+    // breaks the functionality of `window`. Also this does not affect global
+    // `window.open` thanks to variable scoping.
+    //
+    // Proxy from here:
+    // https://gist.github.com/codesorter2015/ea2a41bd03e6d090c817dafad5f1f328
     `  const open = (...args) => ${identifiers.invokeProxyFunction}("open", args);`,
-    `  const window = { ...globalThis, open };`,
+    `  const handler = {`,
+    `    get: function(target, property, receiver) {`,
+    `      let targetObj = target[property];`,
+    `      if (typeof targetObj == "function") {`,
+    `        if (property === "open") {`,
+    `          return (...args) => open(...args);`,
+    `        }`,
+    `        return (...args) => target[property].apply(target, args)`,
+    `      } else {`,
+    `        return targetObj;`,
+    `      }`,
+    `    }`,
+    `  };`,
+    `  const window = new Proxy(globalThis, handler);`,
     `  ${bookmarkletCode}`,
     '}'
   );
