@@ -36,5 +36,15 @@ window.addEventListener(identifiers.messageToIsolatedScript, (event) => {
 
   logger.log('window_message', message);
 
+  if (message.type === identifiers.invokeProxyFunction) {
+    // Catch invoke proxy function events here to preventing them from ending up
+    // in the the background worker. This is because we have access to
+    // `window.open` in isolated content, and can open up windows without Chrome
+    // popup blocker stopping them. Popup windows are blocked in the main
+    // content script.
+    invokeProxyFunction(message.name, message.args);
+    return;
+  }
+
   chrome.runtime.sendMessage(message);
 });
