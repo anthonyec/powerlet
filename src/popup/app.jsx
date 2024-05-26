@@ -1,10 +1,12 @@
 import React, { Suspense, startTransition, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
+import * as identifiers from "../identifiers";
+import { isMessage } from '../utils/is_message';
 import zipObject from '../utils/zipObject';
-import { firePageView } from './store/actions/stats';
-import { fetchLocaleMessages } from './store/actions/locale';
 import HomeScreen from './screens/home_screen';
+import { fetchLocaleMessages } from './store/actions/locale';
+import { firePageView } from './store/actions/stats';
 
 const EditBookmarkletScreen = React.lazy(() =>
   import('./screens/edit_bookmarklet_screen')
@@ -12,6 +14,7 @@ const EditBookmarkletScreen = React.lazy(() =>
 const SettingsScreen = React.lazy(() => import('./screens/settings'));
 
 import './reset.css';
+
 import './app.css';
 
 function parseHashPath(hash) {
@@ -45,12 +48,30 @@ function parseHashQuery(hash) {
   return params;
 }
 
+function useIsSleepyServiceWorkerAwake() {
+  const [isAwake, setIsAwake] = useState(false)
+
+  useEffect(() => {
+    chrome.runtime.sendMessage({ type: identifiers.pingEvent }, (response) => {
+      if (!isMessage(response)) return
+
+      if (response.type === identifiers.pongEvent) {
+        setIsAwake(true)
+      }
+    })
+  }, [])
+
+  return isAwake
+}
+
 export default function App() {
   const dispatch = useDispatch();
   const [path, setPath] = useState(parseHashPath(window.location.hash));
   const [query, setQuery] = useState(parseHashQuery(window.location.hash));
   const base = path[0];
   const params = path.slice(1);
+
+  useIsSleepyServiceWorkerAwake()
 
   const screens = {
     home: HomeScreen,

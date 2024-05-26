@@ -206,10 +206,14 @@ chrome.bookmarks.onChanged.addListener(async (id, bookmark) => {
   }
 });
 
-chrome.runtime.onMessage.addListener((message) => {
+chrome.runtime.onMessage.addListener((message, _sender, respond) => {
   if (!isMessage(message)) return;
 
   logger.log('on_runtime_message', message);
+
+  if (message.type === identifiers.pingEvent) {
+    respond({ type: identifiers.pongEvent });
+  }
 
   if (message.type === identifiers.executeBookmarkletEvent) {
     executeBookmarklet(message.bookmarkId, message.tabId);
