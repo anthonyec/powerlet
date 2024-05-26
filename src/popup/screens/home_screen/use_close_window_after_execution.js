@@ -13,7 +13,7 @@ export default function useCloseWindowAfterExecution() {
 
   useEffect(() => {
     if (shouldCloseWindow) {
-      // window.close();
+      window.close();
     }
   }, [shouldCloseWindow]);
 

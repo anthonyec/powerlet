@@ -2,7 +2,7 @@ import * as identifiers from '../identifiers';
 import { isMessage } from '../utils/is_message';
 import { createLogger } from '../utils/logger';
 
-const logger = createLogger('content');
+const logger = createLogger('content_main');
 
 function isFunction(value) {
   return typeof value === 'function';
@@ -42,7 +42,7 @@ function executeBookmarklet(bookmarkId, tabId, currentHash, retry = true) {
 
   if (retry && !bookmarklet) {
     logger.error(`Could not find bookmarklet: ${bookmarkId}`);
-    return queueAndReload(bookmarkId);
+    return queueAndReload(bookmarkId, tabId);
   }
 
   const getHash = getPowerletHashFunction(bookmarkId);
@@ -69,7 +69,7 @@ window.addEventListener(identifiers.messageToContentScript, (event) => {
   const message = event.detail;
   if (!isMessage(message)) return;
 
-  logger.log('window_message', message);
+  logger.log('on_window_message', message);
 
   if (message.type === identifiers.executeBookmarkletEvent) {
     executeBookmarklet(

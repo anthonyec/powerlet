@@ -6,7 +6,7 @@ import { createLogger } from '../utils/logger';
 
 const logger = createLogger('background');
 
-async function waitForTabReload(tabId) {
+async function reloadTab(tabId) {
   return new Promise((resolve) => {
     const handleTabUpdated = (updatedTabId, changeInfo) => {
       if (updatedTabId !== tabId) return;
@@ -18,13 +18,16 @@ async function waitForTabReload(tabId) {
     };
 
     chrome.tabs.onUpdated.addListener(handleTabUpdated);
+    chrome.tabs.reload(tabId);
   });
 }
 
 async function queueAndReload(bookmarkId, tabId) {
-  chrome.tabs.reload(tabId);
-  await waitForTabReload(tabId);
+  logger.log('queue_and_reload:start');
+  await reloadTab(tabId);
+  logger.log('queue_and_reload:finished_reload');
   await executeBookmarklet(bookmarkId, tabId, false);
+  logger.log('queue_and_reload:finished_execute');
 }
 
 async function executeBookmarklet(bookmarkId, tabId, retry = true) {
@@ -35,6 +38,7 @@ async function executeBookmarklet(bookmarkId, tabId, retry = true) {
 
   try {
     // Send message to isolated content script in active tab.
+    logger.log('Send message to tab');
     await chrome.tabs.sendMessage(tabId, {
       type: identifiers.executeBookmarkletEvent,
       bookmarkId,
@@ -46,9 +50,7 @@ async function executeBookmarklet(bookmarkId, tabId, retry = true) {
     logger.error('Failed to execute bookmarklet', err);
 
     if (retry) {
-      logger.log('Reloading tab and retrying...');
       await queueAndReload(bookmarkId, tabId);
-      logger.log('Reloaded');
     }
   }
 }
@@ -207,7 +209,7 @@ chrome.bookmarks.onChanged.addListener(async (id, bookmark) => {
 chrome.runtime.onMessage.addListener((message) => {
   if (!isMessage(message)) return;
 
-  logger.log('runtime_message', message);
+  logger.log('on_runtime_message', message);
 
   if (message.type === identifiers.executeBookmarkletEvent) {
     executeBookmarklet(message.bookmarkId, message.tabId);

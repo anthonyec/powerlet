@@ -2,7 +2,7 @@ import * as identifiers from '../identifiers';
 import { isMessage } from '../utils/is_message';
 import { createLogger } from '../utils/logger';
 
-const logger = createLogger('isolated');
+const logger = createLogger('content_isolated');
 
 function invokeProxyFunction(name, args = []) {
   switch (name) {
@@ -21,7 +21,7 @@ function invokeProxyFunction(name, args = []) {
 chrome.runtime.onMessage.addListener((message) => {
   if (!isMessage(message)) return;
 
-  logger.log('runtime_message', message);
+  logger.log('on_runtime_message', message);
 
   const event = new CustomEvent(identifiers.messageToContentScript, {
     detail: message
@@ -34,7 +34,7 @@ window.addEventListener(identifiers.messageToIsolatedScript, (event) => {
   const message = event.detail;
   if (!isMessage(message)) return;
 
-  logger.log('window_message', message);
+  logger.log('on_window_message', message);
 
   if (message.type === identifiers.invokeProxyFunction) {
     // Catch invoke proxy function events here to preventing them from ending up

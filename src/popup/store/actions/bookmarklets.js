@@ -1,8 +1,11 @@
 import * as identifiers from '../../../identifiers';
+import { createLogger } from '../../../utils/logger';
 
 export const SET_BOOKMARKLETS = 'SET_BOOKMARKLETS';
 export const ADD_RECENT_BOOKMARKLET = 'ADD_RECENT_BOOKMARKLET';
 export const REMOVE_RECENT_BOOKMARKLET = 'REMOVE_RECENT_BOOKMARKLET';
+
+const logger = createLogger('popup');
 
 function setBookmarklets(bookmarklets = []) {
   return {
@@ -29,6 +32,8 @@ export function addRecentBookmarklet(id) {
 export function executeBookmarklet(id) {
   return async (dispatch) => {
     dispatch(addRecentBookmarklet(id));
+
+    logger.log('execute');
 
     try {
       const [activeTab] = await chrome.tabs.query({
