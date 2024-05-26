@@ -103,8 +103,8 @@ function getBookmarkletAsUserScript(id, title, url = '') {
     `  // ${title}`,
     // Chrome's popup blocker will stop windows from opening since this user
     // script is executing in the "MAIN" world. To avoid this, `open` is
-    // overridden our own function for opening windows. This does not affect
-    // global `window.open` thanks to variable scoping.
+    // overridden with our own function for opening windows. This does not
+    // affect global `window.open` thanks to variable scoping.
     `  const open = (...args) => ${identifiers.invokeProxyFunction}("open", args);`,
     `  const window = { ...globalThis, open };`,
     `  ${bookmarkletCode}`,
@@ -191,7 +191,29 @@ chrome.bookmarks.onRemoved.addListener(async (id) => {
 });
 
 chrome.bookmarks.onChanged.addListener(async (id, bookmark) => {
-  if (!isBookmarklet(bookmark)) return;
+  const wasUserScript = await hasUserScript(id);
+
+  if (!isBookmarklet(bookmark)) {
+    if (wasUserScript) {
+      logger.log('converted userScript to bookmark', id);
+      await removeUserScript(id);
+    }
+
+    return;
+  }
+
+  if (!wasUserScript) {
+    logger.log('converted bookmark to userScript', id);
+
+    const userScript = getBookmarkletAsUserScript(
+      id,
+      bookmark.title,
+      bookmark.url
+    );
+
+    await registerUserScript(userScript);
+    return;
+  }
 
   const userScript = getBookmarkletAsUserScript(
     id,
@@ -199,11 +221,7 @@ chrome.bookmarks.onChanged.addListener(async (id, bookmark) => {
     bookmark.url
   );
 
-  if (hasUserScript(id)) {
-    await updateUserScript(userScript);
-  } else {
-    await registerUserScript(userScript);
-  }
+  await updateUserScript(userScript);
 });
 
 chrome.runtime.onMessage.addListener((message, _sender, respond) => {
