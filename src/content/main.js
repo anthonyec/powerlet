@@ -1,12 +1,9 @@
 import * as identifiers from '../identifiers';
+import { isFunction } from '../utils/is_function';
 import { isMessage } from '../utils/is_message';
 import { createLogger } from '../utils/logger';
 
 const logger = createLogger('content_main');
-
-function isFunction(value) {
-  return typeof value === 'function';
-}
 
 function sendMessage(message) {
   const event = new CustomEvent(identifiers.messageToIsolatedScript, {
