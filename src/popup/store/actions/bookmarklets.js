@@ -30,12 +30,18 @@ export function executeBookmarklet(id) {
   return async (dispatch) => {
     dispatch(addRecentBookmarklet(id));
 
-    const port = chrome.runtime.connect({ name: 'events' });
-
     try {
-      port.postMessage({
+      const [activeTab] = await chrome.tabs.query({
+        active: true,
+        currentWindow: true
+      });
+      if (!activeTab || !activeTab.id) return console.error('No active tab');
+
+      // Send message to background worker.
+      chrome.runtime.sendMessage({
         type: identifiers.executeBookmarkletEvent,
-        id
+        bookmarkId: id,
+        tabId: activeTab.id
       });
     } catch (err) {
       console.error(err);

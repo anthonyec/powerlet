@@ -1,50 +1,52 @@
 import * as identifiers from '../identifiers';
 import { cyrb53 } from '../utils/cyrb53';
-import { isObject } from '../utils/is_object';
+import { isMessage } from '../utils/is_message';
 import { joinLines } from '../utils/join_lines';
+import { createLogger } from '../utils/logger';
 
-async function waitForContentScriptReady() {}
+const logger = createLogger('background');
 
-async function queueAndReload(bookmarkId) {
-  // const [activeTab] = await chrome.tabs.query({
-  //   active: true,
-  //   currentWindow: true
-  // });
-  // if (!activeTab) return;
-  // chrome.tabs.reload(activeTab.id);
-  // await executeBookmarklet(bookmarkId, false);
+async function waitForTabReload(tabId) {
+  return new Promise((resolve) => {
+    const handleTabUpdated = (updatedTabId, changeInfo) => {
+      if (updatedTabId !== tabId) return;
+
+      if (changeInfo.status === 'complete') {
+        chrome.tabs.onUpdated.removeListener(handleTabUpdated);
+        resolve();
+      }
+    };
+
+    chrome.tabs.onUpdated.addListener(handleTabUpdated);
+  });
 }
 
-async function executeBookmarklet(bookmarkId, retry = true) {
-  const [activeTab] = await chrome.tabs.query({
-    active: true,
-    currentWindow: true
-  });
-  if (!activeTab || !activeTab.id) return console.error('No active tab found');
+async function queueAndReload(bookmarkId, tabId) {
+  chrome.tabs.reload(tabId);
+  await waitForTabReload(tabId);
+  await executeBookmarklet(bookmarkId, tabId, false);
+}
 
+async function executeBookmarklet(bookmarkId, tabId, retry = true) {
   const [bookmark] = await chrome.bookmarks.get(bookmarkId);
-  if (!bookmark) return console.error('No bookmark found');
+  if (!bookmark) return logger.error('No bookmark found');
 
   const hash = cyrb53(bookmark.url);
 
-  const port = chrome.tabs.connect(activeTab.id);
-
   try {
-    port.postMessage(activeTab.id, {
+    // Send message to isolated content script in active tab.
+    await chrome.tabs.sendMessage(tabId, {
       type: identifiers.executeBookmarkletEvent,
-      id: bookmarkId,
+      bookmarkId,
       hash
     });
   } catch (err) {
-    console.error(
-      retry
-        ? 'Failed to execute bookmarklet, retrying...'
-        : 'Failed to execute bookmarklet',
-      err
-    );
+    logger.error('Failed to execute bookmarklet', err);
 
     if (retry) {
-      queueAndReload(bookmarkId);
+      logger.log('Reloading tab and retrying...');
+      await queueAndReload(bookmarkId, tabId);
+      logger.log('Reloaded');
     }
   }
 }
@@ -200,23 +202,12 @@ chrome.bookmarks.onChanged.addListener(async (id, bookmark) => {
   }
 });
 
-chrome.runtime.onConnect.addListener((port) => {
-  console.log('connect', port);
+chrome.runtime.onMessage.addListener((message) => {
+  if (!isMessage(message)) return;
 
-  port.onMessage.addListener(async (message) => {
-    if (!isObject(message) || !('type' in message)) return;
-    console.log(message);
+  logger.log('onMessage', message);
 
-    if (message.type === identifiers.reloadAllUserScriptsEvent) {
-      await reloadAllUserScripts();
-    }
-
-    if (message.type === identifiers.executeBookmarkletEvent) {
-      await executeBookmarklet(message.id);
-    }
-
-    if (message.type === identifiers.queueAndReloadEvent) {
-      await queueAndReload(message.id);
-    }
-  });
+  if (message.type === identifiers.executeBookmarkletEvent) {
+    executeBookmarklet(message.bookmarkId, message.tabId);
+  }
 });

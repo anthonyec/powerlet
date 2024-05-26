@@ -1,5 +1,8 @@
 import * as identifiers from '../identifiers';
-import { isObject } from '../utils/is_object';
+import { isMessage } from '../utils/is_message';
+import { createLogger } from '../utils/logger';
+
+const logger = createLogger('content');
 
 function isFunction(value) {
   return typeof value === 'function';
@@ -29,10 +32,7 @@ function getPowerletHashFunction(id) {
 }
 
 function queueAndReload(id) {
-  // sendMessage({
-  //   type: identifiers.queueAndReloadEvent,
-  //   id
-  // });
+  // TODO(anthony): POST MESSAGE
 }
 
 function executeBookmarklet(id, currentHash, retry = true) {
@@ -57,23 +57,17 @@ function executeBookmarklet(id, currentHash, retry = true) {
   }
 }
 
-function handleMessage(message) {
-  console.log('connect->handleMessage', message);
-
-  if (message.type === identifiers.executeBookmarkletEvent) {
-    executeBookmarklet(message.id, message.hash);
-  }
-}
-
 window[identifiers.invokeProxyFunction] = (name, args = []) => {
   sendMessage({ type: identifiers.invokeProxyFunction, name, args });
 };
 
-window.addEventListener(identifiers.contentMessageEvent, (event) => {
-  if (!isObject(event)) return;
-  if (!('type' in event) || event.type !== identifiers.contentMessageEvent)
-    return;
-  if (!('type' in event.detail)) return;
+window.addEventListener(identifiers.messageToContentScript, (event) => {
+  const message = event.detail;
+  if (!isMessage(message)) return;
 
-  handleMessage(event.detail);
+  logger.log('onEvent', message);
+
+  if (message.type === identifiers.executeBookmarkletEvent) {
+    executeBookmarklet(message.bookmarkId, message.hash);
+  }
 });
