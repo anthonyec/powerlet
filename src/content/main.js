@@ -58,10 +58,6 @@ function executeBookmarklet(bookmarkId, tabId, currentHash, retry = true) {
   }
 }
 
-window[identifiers.invokeProxyFunction] = (name, args = []) => {
-  sendMessage({ type: identifiers.invokeProxyFunction, name, args });
-};
-
 window.addEventListener(identifiers.messageToContentScript, (event) => {
   const message = event.detail;
   if (!isMessage(message)) return;

@@ -4,19 +4,6 @@ import { createLogger } from '../utils/logger';
 
 const logger = createLogger('content_isolated');
 
-function invokeProxyFunction(name, args = []) {
-  switch (name) {
-    case 'open': {
-      window.open(...args);
-      break;
-    }
-
-    default: {
-      logger.error(`No proxy function found for: ${name}`);
-    }
-  }
-}
-
 // Bridge all runtime events from the extension to window events.
 chrome.runtime.onMessage.addListener((message) => {
   if (!isMessage(message)) return;
@@ -35,16 +22,6 @@ window.addEventListener(identifiers.messageToIsolatedScript, (event) => {
   if (!isMessage(message)) return;
 
   logger.log('on_window_message', message);
-
-  if (message.type === identifiers.invokeProxyFunction) {
-    // Catch invoke proxy function events here to preventing them from ending up
-    // in the the background worker. This is because we have access to
-    // `window.open` in isolated content, and can open up windows without Chrome
-    // popup blocker stopping them. Popup windows are blocked in the main
-    // content script.
-    invokeProxyFunction(message.name, message.args);
-    return;
-  }
 
   chrome.runtime.sendMessage(message);
 });
