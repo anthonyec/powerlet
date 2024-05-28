@@ -29,8 +29,6 @@ function getPowerletHashFunction(id) {
 }
 
 function queueAndReload(bookmarkId, tabId) {
-  // TODO(anthony): There is a glitch where it will execute the bookmarklet
-  // twice on reload.
   sendMessage({ type: identifiers.queueAndReloadEvent, bookmarkId, tabId });
 }
 
