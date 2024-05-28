@@ -202,8 +202,8 @@ chrome.bookmarks.onChanged.addListener(async (id, updateInfo) => {
 
     const userScript = getBookmarkletAsUserScript(
       id,
-      bookmark.title,
-      bookmark.url
+      updateInfo.title,
+      updateInfo.url
     );
 
     await registerUserScript(userScript);
@@ -212,10 +212,11 @@ chrome.bookmarks.onChanged.addListener(async (id, updateInfo) => {
 
   const userScript = getBookmarkletAsUserScript(
     id,
-    bookmark.title,
-    bookmark.url
+    updateInfo.title,
+    updateInfo.url
   );
 
+  logger.log('update', userScript);
   await updateUserScript(userScript);
 });
 
