@@ -6,11 +6,11 @@ import React, {
   useRef,
   useState
 } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
-  fetchAllBookmarklets,
   executeBookmarklet,
+  fetchAllBookmarklets,
   removeNonExistentRecents
 } from '../../store/actions/bookmarklets';
 import {
@@ -23,11 +23,11 @@ import { selectTranslations } from '../../store/selectors/locale';
 import useCloseWindowAfterExecution from './use_close_window_after_execution';
 import { useListItemContextMenu } from './use_list_item_context_menu';
 
-import SearchField from '../../components/search_field';
-import ScrollView from '../../components/scroll_view';
+import EmptyMessage from '../../components/empty_message';
 import List from '../../components/list';
 import OnboardMessage from '../../components/onboard_message';
-import EmptyMessage from '../../components/empty_message';
+import ScrollView from '../../components/scroll_view';
+import SearchField from '../../components/search_field';
 
 import './home_screen.css';
 
@@ -109,7 +109,7 @@ export default function HomeScreen({ route }) {
 
   const handleListItemAction = (item) => {
     setExecutedScript(item.id);
-    dispatch(executeBookmarklet(item.id, item.url));
+    dispatch(executeBookmarklet(item.id));
   };
 
   const handleListItemContextMenu = (index, item, position) => {

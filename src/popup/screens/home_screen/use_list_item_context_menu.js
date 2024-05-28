@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { useBrowserBookmarks } from '../../hooks/use_browser_bookmarks';
 import {
   addRecentBookmarklet,
   removeRecentBookmarklet
 } from '../../store/actions/bookmarklets';
-import { selectTranslations } from '../../store/selectors/locale';
-import { selectBookmarkletsWithGroup } from '../../store/selectors/bookmarklets';
 import { MAX_RECENTS_LENGTH } from '../../store/reducers/bookmarklets';
-import { useBrowserBookmarks } from '../../hooks/use_browser_bookmarks';
+import { selectBookmarkletsWithGroup } from '../../store/selectors/bookmarklets';
+import { selectTranslations } from '../../store/selectors/locale';
 
 export function useListItemContextMenu(
   contextMenu = null,

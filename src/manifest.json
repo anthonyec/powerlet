@@ -1,27 +1,39 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
+  "minimum_chrome_version": "120",
   "name": "Powerlet",
-  "version": "1.5.1",
   "description": "Quickly find and run your bookmarklets.",
-  "permissions": ["activeTab", "bookmarks"],
   "default_locale": "en",
-  "background": {
-    "scripts": ["background.bundle.js"],
-    "persistent": false
-  },
-  "browser_action": {
-    "default_popup": "popup.html",
-    "default_icon": {
-      "19": "default_icon.png",
-      "38": "default_icon@2x.png"
-    }
-  },
+  "version": "2.0.0",
   "icons": {
-    "36": "extension_icon_36.png",
+    "16": "extension_icon_19.png",
+    "32": "extension_icon_38.png",
     "128": "extension_icon_128.png"
   },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "permissions": ["activeTab", "bookmarks", "userScripts"],
+  "host_permissions": ["*://*/*"],
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": ["content_main.bundle.js"],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": ["*://*/*"],
+      "js": ["content_isolated.bundle.js"],
+      "run_at": "document_start",
+      "world": "ISOLATED"
+    }
+  ],
+  "background": {
+    "service_worker": "background.bundle.js"
+  },
   "commands": {
-    "_execute_browser_action": {
+    "_execute_action": {
       "suggested_key": {
         "windows": "Ctrl+Shift+K",
         "mac": "Command+Shift+K",

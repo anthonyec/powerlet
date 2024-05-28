@@ -1,6 +1,12 @@
+import * as identifiers from '../../../identifiers';
+import { isBookmarklet } from '../../../utils/is_bookmarklet';
+import { createLogger } from '../../../utils/logger';
+
 export const SET_BOOKMARKLETS = 'SET_BOOKMARKLETS';
 export const ADD_RECENT_BOOKMARKLET = 'ADD_RECENT_BOOKMARKLET';
 export const REMOVE_RECENT_BOOKMARKLET = 'REMOVE_RECENT_BOOKMARKLET';
+
+const logger = createLogger('popup');
 
 function setBookmarklets(bookmarklets = []) {
   return {
@@ -23,27 +29,29 @@ export function addRecentBookmarklet(id) {
   };
 }
 
-export function executeBookmarklet(id, url) {
-  return async (dispatch, getState, { browser }) => {
-    let bookmarkletCode;
+// TODO(anthony): Move this to a hook?
+export function executeBookmarklet(id) {
+  return async (dispatch) => {
+    dispatch(addRecentBookmarklet(id));
+
+    logger.log('execute');
 
     try {
-      bookmarkletCode = decodeURIComponent(url);
+      const [activeTab] = await chrome.tabs.query({
+        active: true,
+        currentWindow: true
+      });
+      if (!activeTab || !activeTab.id) return console.error('No active tab');
+
+      // Send message to background worker.
+      chrome.runtime.sendMessage({
+        type: identifiers.executeBookmarkletEvent,
+        bookmarkId: id,
+        tabId: activeTab.id
+      });
     } catch (err) {
-      bookmarkletCode = url;
+      console.error(err);
     }
-
-    const code = `
-      try {
-        ${bookmarkletCode}
-      } catch(err) {
-        console.error(err);
-        alert('Bookmarklet error: ' + err.message);
-      }
-    `;
-
-    dispatch(addRecentBookmarklet(id));
-    await browser.tabs.executeScript({ code, runAt: 'document_start' });
   };
 }
 
@@ -87,9 +95,7 @@ export function fetchAllBookmarklets() {
       (results) => {
         // Remove any matches that had "javascript:" in the URL but not
         // at the very start, which makes them not bookmarklets.
-        const filteredResults = results.filter((result) => {
-          return result.url && result.url.match(/^javascript\:/);
-        });
+        const filteredResults = results.filter(isBookmarklet);
 
         dispatch(setBookmarklets(filteredResults));
       }
