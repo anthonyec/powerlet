@@ -180,14 +180,15 @@ chrome.bookmarks.onCreated.addListener(async (id, bookmark) => {
   await registerUserScript(userScript);
 });
 
-chrome.bookmarks.onRemoved.addListener(async (id) => {
+chrome.bookmarks.onRemoved.addListener(async (id, removeInfo) => {
+  if (!isBookmarklet(removeInfo.node)) return;
   await removeUserScript(id);
 });
 
-chrome.bookmarks.onChanged.addListener(async (id, bookmark) => {
+chrome.bookmarks.onChanged.addListener(async (id, updateInfo) => {
   const wasUserScript = await hasUserScript(id);
 
-  if (!isBookmarklet(bookmark)) {
+  if (!isBookmarklet(updateInfo)) {
     if (wasUserScript) {
       logger.log('converted userScript to bookmark', id);
       await removeUserScript(id);
