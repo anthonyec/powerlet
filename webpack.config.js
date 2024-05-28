@@ -64,7 +64,7 @@ module.exports = {
       title: 'Powerlet',
       filename: 'popup.html',
       template: './src/popup/index.ejs',
-      excludeChunks: ['content']
+      excludeChunks: ['content_main', 'content_isolated', 'background']
     }),
     new MiniCssExtractPlugin({
       filename: 'popup.[contenthash:5].css'
