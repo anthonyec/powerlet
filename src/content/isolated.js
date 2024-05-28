@@ -4,7 +4,7 @@ import { createLogger } from '../utils/logger';
 
 const logger = createLogger('content_isolated');
 
-// Bridge all runtime events from the extension to window events.
+// Bridge all runtime events from the extension to window events, and vice versa.
 chrome.runtime.onMessage.addListener((message) => {
   if (!isMessage(message)) return;
 
