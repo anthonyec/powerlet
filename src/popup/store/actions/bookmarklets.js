@@ -1,4 +1,5 @@
 import * as identifiers from '../../../identifiers';
+import { isBookmarklet } from '../../../utils/is_bookmarklet';
 import { createLogger } from '../../../utils/logger';
 
 export const SET_BOOKMARKLETS = 'SET_BOOKMARKLETS';
@@ -94,9 +95,7 @@ export function fetchAllBookmarklets() {
       (results) => {
         // Remove any matches that had "javascript:" in the URL but not
         // at the very start, which makes them not bookmarklets.
-        const filteredResults = results.filter((result) => {
-          return result.url && result.url.match(/^javascript\:/);
-        });
+        const filteredResults = results.filter(isBookmarklet);
 
         dispatch(setBookmarklets(filteredResults));
       }

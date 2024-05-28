@@ -1,5 +1,6 @@
 import * as identifiers from '../identifiers';
 import { cyrb53 } from '../utils/cyrb53';
+import { isBookmarklet } from '../utils/is_bookmarklet';
 import { isMessage } from '../utils/is_message';
 import { joinLines } from '../utils/join_lines';
 import { createLogger } from '../utils/logger';
@@ -53,10 +54,6 @@ async function executeBookmarklet(bookmarkId, tabId, retry = true) {
       await queueAndReload(bookmarkId, tabId);
     }
   }
-}
-
-function isBookmarklet(bookmark) {
-  return bookmark.url && bookmark.url.match(/^javascript\:/);
 }
 
 async function getBookmarklets() {
