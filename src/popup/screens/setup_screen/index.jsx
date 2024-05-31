@@ -35,20 +35,20 @@ function useDarkMode() {
 }
 
 function getIllustration(isDarkMode = false, language) {
-  if (isDarkMode && language === "ja") {
-    return illustrationDarkJa
+  if (isDarkMode && language === 'ja') {
+    return illustrationDarkJa;
   }
 
-  if (!isDarkMode && language === "ja") {
-    return illustrationLightJa
+  if (!isDarkMode && language === 'ja') {
+    return illustrationLightJa;
   }
 
   if (isDarkMode) {
-    return illustrationDarkEn
+    return illustrationDarkEn;
   }
 
   if (!isDarkMode) {
-    return illustrationLightEn
+    return illustrationLightEn;
   }
 }
 
@@ -84,7 +84,10 @@ export default function SetupScreen() {
       <div className="setup-screen__message">
         <p>{translations['enable_developer_mode_message']}</p>
 
-        <a href={`https://anthonycossins.com/posts/powerlet-manifest-v3?lang=${language}`} onClick={openLearnMoreLink}>
+        <a
+          href={`https://anthonycossins.com/posts/powerlet-manifest-v3?lang=${language}`}
+          onClick={openLearnMoreLink}
+        >
           {translations['learn_more_label']}
         </a>
       </div>
