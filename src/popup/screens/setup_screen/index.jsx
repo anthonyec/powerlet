@@ -84,7 +84,7 @@ export default function SetupScreen() {
       <div className="setup-screen__message">
         <p>{translations['enable_developer_mode_message']}</p>
 
-        <a href={`https://anthony.ec/powerlet-mv3?lang=${language}`} onClick={openLearnMoreLink}>
+        <a href={`https://anthonycossins.com/posts/powerlet-manifest-v3?lang=${language}`} onClick={openLearnMoreLink}>
           {translations['learn_more_label']}
         </a>
       </div>

@@ -248,10 +248,6 @@ chrome.runtime.onMessage.addListener(async (message, _sender, respond) => {
   await chrome.storage.local.set({ supportsUserScripts: isUserScriptsEnabled });
   if (!isUserScriptsEnabled) return;
 
-  if (message.type === identifiers.reloadAllUserScripts) {
-    // TODO(anthony): Reload all.
-  }
-
   if (message.type === identifiers.executeBookmarkletEvent) {
     executeBookmarklet(message.bookmarkId, message.tabId);
   }
