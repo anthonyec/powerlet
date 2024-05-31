@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { clamp } from '../../lib/clamp';
 import ItemActions from '../item_actions';
@@ -49,6 +49,8 @@ const List = React.forwardRef(
       groups = [],
       placeholder = '',
       disableKeyboardNavigation,
+      disabled,
+      loading,
 
       /** Callback when item is clicked or enter key is pressed. */
       onItemAction = () => {},
@@ -69,15 +71,17 @@ const List = React.forwardRef(
       event.preventDefault();
     };
 
-    const handleItemClick = (item) => {
+    const handleItemClick = useCallback((item) => {
+      if (disabled) return;
       onItemAction(item);
-    };
+    }, [disabled]);
 
-    const handleItemContextMenu = (index, item, event) => {
+    const handleItemContextMenu = useCallback((index, item, event) => {
       event.preventDefault();
+      if (disabled) return;
       setSelectedItemIndex(index);
       onItemContextMenu(index, item, { x: event.clientX, y: event.clientY });
-    };
+    }, [disabled]);
 
     const handleItemMouseEnter = (index) => {
       setHoveredItemIndex(index);
@@ -87,10 +91,11 @@ const List = React.forwardRef(
       setHoveredItemIndex(-1);
     };
 
-    const handleItemEnter = () => {
+    const handleItemEnter = useCallback(() => {
+      if (disabled) return;
       const item = items[selectItemIndexRef.current];
       onItemAction(item);
-    };
+    }, [disabled]);
 
     const getPrevIndex = (index) => {
       const calculatedIndex = index - 1;
@@ -102,19 +107,17 @@ const List = React.forwardRef(
       return calculatedIndex > items.length - 1 ? 0 : calculatedIndex;
     };
 
-    const handleKeyDown = (evt) => {
-      if (disableKeyboardNavigation) {
-        return;
-      }
+    const handleKeyDown = (event) => {
+      if (disabled || disableKeyboardNavigation) return;
 
-      switch (evt.keyCode) {
+      switch (event.keyCode) {
         case KEYS.ENTER:
-          evt.preventDefault();
+          event.preventDefault();
           handleItemEnter();
           break;
 
         case KEYS.UP:
-          evt.preventDefault();
+          event.preventDefault();
           // Use state function for performance reasons. This allows us to
           // access previous state without rebinding the key listeners.
           // https://stackoverflow.com/a/62005831/4703489
@@ -122,7 +125,7 @@ const List = React.forwardRef(
           break;
 
         case KEYS.DOWN:
-          evt.preventDefault();
+          event.preventDefault();
           setSelectedItemIndex((nextIndex) => getNextIndex(nextIndex));
           break;
 
@@ -136,7 +139,7 @@ const List = React.forwardRef(
       return () => {
         window.document.removeEventListener('keydown', handleKeyDown);
       };
-    }, [disableKeyboardNavigation, getArrayAsStringOfIds(items)]);
+    }, [disabled, disableKeyboardNavigation, getArrayAsStringOfIds(items)]);
 
     // Reset selected item when `items` change to avoid selected being
     // out of bounds when the array length changes.
@@ -191,11 +194,14 @@ const List = React.forwardRef(
             onMouseLeave={handleItemMouseLeave}
           >
             <div className="list__text">{item.title || placeholder}</div>
-            {(isSelected || isHovered) && (
+
+            {(!loading && (isSelected || isHovered)) && (
               <div className="list__actions">
-                <ItemActions onEditClick={onEditClick.bind(null, item)} />
+                <ItemActions onEditClick={onEditClick.bind(null, item)} disabled={disabled} />
               </div>
             )}
+
+            {loading && isSelected && <div className="list__spinner" />}
           </li>
         </React.Fragment>
       );
