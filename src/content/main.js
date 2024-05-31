@@ -63,6 +63,11 @@ window.addEventListener(identifiers.messageToContentScript, (event) => {
   logger.log('on_window_message', message);
 
   if (message.type === identifiers.executeBookmarkletEvent) {
+    sendMessage({
+      type: identifiers.startExecuteBookmarkletEvent,
+      bookmarkId: message.bookmarkId
+    });
+
     executeBookmarklet(
       message.bookmarkId,
       message.tabId,
