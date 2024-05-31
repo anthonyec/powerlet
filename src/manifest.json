@@ -13,7 +13,7 @@
   "action": {
     "default_popup": "popup.html"
   },
-  "permissions": ["activeTab", "bookmarks", "userScripts"],
+  "permissions": ["activeTab", "bookmarks", "storage", "userScripts"],
   "host_permissions": ["*://*/*"],
   "content_scripts": [
     {

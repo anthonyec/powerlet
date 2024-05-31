@@ -36,6 +36,7 @@
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.7.5",
     "style-loader": "^3.3.2",
+    "svg-inline-loader": "^0.8.2",
     "webpack": "^5.77.0",
     "webpack-cli": "^5.0.1"
   }

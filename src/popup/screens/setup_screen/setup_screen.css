@@ -1,0 +1,50 @@
+.setup-screen {
+  width: 100%;
+  padding: 20px;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.setup-screen__actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 10px;
+}
+
+.setup-screen__image-container {
+  width: 258px;
+  height: 168px;
+  margin: 14px 0 16px;
+}
+
+.setup-screen__image {
+  left: -4px;
+  top: -2px;
+  width: 266px;
+  height: 176px;
+  position: relative;
+}
+
+.setup-screen h1 {
+  line-height: 20px;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.setup-screen__message {
+  margin: 12px 0;
+}
+
+.setup-screen p {
+  margin-bottom: 8px;
+}
+
+.setup-screen p, .setup-screen a {
+  line-height: 20px;
+  font-size: 13px;
+}
+
+.setup-screen a:link, .setup-screen a:visited, .setup-screen a:active {
+  color: inherit
+}

@@ -90,5 +90,21 @@
   "script_missing_keyword_message": {
     "message": "スクリプトはキーワード「javascript:」で開始する必要があります。",
     "description": ""
+  },
+  "enable_developer_mode_title": {
+    "message": "デベロッパー モード有効にする",
+    "description": ""
+  },
+  "enable_developer_mode_message": {
+    "message": "拡張機能ページで開発者モードを有効にしてください。",
+    "description": "Used Google Translate for this"
+  },
+  "open_extensions_page_label": {
+    "message": "拡張機能へ移動",
+    "description": "This translates to Go to Extensions"
+  },
+  "learn_more_label": {
+    "message": "詳しく見る",
+    "description": ""
   }
 }

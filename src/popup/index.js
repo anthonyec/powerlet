@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { persistStore } from 'redux-persist';
 import createStats from 'simple-plausible-tracker';
 
+import { supportsUserScripts } from '../utils/supports_user_scripts';
 import App from './app';
 import { ToastProvider } from './hooks/use_toast';
 import { UndoHistoryProvider } from './hooks/use_undo_history';
@@ -29,6 +30,10 @@ const store = createStore(
 );
 
 persistStore(store);
+
+if (!supportsUserScripts()) {
+  window.location.hash = 'setup';
+}
 
 const root = createRoot(document.getElementById('root'));
 
