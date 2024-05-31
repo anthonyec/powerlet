@@ -153,6 +153,7 @@ export default function HomeScreen({ route }) {
                 initialSelectedItem={initialSelectedItem}
                 disableKeyboardNavigation={contextMenu || executingScriptId}
                 disabled={executingScriptId}
+                loading={executingScriptId}
                 items={results}
                 groups={groups}
                 placeholder="Untitled script"

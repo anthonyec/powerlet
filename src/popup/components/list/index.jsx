@@ -50,6 +50,7 @@ const List = React.forwardRef(
       placeholder = '',
       disableKeyboardNavigation,
       disabled,
+      loading,
 
       /** Callback when item is clicked or enter key is pressed. */
       onItemAction = () => {},
@@ -66,10 +67,9 @@ const List = React.forwardRef(
     // TODO: Hack fix for enter key to work correctly with up-to-date index
     selectItemIndexRef.current = selectedItemIndex;
 
-    const handleHeadingContextMenu = useCallback((event) => {
-      if (disabled) return;
+    const handleHeadingContextMenu = (event) => {
       event.preventDefault();
-    }, [disabled]);
+    };
 
     const handleItemClick = useCallback((item) => {
       if (disabled) return;
@@ -77,8 +77,8 @@ const List = React.forwardRef(
     }, [disabled]);
 
     const handleItemContextMenu = useCallback((index, item, event) => {
-      if (disabled) return;
       event.preventDefault();
+      if (disabled) return;
       setSelectedItemIndex(index);
       onItemContextMenu(index, item, { x: event.clientX, y: event.clientY });
     }, [disabled]);
@@ -194,11 +194,14 @@ const List = React.forwardRef(
             onMouseLeave={handleItemMouseLeave}
           >
             <div className="list__text">{item.title || placeholder}</div>
-            {(isSelected || isHovered) && (
+
+            {(!loading && (isSelected || isHovered)) && (
               <div className="list__actions">
                 <ItemActions onEditClick={onEditClick.bind(null, item)} disabled={disabled} />
               </div>
             )}
+
+            {loading && isSelected && <div className="list__spinner" />}
           </li>
         </React.Fragment>
       );

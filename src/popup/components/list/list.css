@@ -53,3 +53,25 @@
 .list__actions {
   margin-right: -6px;
 }
+
+.list__spinner {
+  background: conic-gradient(from 90deg, transparent, var(--global-color));
+  width: 14px;
+  height: 14px;
+  border-radius: 100px;
+  position: relative;
+  animation: spin 1s infinite linear;
+}
+
+.list__spinner::after {
+  content: "";
+  border-radius: 100px;
+  position: absolute;
+  inset: 3px;
+  background: var(--item-selected-background);
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(365deg); }
+}
