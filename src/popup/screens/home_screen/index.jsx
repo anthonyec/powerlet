@@ -50,7 +50,7 @@ const getInitialSelectedIndex = (results = [], route = {}) => {
 export default function HomeScreen({ route }) {
   const dispatch = useDispatch();
   const [contextMenu, setContextMenu] = useState(null);
-  const setExecutedScript = useCloseWindowAfterExecution();
+  const [executingScriptId, setExecutingScript] = useCloseWindowAfterExecution();
   const contextMenuItems = useListItemContextMenu(contextMenu, () => {
     setInitialSelectedItem(contextMenu.index);
   });
@@ -108,7 +108,7 @@ export default function HomeScreen({ route }) {
   };
 
   const handleListItemAction = (item) => {
-    setExecutedScript(item.id);
+    setExecutingScript(item.id);
     dispatch(executeBookmarklet(item.id));
   };
 
@@ -139,10 +139,11 @@ export default function HomeScreen({ route }) {
         onAddClick={handleAddClick}
         placeholder={translations['search_scripts_placeholder']}
         showBorder={groups}
+        disabled={executingScriptId}
       />
 
       {hasBookmarklets && hasSearchResults && (
-        <ScrollView>
+        <ScrollView disabled={executingScriptId}>
           {(scrollToElement) => {
             return (
               <List
@@ -150,7 +151,8 @@ export default function HomeScreen({ route }) {
                   selectedItem: onListItemRefChange.bind(null, scrollToElement)
                 }}
                 initialSelectedItem={initialSelectedItem}
-                disableKeyboardNavigation={contextMenu}
+                disableKeyboardNavigation={contextMenu || executingScriptId}
+                disabled={executingScriptId}
                 items={results}
                 groups={groups}
                 placeholder="Untitled script"

@@ -24,24 +24,24 @@ function useRuntimeMessage(callback = (message) => {}, dependencies = []) {
 // has received a message from the main content script saying it's started
 // executing the script.
 export default function useCloseWindowAfterExecution() {
-  const [executedScriptId, setExecutedScriptId] = useState(null);
+  const [executingScriptId, setExecutingScriptId] = useState(null);
   const shouldCloseWindow = useSelector(
-    selectShouldCloseWindowAfterExecutingScript(executedScriptId)
+    selectShouldCloseWindowAfterExecutingScript(executingScriptId)
   );
 
   useRuntimeMessage(
     (message) => {
       if (
         message.type === identifiers.startExecuteBookmarkletEvent &&
-        message.bookmarkId === executedScriptId
+        message.bookmarkId === executingScriptId
       ) {
         if (shouldCloseWindow) {
           window.close();
         }
       }
     },
-    [executedScriptId, shouldCloseWindow]
+    [executingScriptId, shouldCloseWindow]
   );
 
-  return setExecutedScriptId;
+  return [executingScriptId, setExecutingScriptId];
 }

@@ -5,7 +5,7 @@ import IconButton from '../icon_button';
 
 import './item_actions.css';
 
-export default function ItemActions({ onEditClick = () => {} }) {
+export default function ItemActions({ disabled, onEditClick = () => {} }) {
   const handleEditOnClick = (evt) => {
     evt.stopPropagation();
     onEditClick();
@@ -13,7 +13,7 @@ export default function ItemActions({ onEditClick = () => {} }) {
 
   return (
     <div className="item-actions">
-      <IconButton onClick={handleEditOnClick}>
+      <IconButton onClick={handleEditOnClick} disabled={disabled}>
         <Icon name="pencil" />
       </IconButton>
     </div>

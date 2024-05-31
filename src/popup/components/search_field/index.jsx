@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 
-import IconButton from '../../components/icon_button';
 import Icon from '../../components/icon';
+import IconButton from '../../components/icon_button';
 
 import './search_field.css';
 
@@ -13,7 +13,8 @@ function SearchField(
     onAddClick = () => {},
     placeholder = '',
     defaultValue = '',
-    showBorder
+    showBorder,
+    disabled
   },
   ref
 ) {
@@ -32,12 +33,13 @@ function SearchField(
         onBlur={onBlur}
         placeholder={placeholder}
         defaultValue={defaultValue}
+        disabled={disabled}
         autoComplete="off"
         autoCorrect="off"
         autoCapitalize="off"
         spellCheck="false"
       />
-      <IconButton onClick={onAddClick}>
+      <IconButton onClick={onAddClick} disabled={disabled}>
         <Icon name="plus" />
       </IconButton>
     </div>
