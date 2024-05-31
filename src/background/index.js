@@ -4,6 +4,7 @@ import { isBookmarklet } from '../utils/is_bookmarklet';
 import { isMessage } from '../utils/is_message';
 import { joinLines } from '../utils/join_lines';
 import { createLogger } from '../utils/logger';
+import { supportsUserScripts } from '../utils/supports_user_scripts';
 
 const logger = createLogger('background');
 
@@ -162,10 +163,13 @@ async function reloadAllUserScripts() {
 // TODO(anthony): Add check here for userScripts support.
 
 chrome.runtime.onInstalled.addListener(async () => {
+  if (!supportsUserScripts()) return;
+
   await reloadAllUserScripts();
 });
 
 chrome.bookmarks.onCreated.addListener(async (id, bookmark) => {
+  if (!supportsUserScripts()) return;
   if (!isBookmarklet(bookmark)) return;
 
   const userScript = getBookmarkletAsUserScript(
@@ -178,11 +182,15 @@ chrome.bookmarks.onCreated.addListener(async (id, bookmark) => {
 });
 
 chrome.bookmarks.onRemoved.addListener(async (id, removeInfo) => {
+  if (!supportsUserScripts()) return;
   if (!isBookmarklet(removeInfo.node)) return;
+
   await removeUserScript(id);
 });
 
 chrome.bookmarks.onChanged.addListener(async (id, updateInfo) => {
+  if (!supportsUserScripts()) return;
+
   const wasUserScript = await hasUserScript(id);
 
   if (!isBookmarklet(updateInfo)) {
@@ -217,13 +225,31 @@ chrome.bookmarks.onChanged.addListener(async (id, updateInfo) => {
   await updateUserScript(userScript);
 });
 
-chrome.runtime.onMessage.addListener((message, _sender, respond) => {
+chrome.runtime.onMessage.addListener(async (message, _sender, respond) => {
   if (!isMessage(message)) return;
 
   logger.log('on_runtime_message', message);
 
+  const isUserScriptsEnabled = supportsUserScripts();
+
   if (message.type === identifiers.pingEvent) {
     respond({ type: identifiers.pongEvent });
+
+    const { supportsUserScripts: wasUserScriptsEnabled } =
+      await chrome.storage.local.get('supportsUserScripts');
+
+    if (!wasUserScriptsEnabled && isUserScriptsEnabled) {
+      reloadAllUserScripts();
+    }
+  }
+
+  // Any event handlers after this require user script support. If it's not
+  // supported, don't handle those events.
+  await chrome.storage.local.set({ supportsUserScripts: isUserScriptsEnabled });
+  if (!isUserScriptsEnabled) return;
+
+  if (message.type === identifiers.reloadAllUserScripts) {
+    // TODO(anthony): Reload all.
   }
 
   if (message.type === identifiers.executeBookmarkletEvent) {

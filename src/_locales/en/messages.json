@@ -90,5 +90,21 @@
   "script_missing_keyword_message": {
     "message": "Scripts need to start with the keyword \"javascript:\".",
     "description": "Message shown when the script is missing the 'javascript': keyword at the start"
+  },
+  "enable_developer_mode_title": {
+    "message": "Enable Developer Mode",
+    "description": "Title for enable developer mode screen"
+  },
+  "enable_developer_mode_message": {
+    "message": "Please enable the Developer Mode toggle in the extensions page.",
+    "description": "Message shown when developer mode is not enabled"
+  },
+  "open_extensions_page_label": {
+    "message": "Open Extensions",
+    "description": ""
+  },
+  "learn_more_label": {
+    "message": "Learn More",
+    "description": ""
   }
 }
