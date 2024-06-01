@@ -7,7 +7,12 @@ const IconButton = forwardRef(function IconButton(
   ref
 ) {
   return (
-    <button ref={ref} className={`icon-button ${className}`} onClick={onClick} disabled={disabled}>
+    <button
+      ref={ref}
+      className={`icon-button ${className}`}
+      onClick={onClick}
+      disabled={disabled}
+    >
       {children}
     </button>
   );
