@@ -95,7 +95,7 @@ const List = React.forwardRef(
       if (disabled) return;
       const item = items[selectItemIndexRef.current];
       onItemAction(item);
-    }, [disabled]);
+    }, [items, disabled]);
 
     const getPrevIndex = (index) => {
       const calculatedIndex = index - 1;
