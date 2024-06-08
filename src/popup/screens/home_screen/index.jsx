@@ -50,7 +50,8 @@ const getInitialSelectedIndex = (results = [], route = {}) => {
 export default function HomeScreen({ route }) {
   const dispatch = useDispatch();
   const [contextMenu, setContextMenu] = useState(null);
-  const [executingScriptId, setExecutingScript] = useCloseWindowAfterExecution();
+  const [executingScriptId, setExecutingScript] =
+    useCloseWindowAfterExecution();
   const contextMenuItems = useListItemContextMenu(contextMenu, () => {
     setInitialSelectedItem(contextMenu.index);
   });

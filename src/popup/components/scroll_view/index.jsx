@@ -7,7 +7,9 @@ export default function ScrollView({ disabled, children }) {
     targetElement && targetElement.scrollIntoView({ block: 'nearest' });
   };
 
-  const className = disabled ? "scroll-view scroll-view--disabled" : "scroll-view"
+  const className = disabled
+    ? 'scroll-view scroll-view--disabled'
+    : 'scroll-view';
 
   return (
     <div className={className}>

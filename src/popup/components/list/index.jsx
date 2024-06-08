@@ -71,17 +71,23 @@ const List = React.forwardRef(
       event.preventDefault();
     };
 
-    const handleItemClick = useCallback((item) => {
-      if (disabled) return;
-      onItemAction(item);
-    }, [disabled]);
+    const handleItemClick = useCallback(
+      (item) => {
+        if (disabled) return;
+        onItemAction(item);
+      },
+      [disabled]
+    );
 
-    const handleItemContextMenu = useCallback((index, item, event) => {
-      event.preventDefault();
-      if (disabled) return;
-      setSelectedItemIndex(index);
-      onItemContextMenu(index, item, { x: event.clientX, y: event.clientY });
-    }, [disabled]);
+    const handleItemContextMenu = useCallback(
+      (index, item, event) => {
+        event.preventDefault();
+        if (disabled) return;
+        setSelectedItemIndex(index);
+        onItemContextMenu(index, item, { x: event.clientX, y: event.clientY });
+      },
+      [disabled]
+    );
 
     const handleItemMouseEnter = (index) => {
       setHoveredItemIndex(index);
@@ -95,7 +101,7 @@ const List = React.forwardRef(
       if (disabled) return;
       const item = items[selectItemIndexRef.current];
       onItemAction(item);
-    }, [disabled]);
+    }, [items, disabled]);
 
     const getPrevIndex = (index) => {
       const calculatedIndex = index - 1;
@@ -195,9 +201,12 @@ const List = React.forwardRef(
           >
             <div className="list__text">{item.title || placeholder}</div>
 
-            {(!loading && (isSelected || isHovered)) && (
+            {!loading && (isSelected || isHovered) && (
               <div className="list__actions">
-                <ItemActions onEditClick={onEditClick.bind(null, item)} disabled={disabled} />
+                <ItemActions
+                  onEditClick={onEditClick.bind(null, item)}
+                  disabled={disabled}
+                />
               </div>
             )}
 
