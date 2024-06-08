@@ -5,13 +5,14 @@ import Button from '../../components/button';
 import TextField from '../../components/text_field';
 import Titlebar from '../../components/titlebar';
 import Toast from '../../components/toast';
-import { selectTranslations } from '../../store/selectors/locale';
+import { Toggle } from '../../components/toggle';
 import { useBrowserBookmarks } from '../../hooks/use_browser_bookmarks';
 import { useToast } from '../../hooks/use_toast';
 import clampText from '../../lib/clamp_text';
+import { fetchAllBookmarklets } from '../../store/actions/bookmarklets';
+import { selectTranslations } from '../../store/selectors/locale';
 
 import './edit_bookmarklet_screen.css';
-import { fetchAllBookmarklets } from '../../store/actions/bookmarklets';
 
 function returnToHomeScreen(id) {
   if (id) {
@@ -140,6 +141,7 @@ export default function EditBookmarkletScreen({
           defaultValue={bookmarklet?.url || ''}
           onChange={handleCodeChange}
         />
+        <Toggle />
 
         {bookmarklet !== null && !bookmarklet.url.startsWith('javascript:') && (
           <div style={{ marginLeft: 58 }}>
