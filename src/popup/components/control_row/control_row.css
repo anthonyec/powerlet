@@ -1,0 +1,18 @@
+.control-row {
+  display: flex;
+}
+
+.control-row__label {
+  display: flex;
+  width: 65px;
+  height: 32px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.control-row__control {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+}
