@@ -236,7 +236,7 @@ chrome.runtime.onMessage.addListener(async (message, _sender, respond) => {
     respond({ type: identifiers.pongEvent });
 
     const { supportsUserScripts: wasUserScriptsEnabled } =
-      await chrome.storage.local.get('supportsUserScripts');
+      await chrome.storage.local.get('environment:supportsUserScripts');
 
     if (!wasUserScriptsEnabled && isUserScriptsEnabled) {
       reloadAllUserScripts();
@@ -245,7 +245,9 @@ chrome.runtime.onMessage.addListener(async (message, _sender, respond) => {
 
   // Any event handlers after this require user script support. If it's not
   // supported, don't handle those events.
-  await chrome.storage.local.set({ supportsUserScripts: isUserScriptsEnabled });
+  await chrome.storage.local.set({
+    'environment:supportsUserScripts': isUserScriptsEnabled
+  });
   if (!isUserScriptsEnabled) return;
 
   if (message.type === identifiers.executeBookmarkletEvent) {
