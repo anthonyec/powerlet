@@ -36,7 +36,7 @@
 
 .icon-button:focus {
   border-color: var(--global-focus-border-color);
-  box-shadow: var(--global-focus-box-shadow);
+  box-shadow: var(--global-focus-box-shadow), 0 0 0 1px var(--button-normal-background) inset;
   outline: 0;
 }
 

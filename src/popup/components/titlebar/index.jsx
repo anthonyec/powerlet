@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 
-import Button from '../../components/button';
 import Icon from '../../components/icon';
 import IconButton from '../icon_button';
 
@@ -11,7 +10,7 @@ export default function Titlebar({ title = '', onBackClick = () => {} }) {
 
   useEffect(() => {
     if (backButtonRef.current) {
-      backButtonRef.current.focus();
+      // backButtonRef.current.focus();
     }
   }, []);
 

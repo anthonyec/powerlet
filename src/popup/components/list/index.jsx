@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
 
 import { clamp } from '../../lib/clamp';
 import ItemActions from '../item_actions';
@@ -59,6 +65,8 @@ const List = React.forwardRef(
     },
     ref
   ) => {
+    const listClassName = groups.length > 0 ? 'list list--with-groups' : 'list';
+
     const [selectedItemIndex, setSelectedItemIndex] =
       useState(initialSelectedItem);
     const [hoveredItemIndex, setHoveredItemIndex] = useState(-1);
@@ -165,11 +173,11 @@ const List = React.forwardRef(
       const isSelected = index === selectedItemIndex;
       const isHovered = index === hoveredItemIndex;
 
-      const listClassNameWithGroup =
+      const listItemClassNameWithGroup =
         groups.length !== 0 ? 'list__item--group' : '';
       const className = isSelected
-        ? `list__item list__item--selected ${listClassNameWithGroup}`
-        : `list__item ${listClassNameWithGroup}`;
+        ? `list__item list__item--selected ${listItemClassNameWithGroup}`
+        : `list__item ${listItemClassNameWithGroup}`;
 
       // If the selected item is under a heading, use the heading as the
       // element ref for the scroll view to scroll to. This keeps headings
@@ -216,7 +224,7 @@ const List = React.forwardRef(
       );
     });
 
-    return <div className="list">{renderedItems}</div>;
+    return <div className={listClassName}>{renderedItems}</div>;
   }
 );
 

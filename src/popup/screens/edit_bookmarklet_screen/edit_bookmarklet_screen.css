@@ -1,9 +1,9 @@
 .edit-bookmarklet-screen {
-  width: 300px;
+  width: 320px;
 }
 
 .edit-bookmarklet-screen__content {
-  padding: 0 20px;
+  padding: 0 var(--item-padding-left-right);
   display: flex;
   flex-direction: column;
   gap: 12px;

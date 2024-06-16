@@ -8,14 +8,15 @@
 
   border-width: 1px;
   border-style: solid;
-  border-radius: 3px;
+  border-radius: 100px;
 
   padding-left: var(--button-padding-left-right);
   padding-right: var(--button-padding-left-right);
   font-size: var(--button-font-size);
-  height: 34px;
+  height: 36px;
   font-weight: 500;
   min-width: 76px;
+  transition: background 100ms ease;
 }
 
 .button:hover {
