@@ -5,6 +5,13 @@
   position: relative;
 }
 
+/* Increase hit area of toggle. */
+.toggle::after {
+  content: "";
+  inset: -10px;
+  position: absolute;
+}
+
 .toggle:focus-within {
   box-shadow: 0 0 0 2px var(--global-background), 0 0 0 4px var(--global-focus-border-color);
 }

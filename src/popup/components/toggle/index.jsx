@@ -4,7 +4,7 @@ import './toggle.css';
 
 export function Toggle({ value, onChange }) {
   return (
-    <div className="toggle">
+    <label className="toggle">
       <input
         className="toggle__input"
         type="checkbox"
@@ -13,6 +13,6 @@ export function Toggle({ value, onChange }) {
       />
       <div className="toggle__track" />
       <div className="toggle__knob" />
-    </div>
+    </label>
   );
 }
