@@ -2,7 +2,7 @@ import React from 'react';
 
 import './toggle.css';
 
-export function Toggle({ value, onChange }) {
+export default function Toggle({ value, onChange }) {
   return (
     <label className="toggle">
       <input

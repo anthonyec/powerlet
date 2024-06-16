@@ -6,13 +6,15 @@ import { ControlRow } from '../../components/control_row';
 import TextField from '../../components/text_field';
 import Titlebar from '../../components/titlebar';
 import Toast from '../../components/toast';
-import { Toggle } from '../../components/toggle';
+import Toggle from '../../components/toggle';
+
 import { useBrowserBookmarks } from '../../hooks/use_browser_bookmarks';
 import { useBrowserLocalStorage } from '../../hooks/use_browser_local_storage';
 import { useToast } from '../../hooks/use_toast';
-import clampText from '../../lib/clamp_text';
+
 import { fetchAllBookmarklets } from '../../store/actions/bookmarklets';
 import { selectTranslations } from '../../store/selectors/locale';
+import clampText from '../../lib/clamp_text';
 
 import './edit_bookmarklet_screen.css';
 
