@@ -2,16 +2,21 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Button from '../../components/button';
+import { ControlRow } from '../../components/control_row';
 import TextField from '../../components/text_field';
 import Titlebar from '../../components/titlebar';
 import Toast from '../../components/toast';
-import { selectTranslations } from '../../store/selectors/locale';
+import Toggle from '../../components/toggle';
+
 import { useBrowserBookmarks } from '../../hooks/use_browser_bookmarks';
+import { useBrowserLocalStorage } from '../../hooks/use_browser_local_storage';
 import { useToast } from '../../hooks/use_toast';
+
+import { fetchAllBookmarklets } from '../../store/actions/bookmarklets';
+import { selectTranslations } from '../../store/selectors/locale';
 import clampText from '../../lib/clamp_text';
 
 import './edit_bookmarklet_screen.css';
-import { fetchAllBookmarklets } from '../../store/actions/bookmarklets';
 
 function returnToHomeScreen(id) {
   if (id) {
@@ -30,6 +35,10 @@ export default function EditBookmarkletScreen({
   const translations = useSelector(selectTranslations);
   const toast = useToast();
   const bookmarks = useBrowserBookmarks();
+
+  const storage = useBrowserLocalStorage(`settings_local:${route.params.id}`, {
+    allowPopups: true
+  });
 
   useEffect(() => {
     toast.hide();
@@ -122,6 +131,11 @@ export default function EditBookmarkletScreen({
     setBookmarklet({ ...bookmarklet, url: code });
   };
 
+  const handlePopupsChange = async (event) => {
+    if (!event.currentTarget) return;
+    await storage.set('allowPopups', event.currentTarget.checked);
+  };
+
   return (
     <div className="edit-bookmarklet-screen">
       <Titlebar
@@ -130,16 +144,26 @@ export default function EditBookmarkletScreen({
       />
 
       <div className="edit-bookmarklet-screen__content">
-        <TextField
-          label={translations['name_field_label']}
-          defaultValue={bookmarklet?.title || ''}
-          onChange={handleTitleChange}
-        />
-        <TextField
-          label={translations['code_field_label']}
-          defaultValue={bookmarklet?.url || ''}
-          onChange={handleCodeChange}
-        />
+        <ControlRow label={translations['name_field_label']}>
+          <TextField
+            defaultValue={bookmarklet?.title || ''}
+            onChange={handleTitleChange}
+          />
+        </ControlRow>
+
+        <ControlRow label={translations['code_field_label']}>
+          <TextField
+            defaultValue={bookmarklet?.url || ''}
+            onChange={handleCodeChange}
+          />
+        </ControlRow>
+
+        <ControlRow label="Popups" visible={storage.loaded}>
+          <Toggle
+            value={storage.values['allowPopups']}
+            onChange={handlePopupsChange}
+          />
+        </ControlRow>
 
         {bookmarklet !== null && !bookmarklet.url.startsWith('javascript:') && (
           <div style={{ marginLeft: 58 }}>

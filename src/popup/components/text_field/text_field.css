@@ -1,13 +1,6 @@
 .text-field {
   display: flex;
-}
-
-.text-field__label {
-  display: flex;
-  width: 56px;
-  height: 32px;
-  align-items: center;
-  flex-shrink: 0;
+  width: 100%;
 }
 
 .text-field__input {

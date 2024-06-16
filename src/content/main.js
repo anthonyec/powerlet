@@ -32,7 +32,13 @@ function queueAndReload(bookmarkId, tabId) {
   sendMessage({ type: identifiers.queueAndReloadEvent, bookmarkId, tabId });
 }
 
-function executeBookmarklet(bookmarkId, tabId, currentHash, retry = true) {
+function executeBookmarklet(
+  bookmarkId,
+  tabId,
+  currentHash,
+  retry = true,
+  settings = {}
+) {
   const bookmarklet = getPowerletBookmarkletFunction(bookmarkId);
 
   if (retry && !bookmarklet) {
@@ -50,11 +56,15 @@ function executeBookmarklet(bookmarkId, tabId, currentHash, retry = true) {
   }
 
   try {
-    bookmarklet();
+    bookmarklet(settings);
   } catch (err) {
     alert(`Failed to run bookmarklet:\n${err}`);
   }
 }
+
+window[identifiers.invokeProxyFunction] = (name, args = []) => {
+  sendMessage({ type: identifiers.invokeProxyFunction, name, args });
+};
 
 window.addEventListener(identifiers.messageToContentScript, (event) => {
   const message = event.detail;
@@ -72,7 +82,8 @@ window.addEventListener(identifiers.messageToContentScript, (event) => {
       message.bookmarkId,
       message.tabId,
       message.hash,
-      message.retry
+      message.retry,
+      message.settings
     );
   }
 });
