@@ -251,6 +251,10 @@ chrome.bookmarks.onChanged.addListener(async (id, updateInfo) => {
   await updateUserScript(userScript);
 });
 
+const environmentStorage = createBrowserLocalStorage('environment', {
+  supportsUserScripts: false
+});
+
 chrome.runtime.onMessage.addListener(async (message, _sender, respond) => {
   if (!isMessage(message)) return;
 
@@ -261,8 +265,9 @@ chrome.runtime.onMessage.addListener(async (message, _sender, respond) => {
   if (message.type === identifiers.pingEvent) {
     respond({ type: identifiers.pongEvent });
 
-    const { supportsUserScripts: wasUserScriptsEnabled } =
-      await chrome.storage.local.get('environment:supportsUserScripts');
+    const wasUserScriptsEnabled = await environmentStorage.get(
+      'supportsUserScripts'
+    );
 
     if (!wasUserScriptsEnabled && isUserScriptsEnabled) {
       reloadAllUserScripts();
@@ -271,9 +276,7 @@ chrome.runtime.onMessage.addListener(async (message, _sender, respond) => {
 
   // Any event handlers after this require user script support. If it's not
   // supported, don't handle those events.
-  await chrome.storage.local.set({
-    'environment:supportsUserScripts': isUserScriptsEnabled
-  });
+  await environmentStorage.set('supportsUserScripts', isUserScriptsEnabled);
   if (!isUserScriptsEnabled) return;
 
   if (message.type === identifiers.executeBookmarkletEvent) {
