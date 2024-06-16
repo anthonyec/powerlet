@@ -1,4 +1,5 @@
 import * as identifiers from '../identifiers';
+import { createBrowserLocalStorage } from '../utils/browser_local_storage';
 import { cyrb53 } from '../utils/cyrb53';
 import { isBookmarklet } from '../utils/is_bookmarklet';
 import { isMessage } from '../utils/is_message';
@@ -38,15 +39,22 @@ async function executeBookmarklet(bookmarkId, tabId, retry = true) {
 
   const hash = cyrb53(bookmark.url);
 
+  const storage = createBrowserLocalStorage(`settings_local:${bookmarkId}`, {
+    allowPopups: true
+  });
+  const settings = await storage.getAll().catch(logger.error);
+
   try {
     // Send message to isolated content script in active tab.
     logger.log('Send message to tab');
+
     await chrome.tabs.sendMessage(tabId, {
       type: identifiers.executeBookmarkletEvent,
       bookmarkId,
       tabId,
       hash,
-      retry
+      retry,
+      settings
     });
   } catch (err) {
     logger.error('Failed to execute bookmarklet', err);
@@ -97,8 +105,26 @@ function getBookmarkletAsUserScript(id, title, url = '') {
     `function _powerlet_get_hash_${id}() {`,
     `  return "${hash}";`,
     `}`,
-    `function _${userScriptId}() {`,
+    `function _${userScriptId}(settings = {}) {`,
     `  // ${title}`,
+    `  const proxyOpen = (...args) => ${identifiers.invokeProxyFunction}("open", args);`,
+    `  const handler = {`,
+    `    get: function(target, property, receiver) {`,
+    `      let targetObj = target[property];`,
+    `      if (typeof targetObj == "function") {`,
+    `        if (property === "open") {`,
+    `          return (...args) => proxyOpen(...args);`,
+    `        }`,
+    `        return (...args) => target[property].apply(target, args)`,
+    `      } else {`,
+    `        return targetObj;`,
+    `      }`,
+    `    }`,
+    `  };`,
+    `  const proxyWindow = new Proxy(globalThis, handler);`,
+    ``,
+    `  const open = settings.allowPopups ? proxyOpen : globalThis.open;`,
+    `  const window = settings.allowPopups ? proxyWindow : globalThis;`,
     `  ${bookmarkletCode}`,
     '}'
   );
