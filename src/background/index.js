@@ -79,32 +79,26 @@ function getUserScriptId(bookmarkId) {
   return `powerlet_bookmarklet_${bookmarkId}`;
 }
 
-function getBookmarkletAsUserScript(id, title, url = '') {
+function getBookmarkletAsUserScript(id, title, uriEncodedCode = '') {
   const userScriptId = getUserScriptId(id);
+  
+  uriEncodedCode = uriEncodedCode.trim();
+  console.log({uriEncodedCode})
 
-  let bookmarkletCode = '';
-
-  try {
-    bookmarkletCode = decodeURIComponent(url);
-  } catch (err) {
-    bookmarkletCode = url;
+  if (uriEncodedCode === 'javascript:') {
+    uriEncodedCode = '// javascript:';
   }
 
-  bookmarkletCode = bookmarkletCode.trim();
-
-  if (bookmarkletCode === 'javascript:') {
-    bookmarkletCode = '// javascript:';
-  }
-
-  // Original bookmarklet URL is used instead of decoded URI/trimmed code
-  // because the hash needs to be compared elsewhere, where we don't have access
-  // to the full generated code. E.g `actions/bookmarklets.js`
-  const hash = cyrb53(url);
-
+  // Original bookmarklet URL is used instead of decoded cleaned up version
+  // because the hash needs to be compared in other places where we don't have
+  // access to the full generated code. E.g `actions/bookmarklets.js`
+  const hash = cyrb53(uriEncodedCode);
+  
   const code = joinLines(
     `function _powerlet_get_hash_${id}() {`,
     `  return "${hash}";`,
     `}`,
+    ``,
     `function _${userScriptId}(settings = {}) {`,
     `  // ${title}`,
     `  const proxyOpen = (...args) => ${identifiers.invokeProxyFunction}("open", args);`,
@@ -121,13 +115,23 @@ function getBookmarkletAsUserScript(id, title, url = '') {
     `      }`,
     `    }`,
     `  };`,
-    `  const proxyWindow = new Proxy(globalThis, handler);`,
     ``,
+    `  const proxyWindow = new Proxy(globalThis, handler);`,
     `  const open = settings.allowPopups ? proxyOpen : globalThis.open;`,
     `  const window = settings.allowPopups ? proxyWindow : globalThis;`,
-    `  ${bookmarkletCode}`,
-    '}'
+    ``,
+    `  const code = "${uriEncodedCode}";`,
+    ``,
+    `  try {`,
+    `    decodeURIComponent(code);`,
+    `  } catch (err) {`,
+    `    console.error("Failed to decode URI, falling back to bookmarklet in URL")`,
+    `    window.location.href = "${uriEncodedCode}"`,
+    `  }`,  
+    '}',
   );
+
+  console.log({code})
 
   return { id: userScriptId, code };
 }
